@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Brave Matrix]]></title>
+  <link href="http://AngeldsWang.github.io/atom.xml" rel="self"/>
+  <link href="http://AngeldsWang.github.io/"/>
+  <updated>2013-06-15T13:21:26+08:00</updated>
+  <id>http://AngeldsWang.github.io/</id>
+  <author>
+    <name><![CDATA[zhenjun Wang]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[first post]]></title>
+    <link href="http://AngeldsWang.github.io/blog/2013/06/14/first-post/"/>
+    <updated>2013-06-14T17:46:00+08:00</updated>
+    <id>http://AngeldsWang.github.io/blog/2013/06/14/first-post</id>
+    <content type="html"><![CDATA[
+]]></content>
+  </entry>
+  
+</feed>
