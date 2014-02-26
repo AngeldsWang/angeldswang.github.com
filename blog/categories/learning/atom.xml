@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Brave Matrix]]></title>
-  <link href="http://AngeldsWang.github.io/atom.xml" rel="self"/>
+  <title><![CDATA[Category: Learning | Brave Matrix]]></title>
+  <link href="http://AngeldsWang.github.io/blog/categories/learning/atom.xml" rel="self"/>
   <link href="http://AngeldsWang.github.io/"/>
   <updated>2014-02-26T22:53:05+08:00</updated>
   <id>http://AngeldsWang.github.io/</id>
