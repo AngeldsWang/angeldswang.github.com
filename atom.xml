@@ -4,7 +4,7 @@
   <title><![CDATA[Brave Matrix]]></title>
   <link href="http://AngeldsWang.github.io/atom.xml" rel="self"/>
   <link href="http://AngeldsWang.github.io/"/>
-  <updated>2014-02-27T09:54:38+08:00</updated>
+  <updated>2014-02-27T15:59:14+08:00</updated>
   <id>http://AngeldsWang.github.io/</id>
   <author>
     <name><![CDATA[zhenjun Wang]]></name>
@@ -18,8 +18,10 @@
     <link href="http://AngeldsWang.github.io/blog/20130614/"/>
     <updated>2013-06-14T17:46:00+08:00</updated>
     <id>http://AngeldsWang.github.io/blog/first-post</id>
-    <content type="html"><![CDATA[<p>The Indian buffet process is a stochastic process defining a probability distribution over equivalence classes of sparse binary matrices with a finite number of rows and an unbounded number of columns. (<a href="http://www.jmlr.org/papers/volume12/griffiths11a/griffiths11a.pdf" title="Griffiths and Ghahramani">Griffiths et al., 2011</a>)</p>
+    <content type="html"><![CDATA[<p>The Indian buffet process is a <strong>stochastic process</strong> defining a <strong>probability distribution</strong> over <strong>equivalence classes</strong> of sparse binary matrices with a finite number of rows and an unbounded number of columns. (<a href="http://www.jmlr.org/papers/volume12/griffiths11a/griffiths11a.pdf" title="Griffiths and Ghahramani">Griffiths et al., 2011</a>)  上面这段话就是Indian buffet process (IBP)的fathers给出的最简单明确的说明。首先IBP是一个随机过程，那么到底什么是随机过程，随机过程又和概率分布有什么关系，等价类又是什么？这里先从随机过程说起。</p>
 
+<h1 id="section">随机过程</h1>
+<p>在定义随机过程之前首先要明确两个概念。第一个是<strong>概率空间(probability space)</strong>，在定义概率空间之前还要明确另一个概念<strong>可测空间(measurable space)</strong>。当然这一切还要从一个叫“$\sigma$-代数”的定义说起</p>
 ]]></content>
   </entry>
   
