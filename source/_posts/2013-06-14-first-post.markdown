@@ -1,12 +1,52 @@
 ---
 layout: post
-title: "Indian Buffet Process"
+title: "Stochastic Process"
 date: 2013-06-14 17:46
 comments: true
-categories: [Machine Learning, nonparameteric Bayes]
+categories: [Stochastic Process]
 ---
 
-The Indian buffet process is a **stochastic process** defining a **probability distribution** over **equivalence classes** of sparse binary matrices with a finite number of rows and an unbounded number of columns. ([Griffiths et al., 2011](http://www.jmlr.org/papers/volume12/griffiths11a/griffiths11a.pdf "Griffiths and Ghahramani"))  上面这段话就是Indian buffet process (IBP)的fathers给出的最简单明确的说明。首先IBP是一个随机过程，那么到底什么是随机过程，随机过程又和概率分布有什么关系，等价类又是什么？这里先从随机过程说起。
+##概率和测度
 
-#随机过程
-在定义随机过程之前首先要明确两个概念。第一个是**概率空间(probability space)**，在定义概率空间之前还要明确另一个概念**可测空间(measurable space)**。当然这一切还要从一个叫“$\sigma$-代数”的定义说起
+在定义随机过程之前首先要明确两个概念。第一个是**概率空间(probability space)**，而在定义概率空间之前还要明确另一个概念**可测空间(measurable space)**。当然这一切还要从一个叫**“$$\sigma$$-代数”**的定义说起。  
+  
+###$$\sigma$$-代数
+所谓的**“$$\sigma$$-代数”**有时候又叫做**$$\sigma$$域**，是定义在某个集合$$X$$上。所谓的$$\sigma$$域就是集合$$X$$幂集的子集。形式化出来就是，设$$X$$为一个非空集合。满足以下3个条件的集合系(或者叫集类，就是元素也为集合的集合)$$\cal{F}$$称为$$X$$上的一个$$\sigma$$-代数:<br /> <!--more--> 
+
+   
+|-----------------+----------------|
+| Conditions |Formulations |
+|-----------------|:--------------:|
+|$$X$$本身在$$\cal{F}$$中：|$$x\in \cal{F}$$|
+|如果一个集合$$A$$在$$\cal{F}$$中，它的补集$$A^c$$也在$$\cal{F}$$中：|$$A\in \cal{F} \Rightarrow A^c\in \cal{F}$$|
+|如果有若干个集合$$A_1,\cdots, A_n,\cdots$$都在$$\cal{F}$$中，它们的并集也在$$\cal{F}$$中：|$$(\forall n\in\mathbb{N}  A_n\in \cal{F})\Rightarrow \bigcup_{n=1}^{\infty}A_n\in\cal{F}$$|
+|-----------------+----------------|
+
+<br />
+简单说来就是$$\sigma$$-代数是定义在集合$$X$$上一个关于可数并集运算封闭的集合系。其实这里称作集合代数更合适，可能是由于集合代数就算经过再怎么复杂运算后的结果还是逃脱不了集合系这一范围，所以这里就叫做集合系或者是集合代数是等价的。
+
+###可测空间
+有了以上$$\sigma$$-代数的定义，就可以定义可测空间了。所谓的可测空间可以表示为$$(X,\cal{F})$$。直观上理解就是这个空间本身是由集合$$X$$和集合系$$\cal{F}$$共同决定的，而其可测性就是通过集合系$$\cal{F}$$具有$$\sigma$$-代数关于可数并集运算封闭等性质来体现的。更进一步，如果在这个可测空间上定义一个**测度$$\mu$$**，则$$(X,\cal{F},\mu)$$就组成了一个**测度空间(measure space)**。那么测度又是什么呢？**测度(Measure)**是一个函数，它对一个给定集合的某些子集指定一个数，这个数可以比作大小、体积、概率等等。测度起源于积分的推广。传统的积分是在区间上进行的，后来数学家希望把积分的概念推广到任意集合上，于是就有了测度的概念。测度规定是非负的，定义在集合系$$\cal{F}$$上。测度$$\mu$$满足：
+  
+    
+*   空集的测度为零： $$\mu(\emptyset)=0$$  
+*   可数可加性，或者叫作$$\sigma$$可加性：若$$E_1,E_2,\cdots,$$为$$\cal{F}$$中可数个两两不相交的集合序列，则所有$$E_i$$并集的测度等于每个$$E_i$$的测度的总和：
+$$\mu(\bigcup_{i=1}^{\infty}E_i)=\sum_{i=1}^{\infty}\mu(E_i)$$<br />    
+  
+###概率空间  
+很明显，概率满足测度测度的性质，所以概率就是一种测度，而概率空间就是一个测度空间。不过概率是一种特别的测度，因为概率空间的总测度总为1。概率空间常常用三元组$$(\Omega,\cal{F}, P)$$来表示。将测度空间和概率空间对应起来：
+
+
+|-----------------+--+----------------|
+| 测度空间 |  | 概率空间 |
+|:---------------:|:-:|:--------------|
+|$$X$$是一个非空集合|$$\Rightarrow$$|$$\Omega$$是一个非空集合，在概率论中就是样本空间|
+|$$\cal{F}$$是$$X$$幂集的子集|$$\Rightarrow$$|$$\cal{F}$$就是样本空间的幂集的子集，在概率论中称作事件集，$$\cal{F}$$中的每一个元素就是一个事件|
+|$$\mu$$是定义在$$\cal{F}$$上的测度|$$\Rightarrow$$|$$P$$就是定义在事件集的概率函数，$$P:\cal{F}\mapsto R$$,每个事件都被赋一个0，1之间的概率值|
+|-----------------+--+----------------|
+
+总的说来，以上这些概念之间的依赖关系可以用下图表示：  
+
+![依赖关系图](../images/postimgs/dependency.svg?raw=true "dependency")
+
+
