@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Indian Buffet Process - Brave Matrix</title>
+  <title>Stochastic Process - Brave Matrix</title>
   <meta name="author" content="zhenjun Wang">
 
   
-  <meta name="description" content="Indian Buffet Process Jun 14th, 2013 The Indian buffet process is a stochastic process defining a probability distribution over equivalence classes &hellip;">
+  <meta name="description" content="Stochastic Process Jun 14th, 2013 概率和测度 在定义随机过程之前首先要明确两个概念。第一个是概率空间(probability space)，而在定义概率空间之前还要明确另一个概念可测空间(measurable space)。当然这一切还要从一个叫“-代数” &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -121,7 +121,7 @@
 
   <header>
   <div class="jumbotron">
-    Indian Buffet Process
+    Stochastic Process
 	<h5>
 
 
@@ -139,10 +139,87 @@
 </header>
   <div class="row-fluid">
     <div class="span12">
-      <p>The Indian buffet process is a <strong>stochastic process</strong> defining a <strong>probability distribution</strong> over <strong>equivalence classes</strong> of sparse binary matrices with a finite number of rows and an unbounded number of columns. (<a href="http://www.jmlr.org/papers/volume12/griffiths11a/griffiths11a.pdf" title="Griffiths and Ghahramani">Griffiths et al., 2011</a>)  上面这段话就是Indian buffet process (IBP)的fathers给出的最简单明确的说明。首先IBP是一个随机过程，那么到底什么是随机过程，随机过程又和概率分布有什么关系，等价类又是什么？这里先从随机过程说起。</p>
+      <h2 id="section">概率和测度</h2>
 
-<h1 id="section">随机过程</h1>
-<p>在定义随机过程之前首先要明确两个概念。第一个是<strong>概率空间(probability space)</strong>，在定义概率空间之前还要明确另一个概念<strong>可测空间(measurable space)</strong>。当然这一切还要从一个叫“$\sigma$-代数”的定义说起</p>
+<p>在定义随机过程之前首先要明确两个概念。第一个是<strong>概率空间(probability space)</strong>，而在定义概率空间之前还要明确另一个概念<strong>可测空间(measurable space)</strong>。当然这一切还要从一个叫<strong>“<script type="math/tex">\sigma</script>-代数”</strong>的定义说起。  </p>
+
+<h3 id="sigma-"><script type="math/tex">\sigma</script>-代数</h3>
+<p>所谓的<strong>“<script type="math/tex">\sigma</script>-代数”</strong>有时候又叫做<strong><script type="math/tex">\sigma</script>域</strong>，是定义在某个集合<script type="math/tex">X</script>上。所谓的<script type="math/tex">\sigma</script>域就是集合<script type="math/tex">X</script>幂集的子集。形式化出来就是，设<script type="math/tex">X</script>为一个非空集合。满足以下3个条件的集合系(或者叫集类，就是元素也为集合的集合)<script type="math/tex">\cal{F}</script>称为<script type="math/tex">X</script>上的一个<script type="math/tex">\sigma</script>-代数:<br /> <!--more--> </p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Conditions</th>
+      <th style="text-align: center">Formulations</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><script type="math/tex">X</script>本身在<script type="math/tex">\cal{F}</script>中：</td>
+      <td style="text-align: center"><script type="math/tex">x\in \cal{F}</script></td>
+    </tr>
+    <tr>
+      <td>如果一个集合<script type="math/tex">A</script>在<script type="math/tex">\cal{F}</script>中，它的补集<script type="math/tex">A^c</script>也在<script type="math/tex">\cal{F}</script>中：</td>
+      <td style="text-align: center"><script type="math/tex">A\in \cal{F} \Rightarrow A^c\in \cal{F}</script></td>
+    </tr>
+    <tr>
+      <td>如果有若干个集合<script type="math/tex">A_1,\cdots, A_n,\cdots</script>都在<script type="math/tex">\cal{F}</script>中，它们的并集也在<script type="math/tex">\cal{F}</script>中：</td>
+      <td style="text-align: center"><script type="math/tex">(\forall n\in\mathbb{N}  A_n\in \cal{F})\Rightarrow \bigcup_{n=1}^{\infty}A_n\in\cal{F}</script></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><br />
+简单说来就是<script type="math/tex">\sigma</script>-代数是定义在集合<script type="math/tex">X</script>上一个关于可数并集运算封闭的集合系。其实这里称作集合代数更合适，可能是由于集合代数就算经过再怎么复杂运算后的结果还是逃脱不了集合系这一范围，所以这里就叫做集合系或者是集合代数是等价的。</p>
+
+<h3 id="section-1">可测空间</h3>
+<p>有了以上<script type="math/tex">\sigma</script>-代数的定义，就可以定义可测空间了。所谓的可测空间可以表示为<script type="math/tex">(X,\cal{F})</script>。直观上理解就是这个空间本身是由集合<script type="math/tex">X</script>和集合系<script type="math/tex">\cal{F}</script>共同决定的，而其可测性就是通过集合系<script type="math/tex">\cal{F}</script>具有<script type="math/tex">\sigma</script>-代数关于可数并集运算封闭等性质来体现的。更进一步，如果在这个可测空间上定义一个<strong>测度<script type="math/tex">\mu</script></strong>，则<script type="math/tex">(X,\cal{F},\mu)</script>就组成了一个<strong>测度空间(measure space)</strong>。那么测度又是什么呢？<strong>测度(Measure)</strong>是一个函数，它对一个给定集合的某些子集指定一个数，这个数可以比作大小、体积、概率等等。测度起源于积分的推广。传统的积分是在区间上进行的，后来数学家希望把积分的概念推广到任意集合上，于是就有了测度的概念。测度规定是非负的，定义在集合系<script type="math/tex">\cal{F}</script>上。测度<script type="math/tex">\mu</script>满足：</p>
+
+<ul>
+  <li>空集的测度为零： <script type="math/tex">\mu(\emptyset)=0</script>  </li>
+  <li>可数可加性，或者叫作<script type="math/tex">\sigma</script>可加性：若<script type="math/tex">E_1,E_2,\cdots,</script>为<script type="math/tex">\cal{F}</script>中可数个两两不相交的集合序列，则所有<script type="math/tex">E_i</script>并集的测度等于每个<script type="math/tex">E_i</script>的测度的总和：
+<script type="math/tex">\mu(\bigcup_{i=1}^{\infty}E_i)=\sum_{i=1}^{\infty}\mu(E_i)</script><br />    </li>
+</ul>
+
+<h3 id="section-2">概率空间</h3>
+<p>很明显，概率满足测度测度的性质，所以概率就是一种测度，而概率空间就是一个测度空间。不过概率是一种特别的测度，因为概率空间的总测度总为1。概率空间常常用三元组<script type="math/tex">(\Omega,\cal{F}, P)</script>来表示。将测度空间和概率空间对应起来：</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center"> </th>
+      <th style="text-align: center">测度空间</th>
+      <th style="text-align: left"> </th>
+      <th>概率空间</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center"><script type="math/tex">X</script>是一个非空集合</td>
+      <td style="text-align: left"><script type="math/tex">\Rightarrow</script></td>
+      <td><script type="math/tex">\Omega</script>是一个非空集合，在概率论中就是样本空间</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center"><script type="math/tex">\cal{F}</script>是<script type="math/tex">X</script>幂集的子集</td>
+      <td style="text-align: left"><script type="math/tex">\Rightarrow</script></td>
+      <td><script type="math/tex">\cal{F}</script>就是样本空间的幂集的子集，在概率论中称作事件集，<script type="math/tex">\cal{F}</script>中的每一个元素就是一个事件</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center"><script type="math/tex">\mu</script>是定义在<script type="math/tex">\cal{F}</script>上的测度</td>
+      <td style="text-align: left"><script type="math/tex">\Rightarrow</script></td>
+      <td><script type="math/tex">P</script>就是定义在事件集的概率函数，<script type="math/tex">P:\cal{F}\mapsto R</script>,每个事件都被赋一个0，1之间的概率值</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><br /> 
+总的说来，以上这些概念之间的依赖关系可以用下图表示：  </p>
+
+<p><img src="/images/postimgs/dependency.svg" alt="依赖关系图" title="dependency" /></p>
+
 
     </div>
   </div>
@@ -161,9 +238,7 @@
 
 
 
-  <a href="/blog/categories/Machine Learning/"><span class="badge">Machine Learning</span></a>
-
-  <a href="/blog/categories/nonparameteric Bayes/"><span class="badge">nonparameteric Bayes</span></a>
+  <a href="/blog/categories/Stochastic Process/"><span class="badge">Stochastic Process</span></a>
 
 
 
@@ -195,6 +270,8 @@
       <div class="span12">
         <p class="meta">
           
+          
+            <a class="basic-alignment right" href="/blog/20140227/" title="Next Post: Indian Buffet Process">Indian Buffet Process &raquo;</a>
           
         </p>
       </div>

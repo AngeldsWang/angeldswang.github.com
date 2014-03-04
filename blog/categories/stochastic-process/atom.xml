@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Brave Matrix]]></title>
-  <link href="http://AngeldsWang.github.io/atom.xml" rel="self"/>
+  <title><![CDATA[Category: Stochastic Process | Brave Matrix]]></title>
+  <link href="http://AngeldsWang.github.io/blog/categories/stochastic-process/atom.xml" rel="self"/>
   <link href="http://AngeldsWang.github.io/"/>
   <updated>2014-03-04T22:21:43+08:00</updated>
   <id>http://AngeldsWang.github.io/</id>
@@ -12,15 +12,6 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
-  
-  <entry>
-    <title type="html"><![CDATA[Indian Buffet Process]]></title>
-    <link href="http://AngeldsWang.github.io/blog/20140227/"/>
-    <updated>2014-02-27T21:55:00+08:00</updated>
-    <id>http://AngeldsWang.github.io/blog/indian-buffet-process</id>
-    <content type="html"><![CDATA[<p>The Indian buffet process is a <strong>stochastic process</strong> defining a <strong>probability distribution</strong> over <strong>equivalence classes</strong> of sparse binary matrices with a finite number of rows and an unbounded number of columns. (<a href="http://www.jmlr.org/papers/volume12/griffiths11a/griffiths11a.pdf" title="Griffiths and Ghahramani">Griffiths et al., 2011</a>)  上面这段话就是Indian buffet process (IBP)的fathers给出的最简单明确的说明。首先IBP是一个随机过程。</p>
-]]></content>
-  </entry>
   
   <entry>
     <title type="html"><![CDATA[Stochastic Process]]></title>
@@ -106,7 +97,7 @@
 <p><br /> 
 总的说来，以上这些概念之间的依赖关系可以用下图表示：  </p>
 
-<p><img src="http://AngeldsWang.github.io/images/postimgs/dependency.svg" alt="依赖关系图" title="dependency" /></p>
+<p><img src="/images/postimgs/dependency.svg" alt="依赖关系图" title="dependency" /></p>
 
 ]]></content>
   </entry>
