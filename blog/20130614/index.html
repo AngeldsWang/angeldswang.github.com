@@ -172,8 +172,17 @@
 <p><br />
 简单说来就是<script type="math/tex">\sigma</script>-代数是定义在集合<script type="math/tex">X</script>上一个关于可数并集运算封闭的集合系。其实这里称作集合代数更合适，可能是由于集合代数就算经过再怎么复杂运算后的结果还是逃脱不了集合系这一范围，所以这里就叫做集合系或者是集合代数是等价的。</p>
 
-<h3 id="section-1">可测空间</h3>
-<p>有了以上<script type="math/tex">\sigma</script>-代数的定义，就可以定义可测空间了。所谓的可测空间可以表示为<script type="math/tex">(X,\cal{F})</script>。直观上理解就是这个空间本身是由集合<script type="math/tex">X</script>和集合系<script type="math/tex">\cal{F}</script>共同决定的，而其可测性就是通过集合系<script type="math/tex">\cal{F}</script>具有<script type="math/tex">\sigma</script>-代数关于可数并集运算封闭等性质来体现的。更进一步，如果在这个可测空间上定义一个<strong>测度<script type="math/tex">\mu</script></strong>，则<script type="math/tex">(X,\cal{F},\mu)</script>就组成了一个<strong>测度空间(measure space)</strong>。那么测度又是什么呢？<strong>测度(Measure)</strong>是一个函数，它对一个给定集合的某些子集指定一个数，这个数可以比作大小、体积、概率等等。测度起源于积分的推广。传统的积分是在区间上进行的，后来数学家希望把积分的概念推广到任意集合上，于是就有了测度的概念。测度规定是非负的，定义在集合系<script type="math/tex">\cal{F}</script>上。测度<script type="math/tex">\mu</script>满足：</p>
+<h3 id="section-1">可测空间和可测函数</h3>
+<p>有了以上<script type="math/tex">\sigma</script>-代数的定义，就可以定义可测空间了。所谓的可测空间可以表示为<script type="math/tex">(X,\cal{F})</script>。直观上理解就是这个空间本身是由集合<script type="math/tex">X</script>和集合系<script type="math/tex">\cal{F}</script>共同决定的，而其可测性就是通过集合系<script type="math/tex">\cal{F}</script>具有<script type="math/tex">\sigma</script>-代数关于可数并集运算封闭等性质来体现的。  </p>
+
+<p><strong>可测函数(Measurable function)</strong>是可测空间之间的映射。它的形式化定义是：给定两个可测空间<script type="math/tex">(X,\Sigma)</script>和<script type="math/tex">(Y,T)</script>，存在函数<script type="math/tex">f:X\mapsto Y</script>使得对于任意<script type="math/tex">E\in T</script>的原像都在<script type="math/tex">\Sigma</script>中，则称函数<script type="math/tex">f</script>是可测的：
+$$
+f^{-1}(E):=\{x\in X|f(x)\in E\}\in \Sigma,  \forall E\in T
+$$
+由于这里的可测性同样还是由<script type="math/tex">\sigma</script>-代数来保证的，所以这里的可测函数通常写成<script type="math/tex">f:(X,\Sigma)\mapsto (Y,T)</script>。</p>
+
+<h3 id="section-2">测度和测度空间</h3>
+<p>更进一步，如果在可测空间上定义一个<strong>测度<script type="math/tex">\mu</script></strong>，则<script type="math/tex">(X,\cal{F},\mu)</script>就组成了一个<strong>测度空间(measure space)</strong>。那么测度又是什么呢？<strong>测度(Measure)</strong>是一个函数，它对一个给定集合的某些子集指定一个数，这个数可以比作大小、体积、概率等等。测度起源于积分的推广。传统的积分是在区间上进行的，后来数学家希望把积分的概念推广到任意集合上，于是就有了测度的概念。测度规定是非负的，定义在集合系<script type="math/tex">\cal{F}</script>上。测度<script type="math/tex">\mu</script>满足：</p>
 
 <ul>
   <li>空集的测度为零： <script type="math/tex">\mu(\emptyset)=0</script>  </li>
@@ -181,8 +190,8 @@
 <script type="math/tex">\mu(\bigcup_{i=1}^{\infty}E_i)=\sum_{i=1}^{\infty}\mu(E_i)</script><br />    </li>
 </ul>
 
-<h3 id="section-2">概率空间</h3>
-<p>很明显，概率满足测度测度的性质，所以概率就是一种测度，而概率空间就是一个测度空间。不过概率是一种特别的测度，因为概率空间的总测度总为1。概率空间常常用三元组<script type="math/tex">(\Omega,\cal{F}, P)</script>来表示。将测度空间和概率空间对应起来：</p>
+<h3 id="section-3">概率空间</h3>
+<p>很明显，概率满足测度的性质，所以概率就是一种测度，而概率空间就是一个测度空间。不过概率是一种特别的测度，因为概率空间的总测度总为1。概率空间常常用三元组<script type="math/tex">(\Omega,\cal{F}, P)</script>来表示。将测度空间和概率空间对应起来：</p>
 
 <table>
   <thead>
@@ -219,6 +228,9 @@
 总的说来，以上这些概念之间的依赖关系可以用下图表示：  </p>
 
 <p><img src="/images/postimgs/dependency.svg" alt="依赖关系图" title="dependency" /></p>
+
+<h2 id="section-4">随机过程</h2>
+<p>有了以上的基本定义之后就可以来定义什么是随机过程了</p>
 
 
     </div>
