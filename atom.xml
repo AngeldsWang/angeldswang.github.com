@@ -4,7 +4,7 @@
   <title><![CDATA[Brave Matrix]]></title>
   <link href="http://AngeldsWang.github.io/atom.xml" rel="self"/>
   <link href="http://AngeldsWang.github.io/"/>
-  <updated>2014-03-06T20:34:59+08:00</updated>
+  <updated>2014-03-07T13:13:52+08:00</updated>
   <id>http://AngeldsWang.github.io/</id>
   <author>
     <name><![CDATA[zhenjun Wang]]></name>
@@ -107,7 +107,7 @@ $$
       <td style="text-align: center"> </td>
       <td style="text-align: center"><script type="math/tex">\mu</script>是定义在<script type="math/tex">\cal{F}</script>上的测度</td>
       <td style="text-align: left"><script type="math/tex">\Rightarrow</script></td>
-      <td><script type="math/tex">P</script>就是定义在事件集的概率函数，<script type="math/tex">P:\cal{F}\mapsto R</script>,每个事件都被赋一个0，1之间的概率值</td>
+      <td><script type="math/tex">P</script>就是定义在事件集的概率函数，<script type="math/tex">P:\cal{F}\mapsto \mathbb{R}</script>,每个事件都被赋一个0，1之间的概率值</td>
     </tr>
   </tbody>
 </table>
@@ -118,10 +118,13 @@ $$
 <p><img src="http://AngeldsWang.github.io/images/postimgs/dependency.svg" alt="依赖关系图" title="dependency" /></p>
 
 <h2 id="section-4">随机过程</h2>
-<p>有了以上的基本定义之后就可以来定义什么是随机过程了。
-&lt;div class=&#8217;bogus-wrapper&#8217;&gt;<notextile><figure class="code">&lt;div class=&#8221;highlight&#8221;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#8221;gutter&#8221;&gt;&lt;pre class=&#8221;line-numbers&#8221;&gt;<span class="line-number">1</span>
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217;&gt;&lt;pre&gt;<code class=""><span class="line">定义1：(随机过程是一个随机变量的集合) 随机过程$$\\{X_t\\}_{t\in T}$$是随机变量$$X_t$$的集合，而$$X_t$$是在可测空间$$(\Xi, \cal{X})$$中取值。$$T$$是该随机过程的顺序下标索引集。</span></code>&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;</figure></notextile>&lt;/div&gt;</p>
+<p>有了以上的基本定义之后就可以来定义什么是随机过程了。</p>
 
+<p><strong>定义1：(随机过程是一个随机变量的集合)</strong> 给定某个概率空间<script type="math/tex">(\Omega, \cal{F}, P)</script>，随机过程<script type="math/tex">\{X_t\}_{t\in T}</script>是随机变量<script type="math/tex">X_t</script>的集合，<script type="math/tex">X_t</script>取值于某个可测空间<script type="math/tex">(\Xi,\cal{X})</script>中。<script type="math/tex">T</script>是该随机过程的顺序时间下标集。</p>
+
+<p>在初等概率论中一般将随机变量定义成事件到实数的映射，可见随机变量存在函数的性质。那么在高等概率论(也就是随机过程)中，随机变量的函数性质将更加明显，这就是通过可测函数来体现的。因为所谓的随机变量就是由样本空间到实数空间的映射，引入可测性之后，就自然的演变成由样本空间和在其上定义的<script type="math/tex">\sigma</script>-代数所组成的可测空间<script type="math/tex">(\Omega, \cal{F})</script>到另一个可测空间<script type="math/tex">(\Xi,\cal{X})</script>的映射(<script type="math/tex">\Xi</script>和<script type="math/tex">\cal{X}</script>一般取作实数空间<script type="math/tex">\mathbb{R}</script>，和在<script type="math/tex">\mathbb{R}</script>上的<script type="math/tex">\sigma</script>-代数)。这样通过引入可测性就将随机变量的本质给显现出来了，随机变量就是一个可测函数。对应到上述随机过程的定义，对于任意给定的时间<script type="math/tex">t\in T</script>，<script type="math/tex">X_t</script>就是一个<script type="math/tex">\cal{F}/\cal{X}</script>-可测函数：<script type="math/tex">\Omega\mapsto \Xi</script>。更一般的，<script type="math/tex">X_t</script>称作<script type="math/tex">\Xi</script>-valued随机变量，而<script type="math/tex">T</script>中所有时刻的<script type="math/tex">\Xi</script>-valued随机变量的顺序集合就是最终的随机过程了。<script type="math/tex">\Xi</script>就称作该随机过程的状态空间。这时候总体的依赖关系就变成下图所示：</p>
+
+<p><img src="http://AngeldsWang.github.io/images/postimgs/dependencies.svg" alt="依赖关系图_forall" title="dependencies" /></p>
 ]]></content>
   </entry>
   

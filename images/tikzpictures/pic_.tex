@@ -1,0 +1,44 @@
+\documentclass{standalone}
+\usepackage{tikz}
+% all other packages and stuff you need for the picture
+\usepackage{ctex}
+\usepackage{pgf}
+\usetikzlibrary{fit, positioning, shapes.geometric}
+%
+\begin{document}
+%\begin{tikzpicture}
+% your picture code
+
+
+\begin{tikzpicture}[
+          shorten >=2pt,
+          >=stealth,
+          node distance=1cm,
+          noname/.style={%
+            very thick,
+            minimum size=0pt,
+            draw=gray!30,
+            text=gray!30}
+          ]
+          %\useasboundingbox (-5.3,0.65) rectangle (3.4,-6.65);
+          \node[circle, noname, scale=1.5, align=center]  (1)                                           {$\sigma$-Algebra\\$\Sigma$ (or $\cal{F}$)};
+          \node[ellipse, noname, scale=1.5, align=center, text=red!70] (2) [node distance=1.7cm, right=of 1]         {Measurable Space\\$(\Xi, \cal{X})$};
+          \node[circle, noname, scale=1.5, align=center]  (3) [node distance=1.7cm, below=of 2]         {Measure\\$\mu$};
+          \node[ellipse, noname, scale=1.5, align=center] (4) [node distance=1.7cm, right=of 2]         {Measure Space\\$(X, \Sigma, \mu)$};
+          \node[ellipse, noname, scale=1.5, align=center, text=red!70] (5) [node distance=1.7cm, right=of 4]         {Probabilistic Measurable Space\\$(\Omega, \cal{F})$};
+          \node[ellipse, noname, scale=1.5, align=center] (6) [node distance=2.3cm, above=of 4]         {Measurable Space\\$(Y, T)$};
+
+          \path[->, fill=gray!30, draw=gray!30, very thick] (1) edge                  node {} (2);
+          \path[->, fill=gray!30, draw=gray!30, very thick] (2) edge                  node {} (4);
+          \path[->, fill=gray!30, draw=gray!30, very thick] (4) edge                  node {} (5);
+          \path[->, fill=gray!30, draw=gray!30, very thick] (3) edge                  node {} (4);
+          \path[->, fill=gray!30, draw=gray!30, very thick] (2) edge     
+                node [midway, above, sloped, text=gray!30, align=center]{Measurable Function\\$f:(\Xi, \cal{X})\mapsto (Y, T)$} (6);
+          \path[->, fill=red!70, draw=red!70, very thick] (5) edge [bend left=40]   
+                node [midway, above, text=red!70, align=center] {$\cal{F}/\cal{X}$-Measurable Function\\ $X_t: \Omega\mapsto \Xi$} 
+                node [midway, below, text=red!70, align=center] 
+                     {Random Variables: $\cdots,X_t,X_{t+1},\cdots$ $\Longrightarrow$ Stochastic Process: $\{X_t\}_{t\in T}$} (2);
+\end{tikzpicture}
+
+%\end{tikzpicture}
+\end{document}
