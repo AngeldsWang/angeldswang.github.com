@@ -11,7 +11,7 @@ categories: [Stochastic Process]
 在定义随机过程之前首先要明确两个概念。第一个是**概率空间(probability space)**，而在定义概率空间之前还要明确另一个概念**可测空间(measurable space)**。当然这一切还要从一个叫**“$$\sigma$$-代数”**的定义说起。  
   
 ###$$\sigma$$-代数
-所谓的**“$$\sigma$$-代数”**有时候又叫做**$$\sigma$$域**，是定义在某个集合$$X$$上。所谓的$$\sigma$$域就是集合$$X$$幂集的子集。形式化出来就是，设$$X$$为一个非空集合。满足以下3个条件的集合系(或者叫集类，就是元素也为集合的集合)$$\cal{F}$$称为$$X$$上的一个$$\sigma$$-代数:<br /> <!--more--> 
+所谓的**“$$\sigma$$-代数”**有时候又叫做**$$\sigma$$域**，是定义在某个集合$$X$$上。所谓的$$\sigma$$域就是集合$$X$$幂集的子集。形式化出来就是，设$$X$$为一个非空集合，满足以下3个条件的集合系(或者叫集类，就是元素也为集合的集合)$$\cal{F}$$称为$$X$$上的一个$$\sigma$$-代数:<br /> <!--more--> 
 
    
 |-----------------+----------------|
@@ -19,7 +19,7 @@ categories: [Stochastic Process]
 |-----------------|:--------------:|
 |$$X$$本身在$$\cal{F}$$中：|$$x\in \cal{F}$$|
 |如果一个集合$$A$$在$$\cal{F}$$中，它的补集$$A^c$$也在$$\cal{F}$$中：|$$A\in \cal{F} \Rightarrow A^c\in \cal{F}$$|
-|如果有若干个集合$$A_1,\cdots, A_n,\cdots$$都在$$\cal{F}$$中，它们的并集也在$$\cal{F}$$中：|$$(\forall n\in\mathbb{N}  A_n\in \cal{F})\Rightarrow \bigcup_{n=1}^{\infty}A_n\in\cal{F}$$|
+|如果有若干个集合$$A_1,\cdots, A_n,\cdots$$都在$$\cal{F}$$中，它们的并集也在$$\cal{F}$$中：|$$(\forall n\in\mathbb{N}, A_n\in \cal{F})\Rightarrow \bigcup_{n=1}^{\infty}A_n\in\cal{F}$$|
 |-----------------+----------------|
 
 <br />
