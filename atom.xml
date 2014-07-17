@@ -4,7 +4,7 @@
   <title><![CDATA[Brave Matrix]]></title>
   <link href="http://AngeldsWang.github.io/atom.xml" rel="self"/>
   <link href="http://AngeldsWang.github.io/"/>
-  <updated>2014-03-07T13:13:52+08:00</updated>
+  <updated>2014-07-17T09:28:54+08:00</updated>
   <id>http://AngeldsWang.github.io/</id>
   <author>
     <name><![CDATA[zhenjun Wang]]></name>
@@ -32,7 +32,7 @@
 <p>在定义随机过程之前首先要明确两个概念。第一个是<strong>概率空间(probability space)</strong>，而在定义概率空间之前还要明确另一个概念<strong>可测空间(measurable space)</strong>。当然这一切还要从一个叫<strong>“<script type="math/tex">\sigma</script>-代数”</strong>的定义说起。  </p>
 
 <h3 id="sigma-"><script type="math/tex">\sigma</script>-代数</h3>
-<p>所谓的<strong>“<script type="math/tex">\sigma</script>-代数”</strong>有时候又叫做<strong><script type="math/tex">\sigma</script>域</strong>，是定义在某个集合<script type="math/tex">X</script>上。所谓的<script type="math/tex">\sigma</script>域就是集合<script type="math/tex">X</script>幂集的子集。形式化出来就是，设<script type="math/tex">X</script>为一个非空集合。满足以下3个条件的集合系(或者叫集类，就是元素也为集合的集合)<script type="math/tex">\cal{F}</script>称为<script type="math/tex">X</script>上的一个<script type="math/tex">\sigma</script>-代数:<br /> <!--more--> </p>
+<p>所谓的<strong>“<script type="math/tex">\sigma</script>-代数”</strong>有时候又叫做<strong><script type="math/tex">\sigma</script>域</strong>，是定义在某个集合<script type="math/tex">X</script>上。所谓的<script type="math/tex">\sigma</script>域就是集合<script type="math/tex">X</script>幂集的子集。形式化出来就是，设<script type="math/tex">X</script>为一个非空集合，满足以下3个条件的集合系(或者叫集类，就是元素也为集合的集合)<script type="math/tex">\cal{F}</script>称为<script type="math/tex">X</script>上的一个<script type="math/tex">\sigma</script>-代数:<br /> <!--more--> </p>
 
 <table>
   <thead>
@@ -52,7 +52,7 @@
     </tr>
     <tr>
       <td>如果有若干个集合<script type="math/tex">A_1,\cdots, A_n,\cdots</script>都在<script type="math/tex">\cal{F}</script>中，它们的并集也在<script type="math/tex">\cal{F}</script>中：</td>
-      <td style="text-align: center"><script type="math/tex">(\forall n\in\mathbb{N}  A_n\in \cal{F})\Rightarrow \bigcup_{n=1}^{\infty}A_n\in\cal{F}</script></td>
+      <td style="text-align: center"><script type="math/tex">(\forall n\in\mathbb{N}, A_n\in \cal{F})\Rightarrow \bigcup_{n=1}^{\infty}A_n\in\cal{F}</script></td>
     </tr>
   </tbody>
 </table>
