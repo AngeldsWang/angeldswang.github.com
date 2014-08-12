@@ -4,7 +4,7 @@
   <title><![CDATA[Brave Matrix]]></title>
   <link href="http://AngeldsWang.github.io/atom.xml" rel="self"/>
   <link href="http://AngeldsWang.github.io/"/>
-  <updated>2014-08-11T21:41:27-04:00</updated>
+  <updated>2014-08-12T00:45:30-04:00</updated>
   <id>http://AngeldsWang.github.io/</id>
   <author>
     <name><![CDATA[zhenjun Wang]]></name>
@@ -61,7 +61,38 @@ p & = \int_{-\infty}^{\infty}\frac{f(y)}{cg(y)}\times g(y)\text{d}y\\
 </blockquote>
 
 <h3 id="font-colorff5544rejection-samplingfont-1"><font color="#FF5544">Rejection sampling算法证明</font></h3>
-<p>由上述说明可知，要证明Rejection sampling算法可行，只需要证明<font color="#F39C12">在给定条件下，随机变量的概率分布即为</font>。    </p>
+<p>由上述说明可知，要证明Rejection sampling算法可行，只需要证明<script type="math/tex">\color{khaki}{\text{在给定条件}U\leqslant \frac{f(Y)}{cg(Y)}\text{下}，\text{随机变量}Y\text{的概率分布即为}F，\text{即}，P(Y\leqslant y|U\leqslant \frac{f(Y)}{cg(Y)})=F(y)}</script>。  <br />
+令<script type="math/tex">B=\{U\leqslant \frac{f(Y)}{cg(Y)}\}</script>，<script type="math/tex">A=\{Y\leqslant y\}</script>，又因为<script type="math/tex">P(B)=p=\frac{1}{c}</script>，根据贝叶斯公式：    </p>
+
+<script type="math/tex; mode=display">% &lt;![CDATA[
+
+\begin{align*}
+\frac{P(B|A)P(A)}{P(B)} &= P(U\leqslant \frac{f(Y)}{cg(Y)}|Y=y)\times \frac{G(y)}{1/c}\\
+                        &= \frac{P(U\leqslant \frac{f(Y)}{cg(Y)}, Y=y)}{G(y)}\times \frac{G(y)}{1/c}\\
+                        &= c\int_{-\infty}^yP(U\leqslant \frac{f(Y)}{cg(Y)}|Y=w\leqslant y)g(w)\text{d}w\\
+                        &= c\int_{-\infty}^y\frac{f(w)}{cg(w)}g(w)\text{d}w\\
+                        &= \int_{-\infty}^yf(w)\text{d}w\\
+                        &= F(y)=P(A|B)=P(Y\leqslant y|U\leqslant \frac{f(Y)}{cg(Y)})~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\blacksquare
+\end{align*}
+ %]]&gt;</script>
+
+<h3 id="font-colorff5544rejection-samplingfont-2"><font color="#FF5544">用Rejection sampling算法产生离散随机变量</font></h3>
+<p>产生离散随机变量的方法和产生连续随机变量的方法基本一致，只是这时候目标的概率分布函数<script type="math/tex">F</script>变成了概率质量函数<script type="math/tex">p(k)=P(X=k)</script>，辅助的概率分布<script type="math/tex">G</script>变成了概率质量函数<script type="math/tex">q(k)=P(Y=k)</script>，并满足条件<script type="math/tex">% &lt;![CDATA[
+\text{sup}_x\{p(k)/q(k)\}\leqslant c < \infty %]]&gt;</script>。</p>
+
+<h3 id="font-colorff5544betafont"><font color="#FF5544">示例：产生服从简单Beta分布的随机变量</font></h3>
+<p>Beta分布的概率密度函数为<script type="math/tex">f(x)=bx^n(1-x)^m，x\in (0,1)</script>，其中<script type="math/tex">b=[\int_0^1x^n(1-x)^m\text{d}x]^{-1}</script>为归一化常数。这里我们只研究<script type="math/tex">n=m>1</script>的情况，此时Beta分布的概率密度函数关于<script type="math/tex">x=\frac{1}{2}</script>对称。这里我们选择<script type="math/tex">g(y)=1</script>这一均匀分布作为辅助的概率密度函数。因此，<script type="math/tex">c=\text{sup}_x\frac{f(x)}{g(x)}=\text{sup}_xf(x)</script>当<script type="math/tex">x=\frac{1}{2}</script>时取到最大，即<script type="math/tex">c=b4^{-n}</script>。  <br />
+这样，若要产生服从<script type="math/tex">f(x)=b(x(1-x))^n</script>这一简单Beta分布的随机变量，只需要：    </p>
+
+<table border="2" cellpadding="15px" bordercolor="#F0E68C">
+<td>
+<ol>
+<li>产生两个0，1之间的均匀分布随机变量$U_1，U_2$。</li> <p />
+<li>If $U_2\leqslant 4^n(U_1(1-U_1))^n$，then $X=U_1$;<br />
+    Otherwise goto step 1。</li> 
+</ol>
+</td>
+</table>
 
 ]]></content>
   </entry>
