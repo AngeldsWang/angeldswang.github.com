@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Sampling | Brave Matrix]]></title>
   <link href="http://AngeldsWang.github.io/blog/categories/sampling/atom.xml" rel="self"/>
   <link href="http://AngeldsWang.github.io/"/>
-  <updated>2014-08-11T21:39:34-04:00</updated>
+  <updated>2014-08-11T21:41:27-04:00</updated>
   <id>http://AngeldsWang.github.io/</id>
   <author>
     <name><![CDATA[zhenjun Wang]]></name>
@@ -61,7 +61,7 @@ p & = \int_{-\infty}^{\infty}\frac{f(y)}{cg(y)}\times g(y)\text{d}y\\
 </blockquote>
 
 <h3 id="font-colorff5544rejection-samplingfont-1"><font color="#FF5544">Rejection sampling算法证明</font></h3>
-<p>由上述说明可知，要证明Rejection sampling算法可行，只需要证明在给定条件<script type="math/tex">U\leqslant \frac{f(Y)}{cg(Y)}</script>下，随机变量<script type="math/tex">Y</script>的概率分布即为<script type="math/tex">F</script>。    </p>
+<p>由上述说明可知，要证明Rejection sampling算法可行，只需要证明<font color="#F39C12">在给定条件下，随机变量的概率分布即为</font>。    </p>
 
 ]]></content>
   </entry>
