@@ -136,7 +136,7 @@
   
 
 
-<i class="icon-calendar-empty"></i> <time datetime="2013-06-14T17:46:00+08:00" pubdate data-updated="true">Jun 14<span>th</span>, 2013</time></h5>
+<i class="icon-calendar-empty"></i> <time datetime="2013-06-14T17:46:00-04:00" pubdate data-updated="true">Jun 14<span>th</span>, 2013</time></h5>
   </div>
 </header>
   <div class="row-fluid">
@@ -172,7 +172,7 @@
 </table>
 
 <p><br />
-简单说来就是<script type="math/tex">\sigma</script>-代数是定义在集合<script type="math/tex">X</script>上一个关于可数并集运算封闭的集合系。其实这里称作集合代数更合适，可能是由于集合代数就算经过再怎么复杂运算后的结果还是逃脱不了集合系这一范围，所以这里就叫做集合系或者是集合代数是等价的。</p>
+简单说来就是<script type="math/tex">\sigma</script>-代数是定义在集合<script type="math/tex">X</script>上一个关于可数并集运算封闭的集合系。其实这里称作集合代数更合适，可能是由于集合代数就算经过再怎么复杂运算后的结果还是逃脱不了集合系这一范围，所以这里叫做集合系或者是集合代数是等价的。</p>
 
 <h3 id="section-1">可测空间和可测函数</h3>
 <p>有了以上<script type="math/tex">\sigma</script>-代数的定义，就可以定义可测空间了。所谓的可测空间可以表示为<script type="math/tex">(X,\cal{F})</script>。直观上理解就是这个空间本身是由集合<script type="math/tex">X</script>和集合系<script type="math/tex">\cal{F}</script>共同决定的，而其可测性就是通过集合系<script type="math/tex">\cal{F}</script>具有<script type="math/tex">\sigma</script>-代数关于可数并集运算封闭等性质来体现的。  </p>
@@ -239,6 +239,9 @@ $$
 <p>在初等概率论中一般将随机变量定义成事件到实数的映射，可见随机变量存在函数的性质。那么在高等概率论(也就是随机过程)中，随机变量的函数性质将更加明显，这就是通过可测函数来体现的。因为所谓的随机变量就是由样本空间到实数空间的映射，引入可测性之后，就自然的演变成由样本空间和在其上定义的<script type="math/tex">\sigma</script>-代数所组成的可测空间<script type="math/tex">(\Omega, \cal{F})</script>到另一个可测空间<script type="math/tex">(\Xi,\cal{X})</script>的映射(<script type="math/tex">\Xi</script>和<script type="math/tex">\cal{X}</script>一般取作实数空间<script type="math/tex">\mathbb{R}</script>，和在<script type="math/tex">\mathbb{R}</script>上的<script type="math/tex">\sigma</script>-代数)。这样通过引入可测性就将随机变量的本质给显现出来了，随机变量就是一个可测函数。对应到上述随机过程的定义，对于任意给定的时间<script type="math/tex">t\in T</script>，<script type="math/tex">X_t</script>就是一个<script type="math/tex">\cal{F}/\cal{X}</script>-可测函数：<script type="math/tex">\Omega\mapsto \Xi</script>。更一般的，<script type="math/tex">X_t</script>称作<script type="math/tex">\Xi</script>-valued随机变量，而<script type="math/tex">T</script>中所有时刻的<script type="math/tex">\Xi</script>-valued随机变量的顺序集合就是最终的随机过程了。<script type="math/tex">\Xi</script>就称作该随机过程的状态空间。这时候总体的依赖关系就变成下图所示：</p>
 
 <p><img src="/images/postimgs/dependencies.svg" alt="依赖关系图_forall" title="dependencies" /></p>
+
+<p>实际上，随机过程还有第二个定义。
+<strong>定义2：(随机过程是一个随机函数)</strong> </p>
 
     </div>
   </div>
