@@ -1,11 +1,11 @@
 .highlight, html .gist .gist-file .gist-syntax .gist-highlight {
-  table td.code { width: 100%; }
+  table td.code { width: 95%; }
   -moz-border-radius: 9px;
   border-radius: 9px;
 }
 .highlight .line-numbers, html .gist .gist-file .gist-syntax .highlight .line_numbers {
   text-align: right;
-  font-size: 13px;
+  font-size: 13px !important;
   @if $solarized == light {
     background: lighten($base03, 1) $noise-bg !important;
     @include box-shadow(lighten(#34495e, 2) -1px 0 inset);
@@ -15,7 +15,7 @@
     @include box-shadow(lighten(#34495e, 2) -1px 0 inset);
   }
   span { color: inherit !important; }
-  padding: .6em !important;
+  padding: 0.6em !important;
 }
 
 figure.code, .gist-file, pre {
@@ -109,7 +109,7 @@ p, li {
   overflow: scroll;
   overflow-y: hidden;
   display: block;
-  padding: .6em;
+  padding: 0.6em;
   overflow-x: auto;
   background: $code-bg-color !important;
   color: $base1 !important;
