@@ -1,6 +1,0 @@
-<div class="jumbotron">
-  <div class="container">
-    Brave Matrix		<!--Hi. I'm {{ site.author }}.-->
-    <h3 class="tagline">Stay hungry. Stay foolish.</h3>
-  </div>
-</div>
