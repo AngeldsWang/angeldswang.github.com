@@ -91,8 +91,8 @@ angular.module('YourModule',[])
 })
 .directive('repeatBrick', function() {
   return function(scope, element, attrs) {
-    if (scope.$last){		// detect the last brick
-      scope.$emit('LastBrick');			// emit the `LastBrick` event
+    if (scope.$last){	// detect the last brick
+      scope.$emit('LastBrick');	// emit the `LastBrick` event
     }
   }
 })
@@ -105,8 +105,8 @@ angular.module('YourModule',[])
 ``` javascript
 .directive('theFreewall', function() {
   return function(scope, element, attrs) {
-    scope.$on('LastBrick', function(event){		// listen to the `LastBrick` event
-      var wall = new freewall("#freewall");		   // run the script in callback function 
+    scope.$on('LastBrick', function(event){	// listen to the `LastBrick` event
+      var wall = new freewall("#freewall");	// run the script in callback function 
       wall.reset({
         selector: '.brick',
         animate: true,
@@ -135,8 +135,8 @@ block content
   #bgimg(ng-if='!currTrend')
     img(src='/images/bgImg.png', width='100%')
   #bgimg(ng-if='currTrend')
-    #freewall.free-wall(ng-hide='!searched' the-freewall)		// add `theFreewall` directive
-      .brick(ng-repeat='tweetinfo in trendinfo' repeat-brick)	// add `repeatBrick` directive
+    #freewall.free-wall(ng-hide='!searched' the-freewall)	//- add `theFreewall` directive
+      .brick(ng-repeat='tweetinfo in trendinfo' repeat-brick)	//- add `repeatBrick` directive
         img(ng-src='{{tweetinfo.imageURL}}', width='100%')
         .info
           ...
