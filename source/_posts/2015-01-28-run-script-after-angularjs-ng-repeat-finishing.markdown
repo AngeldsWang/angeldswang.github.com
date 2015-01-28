@@ -60,7 +60,7 @@ block content
       .brick(ng-repeat='tweetinfo in trendinfo')
         img(ng-src='{{tweetinfo.imageURL}}', width='100%')
         .info
-          h5 {{tweetinfo.tweetText}}
+          h5 {\{tweetinfo.tweetText\}}
 
     script(type='text/javascript').
       var wall = new freewall("#freewall");
