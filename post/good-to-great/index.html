@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]><html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--><html class="no-js" prefix="og: http://ogp.me/ns#" xmlns:og="http://ogp.me/ns#"><!--<![endif]-->
+
+    <head>
+                <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="author" content="Angelds Wang">
+  
+	
+        <meta property="og:site_name" content="Brave Matrix">
+        <meta property="og:title" content="Brave Matrix">
+        <meta property="og:url" content="https://angeldswang.github.io/bookshelf/post/good-to-great/">
+        <meta property="og:description" content="">
+    
+        <meta property="og:type" content="article" />
+        <meta property="og:article:author" content="Angelds Wang" />
+        <meta property="og:article:published_time" content="2017-01-10T15:35:55&#43;09:00" />
+    
+        <meta name="generator" content="Hugo 0.18.1" />
+        <title>good to great &middot; Brave Matrix</title>
+        <link rel="canonical" href="https://angeldswang.github.io/bookshelf/" />
+        <link rel="alternate" type="application/rss+xml" title="RSS" href="">
+        <link rel="stylesheet" type="text/css" href="https://angeldswang.github.io/bookshelf/css/main.css"/>
+        <link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300|Montserrat:700" rel="stylesheet" type="text/css">
+        <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/zenburn.min.css">
+        <script type="text/javascript" src="https://angeldswang.github.io/bookshelf/js/highlight.min.js"></script>
+        <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+    </head>
+
+<body>
+<!--[if lt IE 7]><p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chrome/‎">install Google Chrome</a> to experience this site.</p><![endif]-->
+
+    <header id="site-header">
+        <div class="container">
+            <a href="https://angeldswang.github.io/bookshelf/" alt="Brave Matrix"><h1 class="blog-title heading">Brave Matrix</h1></a>
+            <p class="blog-description"></p>
+        </div>
+    </header>
+<main class="content" role="main">
+	<div class="container">
+		<article class="post">
+	<header class="post-header">
+        <h3 class="p-post-title">good to great</h3>
+    </header>
+
+    <section class="post-content">
+        <p>这几天在做一个小项目的时候，用到了<a href="http://vnjs.net/www/project/freewall/">Freewall</a>这个很nice的插件。它可以很方便的替你实现很多不错的grid layout。但在用到<a href="http://vnjs.net/www/project/freewall/example/pinterest-layout.html">Pinterest style layout</a>的时候遇到了一个问题。官方给出的example如下:</p>
+
+<pre><code class="language-html">&lt;div id=&quot;freewall&quot; class=&quot;free-wall&quot;&gt;
+    &lt;div class=&quot;brick&quot;&gt;
+        &lt;img src=&quot;i/photo/1.jpg&quot; width=&quot;100%&quot;&gt;
+        &lt;div class=&quot;info&quot;&gt;
+            &lt;h3&gt;Freewall&lt;/h3&gt;
+            &lt;h5&gt;Pinterest layout&lt;/h5&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;brick&quot;&gt;
+        &lt;img src=&quot;i/photo/2.jpg&quot; width=&quot;100%&quot;&gt;
+        &lt;div class=&quot;info&quot;&gt;
+            &lt;h3&gt;Freewall&lt;/h3&gt;
+            &lt;h5&gt;Pinterest layout&lt;/h5&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    ....
+&lt;/div&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+    var wall = new freewall(&quot;#freewall&quot;);
+    wall.reset({
+        selector: '.brick',
+        animate: true,
+        cellW: 200,
+        cellH: 'auto',
+        onResize: function() {
+            wall.fitWidth();
+        }
+    });
+
+    wall.container.find('.brick img').load(function() {
+        wall.fitWidth();
+    });
+&lt;/script&gt;
+</code></pre>
+
+<p>这里省略了样式的代码，直接看这些最核心的部分。一看很简单，就一堆自己的图片加上用<code>freewall</code>初始化一下整个图片墙就行了。可是我自己的代码怎么都没法在网页加载的初期就能<code>fitWidth</code>。但是可以响应<code>onResize</code>。我的代码如下。(就是把example的<a href="http://html2jade.org/">html转成jade</a>，偷懒了^_^)</p>
+
+<pre><code class="language-jade">extends layout
+
+block content
+  #bgimg(ng-if='!currTrend')
+    img(src='/images/bgImg.png', width='100%')
+  #bgimg(ng-if='currTrend')
+    #freewall.free-wall(ng-hide='!searched')
+      .brick(ng-repeat='tweetinfo in trendinfo')
+        img(ng-src='{{tweetinfo.imageURL}}', width='100%')
+        .info
+          ...
+
+    script(type='text/javascript').
+      var wall = new freewall(&quot;#freewall&quot;);
+      wall.reset({
+        selector: '.brick',
+        animate: true,
+        cellW: 200,
+        cellH: 'auto',
+        onResize: function() {
+          wall.fitWidth();
+        }
+      });
+      wall.container.find('.brick img').load(function() {
+        wall.fitWidth();
+      });
+</code></pre>
+
+<p>思来想去可能是我用了Angularjs的ng-repeat动态从服务器端读图片过来的问题，我试了下，一个个的手打这些图片列表是可以出来<code>fitWidth</code>的效果的。综合以上分析，既然用ng-repeat的时候是可以响应<code>onResize</code>的，说明脚本肯定是被执行了，但是整个图片墙没有去<code>fitWidth</code>只能说明这些<code>brick</code>是异步添加的。实际运行的时候，脚本早就先运行完了，才慢慢的从服务器端通过http读过来的图片。这样<code>wall.container.find('.brick img').load</code>之前执行了也没什么效果。那么怎么才能同步这些脚本呢？查来查去，发现可以用Angularjs里面的<code>directive</code>来实现这一过程。</p>
+
+<p>首先给循环中的每个<code>brick</code>添加一个检测ng-repeat完成的事件发射器，并将其封装成一个叫<code>repeatBrick</code>的directive。</p>
+
+<pre><code class="language-javascript">angular.module('YourModule',[])
+  .controller('YourCtrl', function ($scope, $http) {
+   // do other things
+})
+.directive('repeatBrick', function() {
+  return function(scope, element, attrs) {
+    if (scope.$last){	// detect the last brick
+      scope.$emit('LastBrick');	// emit the `LastBrick` event
+    }
+  }
+})
+</code></pre>
+
+<p>然后在自定义一个<code>freewall</code>上的directive。在里面监听<code>LastBrick</code>事件，并在其回调函数中执行之前的脚本就行了。</p>
+
+<pre><code class="language-javascript">.directive('theFreewall', function() {
+  return function(scope, element, attrs) {
+    scope.$on('LastBrick', function(event){	// listen to the `LastBrick` event
+      var wall = new freewall(&quot;#freewall&quot;);	// run the script in callback function 
+      wall.reset({
+        selector: '.brick',
+        animate: true,
+        cellW: 200,
+        cellH: 'auto',
+        onResize: function() {
+          wall.fitWidth();
+        }
+      });
+      wall.container.find('.brick img').load(function() {
+        wall.fitWidth();
+      });
+    });
+  };
+});
+</code></pre>
+
+<p>当然这时候在模板中还要加上这两个directives。</p>
+
+<pre><code class="language-jade">extends layout
+
+block content
+  #bgimg(ng-if='!currTrend')
+    img(src='/images/bgImg.png', width='100%')
+  #bgimg(ng-if='currTrend')
+    #freewall.free-wall(ng-hide='!searched' the-freewall)	//- add `theFreewall` directive
+      .brick(ng-repeat='tweetinfo in trendinfo' repeat-brick)	//- add `repeatBrick` directive
+        img(ng-src='{{tweetinfo.imageURL}}', width='100%')
+        .info
+          ...
+</code></pre>
+
+<p>这样就能确保在读取完这些图片之后立刻执行脚本进行布局。总结来说就是传统的html+js是顺序执行的，但是一旦引入模板引擎或者像Angularjs这样的指令之后，很可能就变成异步执行的了，这是个得注意的小坑。</p>
+    </section>
+
+    <hr>
+
+    <footer class="post-footer">
+        <section class="f-1">
+            
+            <section class="author">
+                <p>Words by Angelds Wang</p>
+            </section>
+            
+            
+            <p class="f-post-time"><time datetime="2017-01-10T15:35:55&#43;09:00">January 10, 2017</time></p>
+        </section>
+                        
+        <section class="f-2">
+            <section class="share">
+                <span>Share:
+                <a class="icon-twitter" href="http://twitter.com/share?text=good%20to%20great&url=https%3a%2f%2fangeldswang.github.io%2fbookshelf%2fpost%2fgood-to-great%2f"
+                    onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <i class="fa fa-twitter"></i>
+                </a>
+                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fangeldswang.github.io%2fbookshelf%2fpost%2fgood-to-great%2f"
+                    onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <i class="fa fa-facebook"></i>
+                </a>
+                <a class="icon-google-plus" href="https://plus.google.com/share?url=https%3a%2f%2fangeldswang.github.io%2fbookshelf%2fpost%2fgood-to-great%2f"
+                   onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <i class="fa fa-google-plus"></i>
+                </a>
+                </span>
+            </section>
+
+            
+        </section>
+                
+        <section id="comments">
+            <div id="disqus_thread" class="post-comments"></div>
+            <script type="text/javascript">
+              if (window.location.hostname != "localhost") {
+                var disqus_shortname = 'http-angeldswang-github-io-bookshelf';
+                (function() {
+                  var dsq = document.createElement('script');
+                  dsq.type = 'text/javascript';
+                  dsq.async = true;
+                  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+              }
+            </script>
+            <noscript>
+              Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+            </noscript>
+        </section>
+                
+    </footer>
+</article>
+	</div>
+</main>
+    <footer id="site-footer">
+        <div class="container">
+            <a href="https://angeldswang.github.io/bookshelf/index.xml" title="Get the RSS feed"><span class="tooltip"><i class="fa fa-rss"></i></span></a>
+            <section>&copy; <a href="https://angeldswang.github.io/bookshelf/">Angelds Wang</a> 2017 | All rights reserved</section>
+            <section>Theme by <a href="http://www.jrdnbwmn.com">Jordan Bowman</a>. Generated with <a href="http://gohugo.io/">Hugo</a>.</section>
+        </div>
+    </footer>
+
+    <script type="text/javascript" src="https://angeldswang.github.io/bookshelf/js/fittext.js"></script>
+    <script type="text/javascript">
+      $(".heading").fitText();
+    </script>
+
+
+
+</body>
+</html>
