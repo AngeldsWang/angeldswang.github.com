@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Number Theory on Brave Matrix</title>
+    <link>https://angeldswang.github.io/categories/number-theory/index.xml</link>
+    <description>Recent content in Number Theory on Brave Matrix</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <atom:link href="https://angeldswang.github.io/categories/number-theory/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Why Modulo $1e9&#43;7$</title>
+      <link>https://angeldswang.github.io/post/2014-11-09-why-modulo-1e7-plus-7/</link>
+      <pubDate>Sun, 09 Nov 2014 21:15:55 +0800</pubDate>
+      
+      <guid>https://angeldswang.github.io/post/2014-11-09-why-modulo-1e7-plus-7/</guid>
+      <description>&lt;p&gt;一直很好奇很多编程问题，比如求大数阶乘，大数的排列组合等，要求将输出结果对&lt;code&gt;$ 1e9+7 $&lt;/code&gt;(=1000000007)取模。为什么是这样一个数呢？今天一查，网上还是有不少讨论的。总结一下有下面几个原因。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;首先因为&lt;code&gt;$ 1e9+7 $&lt;/code&gt;是一个质数&lt;/li&gt;
+&lt;li&gt;其次是&lt;code&gt;$ 1e9+7 $&lt;/code&gt;对于int32来说足够大&lt;/li&gt;
+&lt;li&gt;还有就是&lt;code&gt;$ 1e9+7 $&lt;/code&gt;的平方对于int64来说也恰好不会溢出&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;
+其实对于后两点来说都是比较好理解的。足够大是因为取模的结果尽量不重复，跟哈希表一样(应该说哈希表跟它一样，明显它更本质一点#_#)。对于平方不会对int64溢出意味着对于很大数相乘依然可以利用&lt;code&gt;$ 1e9+7 $&lt;/code&gt;取模到int32基本数据类型中。而对于为什么要求质数，等介绍完模运算就能很好的理解了。&lt;/p&gt;
+
+&lt;h2 id=&#34;模运算&#34;&gt;模运算&lt;/h2&gt;
+
+&lt;p&gt;假设有&lt;code&gt;$ a\equiv c(\text{mod} ~m) $&lt;/code&gt;， &lt;code&gt;$ b\equiv d(\text{mod} ~m) $&lt;/code&gt;，则对于基本算术运算有：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;$ a+b\equiv    c+d(\text{mod} ~m) $&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;$ a-b\equiv    c-d(\text{mod} ~m) $&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;$ a\times b\equiv c\times d(\text{mod} ~m) $&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;$ a/ b\not\equiv c/ d(\text{mod} ~m) $&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;而且满足以下分配率：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;$ ( a + b ) \% c = ( ( a \% c ) + ( b \% c ) ) \% c $&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;$ ( a * b ) \% c = ( ( a \% c ) * ( b \% c ) ) \% c $&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;$ ( a – b ) \% c = ( ( a \% c ) – ( b \% c ) ) \% c $&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;$ ( a / b ) \% c \neq ( ( a \% c ) / ( b \% c ) ) \% c $&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;注意到取模除法是不满足分配率的。(万恶的根源。。。)&lt;/p&gt;
+
+&lt;p&gt;对于上述分配率一个很常见的应用就是求大数的阶乘了，结果对&lt;code&gt;$ M=1e9+7 $&lt;/code&gt;取模。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;typedef long long ll;
+ll factorial(int n, int M) {
+    ll ans = 1;
+    while(n &amp;gt;= 1) {
+        ans = (ans * n);
+        n--;
+    }
+    return ans % M;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;如果直接计算对最后的结果再取模的话很可能在累乘的时候就已经溢出int64了，所以这种写法是错误的。正确的写法就是利用模乘法的分配率的性质在每一步乘法计算的时候都对结果取模。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;typedef long long ll;
+ll factorial(int n, int M) {
+    ll ans = 1;
+    while(n &amp;gt;= 1) {
+        ans = (ans * n) % M;
+        n--;
+    }
+    return ans;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;下面就来详细说说为什么一定要&lt;code&gt;$ M $&lt;/code&gt;是一个质数。首先还得从模除法不满足分配率开始说起。
+既然除法不满足分配率，那把除法转化成乘法不就行了。那么模除法能不能像一般数值运算一样简单的把除以
+&lt;code&gt;$ a $&lt;/code&gt;变成乘以&lt;code&gt;$ a^{-1} $&lt;/code&gt;呢。直观上想好像不行，但是有什么可以难倒代数学家呢，人家早就从群啊环啊什么的定义好这些了，直接搬过来就行了，那就是——&lt;code&gt;$ \ulcorner $&lt;/code&gt; &lt;strong&gt;逆元&lt;/strong&gt; &lt;code&gt;$ \lrcorner $&lt;/code&gt;。&lt;/p&gt;
+
+&lt;h2 id=&#34;逆元&#34;&gt;逆元&lt;/h2&gt;
+
+&lt;p&gt;逆元的定义很简单：满足&lt;code&gt;$ ax\equiv 1(\text{mod} ~M) $&lt;/code&gt;，则&lt;code&gt;$ x=a^{-1} $&lt;/code&gt;就是&lt;code&gt;$ a $&lt;/code&gt;的逆元。&lt;/p&gt;
+
+&lt;p&gt;一旦有了逆元，&lt;code&gt;$ (a / b) \% c $&lt;/code&gt;就可以写成&lt;code&gt;$ (a * b^{-1}) \% c $&lt;/code&gt;。这样转换成乘法之后分配率也适用了。&lt;/p&gt;
+
+&lt;p&gt;但是注意到如果&lt;code&gt;$ \text{gcd}(a,M)!=1 $&lt;/code&gt;的话，&lt;code&gt;$ a $&lt;/code&gt;的逆元是不存在的。所以如果&lt;code&gt;$ M $&lt;/code&gt;是一个质数的话&lt;code&gt;$ \text{gcd}(a,M)!=1 $&lt;/code&gt;一般都成立了吧。这还不够！因为如果&lt;code&gt;$ a $&lt;/code&gt;恰好是&lt;code&gt;$ M $&lt;/code&gt;的倍数的话依然不满足条件啊，所以如果&lt;code&gt;$ M $&lt;/code&gt;足够大的话，比如&lt;code&gt;$ 1e9+7 $&lt;/code&gt;(&lt;a href=&#34;http://www.bilibili.com/video/av362069/&#34;&gt;一般问题也不会让你求&lt;code&gt;$ 1e9+7 $&lt;/code&gt;的阶乘吧&lt;/a&gt;)，基本就能够满足&lt;code&gt;$ \text{gcd}(a,M)!=1 $&lt;/code&gt;这个条件了。&lt;/p&gt;
+
+&lt;p&gt;那么如何计算一个数的逆元呢？&lt;/p&gt;
+
+&lt;p&gt;最简单的就是暴力搜索了。对于&lt;code&gt;$ ax\equiv 1(\text{mod} ~M) $&lt;/code&gt;只需要对&lt;code&gt;$ x=[1, M-1] $&lt;/code&gt;(因为对&lt;code&gt;$ M $&lt;/code&gt;取模的结果是以&lt;code&gt;$ 0,1,2,\ldots,M-1 $&lt;/code&gt;为周期的)计算一遍找出和&lt;code&gt;$ a $&lt;/code&gt;相乘&lt;code&gt;$ \text{mod} ~M $&lt;/code&gt;等于1的数就是&lt;code&gt;$ a $&lt;/code&gt;的逆元了。但是这种算法的复杂度是&lt;code&gt;$ \mathcal{O}(M) $&lt;/code&gt;。而一般情况下&lt;code&gt;$ M  $&lt;/code&gt;的取值非常大，如本文讨论的&lt;code&gt;$ 1e9+7 $&lt;/code&gt;这么大的话，这种线性复杂度就是不可以接受的了。更高效的算法有两种，一种是
+&lt;strong&gt;Extended Eucledian algorithm&lt;/strong&gt; (扩展欧几里德算法)，另外一种是利用&lt;strong&gt;Fermat&amp;rsquo;s Little Theorem&lt;/strong&gt; (费马小定理)。&lt;/p&gt;
+
+&lt;h2 id=&#34;extended-eucledian-algorithm&#34;&gt;Extended Eucledian algorithm&lt;/h2&gt;
+
+&lt;p&gt;我们都知道欧几里德算法，又叫辗转相除法是用来求两个数的最大公约数的。那么扩展欧几里德算法又是干什么的呢。扩展欧几里德算法是用来求解不定方程：&lt;code&gt;$ ax+by=\text{gcd}(a,b) $&lt;/code&gt;(这个方程又叫&lt;a href=&#34;http://en.wikipedia.org/wiki/B%C3%A9zout%27s_identity&#34;&gt;贝祖等式&lt;/a&gt;)。&lt;/p&gt;
+
+&lt;p&gt;求满足&lt;code&gt;$ ax\equiv 1(\text{mod} ~M) $&lt;/code&gt;，&lt;code&gt;$ a $&lt;/code&gt;的逆元只需要将方程变形成&lt;code&gt;$ ax-My=1 $&lt;/code&gt;，因为要满足&lt;code&gt;$ \text{gcd}(a,M)=1 $&lt;/code&gt;，所以等式右边为&lt;code&gt;$ 1 $&lt;/code&gt;。这样就可以利用扩展欧几里德算法来解出&lt;code&gt;$ x $&lt;/code&gt;。&lt;/p&gt;
+
+&lt;p&gt;&lt;table border=&#39;2&#39; cellpadding=&#39;15px&#39; bordercolor=&#39;#505050&#39;&gt;
+&lt;td&gt;
+&lt;ol&gt;
+&lt;li&gt;当$b=0$时，$\text{gcd}(a,b)=a$。此时$x=1$，$y=0$。(递归终止条件)&lt;/li&gt; &lt;p/&gt;
+&lt;li&gt;当$ab!=0$时，设原始方程为：$ax_1+by_1=\text{gcd}(a,b)$，并存在：
+   $bx_2+(a\%b)y_2=\text{gcd}(b,a\%b)$。由辗转相除法可知$\text{gcd}(a,b)=\text{gcd}(b,a\%b)$&lt;br/&gt;
+   所以有：$ax_1+by_1=bx_2+(a\%b)y_2$。&lt;br/&gt;
+   即：$ax_1+by_1=bx_2+(a-(a/b)\times b)y_2=ay_2+b(x_2-(a/b)\times y_2)$&lt;br/&gt;
+   所以：$x_1=y_2$$，$$y1=x2-(a/b)\times y_2$&lt;br/&gt;
+   也就是说只要求出$x_2$和$y_2$就能根据上述等式求得$x_1$和$y_2$。这样就可以利用递归定义，直到满足递归终止条件为止，再一步步返回计算出$x$和$y$。&lt;/li&gt; &lt;p/&gt;
+&lt;/ol&gt;
+&lt;/td&gt;
+&lt;/table&gt;
+&lt;br/&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;int extgcd(int a, int b, int &amp;amp;x, int &amp;amp;y) {
+    int d = a;
+    if (b != 0) {
+    	d = extgcd(b, a % b, y, x);
+        y -= (a / b) * x;
+    } else {
+    	x = 1;
+        y = 0;
+    }
+    return d;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;扩展欧几里德算法的复杂度和辗转相除法是一样的(只是多了一步计算)，都是
+&lt;code&gt;$ \mathcal{O}(\text{log}~\text{max}(a,b)) $&lt;/code&gt;。利用扩展欧几里德算法就可以很方便地求得
+&lt;code&gt;$ a $&lt;/code&gt;的逆元(&lt;code&gt;$ \text{mod} ~M $&lt;/code&gt;)。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;int mod_inverse(int a, int M) {
+    int x, y;
+    extgcd(a, M, x, y);
+    return (M + x % M) % M;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;这里用不到extgcd的返回值了(因为肯定是&lt;code&gt;$ 1 $&lt;/code&gt;)。返回值的时候加上&lt;code&gt;$ M $&lt;/code&gt;是为了防止当&lt;code&gt;$ x $&lt;/code&gt;为负数的时候，有些编译器会将&lt;code&gt;$ x\%M $&lt;/code&gt;返回负数，加上&lt;code&gt;$ M $&lt;/code&gt;让其值回到&lt;code&gt;$ [0,M-1] $&lt;/code&gt;。&lt;/p&gt;
+
+&lt;h2 id=&#34;fermat-s-little-theorem&#34;&gt;Fermat&amp;rsquo;s Little Theorem&lt;/h2&gt;
+
+&lt;p&gt;费马小定理说的是：对于任意正整数&lt;code&gt;$ a $&lt;/code&gt;和质数&lt;code&gt;$ p $&lt;/code&gt;，满足&lt;code&gt;$ a^p\equiv a(\text{mod} ~p) $&lt;/code&gt;。而且如果&lt;code&gt;$ a $&lt;/code&gt;不是&lt;code&gt;$ p  $&lt;/code&gt;的倍数时，条件等价成&lt;code&gt;$ a^{p-1}\equiv 1(\text{mod} ~p) $&lt;/code&gt;。利用这条性质可以很方便的求解逆元。&lt;code&gt;$ ax\equiv 1(\text{mod} ~M) $&lt;/code&gt;，这里质数&lt;code&gt;$ p=M $&lt;/code&gt;，则&lt;code&gt;$ a^{p-1}\equiv 1(\text{mod} ~p) $&lt;/code&gt;=&lt;code&gt;$ a\cdot a^{M-2}\equiv 1(\text{mod} ~M) $&lt;/code&gt;。也就是说&lt;code&gt;$ a(\text{mod} ~M) $&lt;/code&gt;的逆元&lt;code&gt;$ x=a^{M-2}(\text{mod} ~M) $&lt;/code&gt;。这样就可以通过快速幂运算来求解逆元。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c++&#34;&gt;typedef long long ll;
+ll fast_pow(ll a, ll n, ll M) {
+    ll res = 1;
+    while (n &amp;gt; 0) {
+    	if (n &amp;amp; 1) res = res * a % M;
+        a = a * a % M;
+        n &amp;gt;&amp;gt;= 1;
+    }
+    return res;
+}
+
+ll mod_inverse(ll a, ll M) {
+    return fast_pow(a,M-2,M);
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;说了这么多，总结一下就是在一些组合问题中由于数值太大需要对结果取模。在计算的时候，特别是在计算排列组合的时候会不可避免的遇到模除法，为了使得除法计算起来符合数值运算的过程就需要引入逆元的概念，在计算逆元的时候&lt;code&gt;$ M $&lt;/code&gt;一定要是一个质数，这个质数一定得足够大，要不然取模后的结果很多都相同了造成无法判断问题输出的正确性。所以很多问题就用了&lt;code&gt;$ 1e9+7 $&lt;/code&gt;这个数了。。。。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>
