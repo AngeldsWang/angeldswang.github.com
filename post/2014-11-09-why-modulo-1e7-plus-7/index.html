@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]><html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--><html class="no-js" prefix="og: http://ogp.me/ns#" xmlns:og="http://ogp.me/ns#"><!--<![endif]-->
+
+    <head>
+                <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="author" content="Angelds Wang">
+  
+	
+        <meta property="og:site_name" content="Brave Matrix">
+        <meta property="og:title" content="Brave Matrix">
+        <meta property="og:url" content="https://angeldswang.github.io/post/2014-11-09-why-modulo-1e7-plus-7/">
+        <meta property="og:description" content="">
+    
+        <meta property="og:type" content="article" />
+        <meta property="og:article:author" content="Angelds Wang" />
+        <meta property="og:article:published_time" content="2014-11-09T21:15:55&#43;08:00" />
+    
+        <meta name="generator" content="Hugo 0.18.1" />
+        <title>Why Modulo $1e9&#43;7$ &middot; Brave Matrix</title>
+        <link rel="canonical" href="https://angeldswang.github.io/" />
+        <link rel="alternate" type="application/rss+xml" title="RSS" href="">
+        <link rel="stylesheet" type="text/css" href="https://angeldswang.github.io/css/main.css"/>
+        <link rel="stylesheet" type="text/css" href="https://angeldswang.github.io/css/customize.css"/>
+        <link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300|Montserrat:700" rel="stylesheet" type="text/css">
+        <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/zenburn.min.css">
+        <script type="text/javascript" src="https://angeldswang.github.io/js/highlight.min.js"></script>
+        <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+    </head>
+
+<body>
+<!--[if lt IE 7]><p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chrome/‎">install Google Chrome</a> to experience this site.</p><![endif]-->
+
+<main class="content" role="main">
+	<div class="container">
+		<article class="post">
+	<header class="post-header">
+        <h1 class="p-post-title">Why Modulo $1e9&#43;7$</h1>
+    </header>
+
+    <section class="post-content">
+        <p>一直很好奇很多编程问题，比如求大数阶乘，大数的排列组合等，要求将输出结果对<code>$ 1e9+7 $</code>(=1000000007)取模。为什么是这样一个数呢？今天一查，网上还是有不少讨论的。总结一下有下面几个原因。</p>
+
+<ul>
+<li>首先因为<code>$ 1e9+7 $</code>是一个质数</li>
+<li>其次是<code>$ 1e9+7 $</code>对于int32来说足够大</li>
+<li>还有就是<code>$ 1e9+7 $</code>的平方对于int64来说也恰好不会溢出</li>
+</ul>
+
+<p>
+其实对于后两点来说都是比较好理解的。足够大是因为取模的结果尽量不重复，跟哈希表一样(应该说哈希表跟它一样，明显它更本质一点#_#)。对于平方不会对int64溢出意味着对于很大数相乘依然可以利用<code>$ 1e9+7 $</code>取模到int32基本数据类型中。而对于为什么要求质数，等介绍完模运算就能很好的理解了。</p>
+
+<h2 id="模运算">模运算</h2>
+
+<p>假设有<code>$ a\equiv c(\text{mod} ~m) $</code>， <code>$ b\equiv d(\text{mod} ~m) $</code>，则对于基本算术运算有：</p>
+
+<ul>
+<li><code>$ a+b\equiv    c+d(\text{mod} ~m) $</code></li>
+<li><code>$ a-b\equiv    c-d(\text{mod} ~m) $</code></li>
+<li><code>$ a\times b\equiv c\times d(\text{mod} ~m) $</code></li>
+<li><code>$ a/ b\not\equiv c/ d(\text{mod} ~m) $</code></li>
+</ul>
+
+<p>而且满足以下分配率：</p>
+
+<ul>
+<li><code>$ ( a + b ) \% c = ( ( a \% c ) + ( b \% c ) ) \% c $</code></li>
+<li><code>$ ( a * b ) \% c = ( ( a \% c ) * ( b \% c ) ) \% c $</code></li>
+<li><code>$ ( a – b ) \% c = ( ( a \% c ) – ( b \% c ) ) \% c $</code></li>
+<li><code>$ ( a / b ) \% c \neq ( ( a \% c ) / ( b \% c ) ) \% c $</code></li>
+</ul>
+
+<p>注意到取模除法是不满足分配率的。(万恶的根源。。。)</p>
+
+<p>对于上述分配率一个很常见的应用就是求大数的阶乘了，结果对<code>$ M=1e9+7 $</code>取模。</p>
+
+<pre><code class="language-c++">typedef long long ll;
+ll factorial(int n, int M) {
+    ll ans = 1;
+    while(n &gt;= 1) {
+        ans = (ans * n);
+        n--;
+    }
+    return ans % M;
+}
+</code></pre>
+
+<p>如果直接计算对最后的结果再取模的话很可能在累乘的时候就已经溢出int64了，所以这种写法是错误的。正确的写法就是利用模乘法的分配率的性质在每一步乘法计算的时候都对结果取模。</p>
+
+<pre><code class="language-c++">typedef long long ll;
+ll factorial(int n, int M) {
+    ll ans = 1;
+    while(n &gt;= 1) {
+        ans = (ans * n) % M;
+        n--;
+    }
+    return ans;
+}
+</code></pre>
+
+<p>下面就来详细说说为什么一定要<code>$ M $</code>是一个质数。首先还得从模除法不满足分配率开始说起。
+既然除法不满足分配率，那把除法转化成乘法不就行了。那么模除法能不能像一般数值运算一样简单的把除以
+<code>$ a $</code>变成乘以<code>$ a^{-1} $</code>呢。直观上想好像不行，但是有什么可以难倒代数学家呢，人家早就从群啊环啊什么的定义好这些了，直接搬过来就行了，那就是——<code>$ \ulcorner $</code> <strong>逆元</strong> <code>$ \lrcorner $</code>。</p>
+
+<h2 id="逆元">逆元</h2>
+
+<p>逆元的定义很简单：满足<code>$ ax\equiv 1(\text{mod} ~M) $</code>，则<code>$ x=a^{-1} $</code>就是<code>$ a $</code>的逆元。</p>
+
+<p>一旦有了逆元，<code>$ (a / b) \% c $</code>就可以写成<code>$ (a * b^{-1}) \% c $</code>。这样转换成乘法之后分配率也适用了。</p>
+
+<p>但是注意到如果<code>$ \text{gcd}(a,M)!=1 $</code>的话，<code>$ a $</code>的逆元是不存在的。所以如果<code>$ M $</code>是一个质数的话<code>$ \text{gcd}(a,M)!=1 $</code>一般都成立了吧。这还不够！因为如果<code>$ a $</code>恰好是<code>$ M $</code>的倍数的话依然不满足条件啊，所以如果<code>$ M $</code>足够大的话，比如<code>$ 1e9+7 $</code>(<a href="http://www.bilibili.com/video/av362069/">一般问题也不会让你求<code>$ 1e9+7 $</code>的阶乘吧</a>)，基本就能够满足<code>$ \text{gcd}(a,M)!=1 $</code>这个条件了。</p>
+
+<p>那么如何计算一个数的逆元呢？</p>
+
+<p>最简单的就是暴力搜索了。对于<code>$ ax\equiv 1(\text{mod} ~M) $</code>只需要对<code>$ x=[1, M-1] $</code>(因为对<code>$ M $</code>取模的结果是以<code>$ 0,1,2,\ldots,M-1 $</code>为周期的)计算一遍找出和<code>$ a $</code>相乘<code>$ \text{mod} ~M $</code>等于1的数就是<code>$ a $</code>的逆元了。但是这种算法的复杂度是<code>$ \mathcal{O}(M) $</code>。而一般情况下<code>$ M  $</code>的取值非常大，如本文讨论的<code>$ 1e9+7 $</code>这么大的话，这种线性复杂度就是不可以接受的了。更高效的算法有两种，一种是
+<strong>Extended Eucledian algorithm</strong> (扩展欧几里德算法)，另外一种是利用<strong>Fermat&rsquo;s Little Theorem</strong> (费马小定理)。</p>
+
+<h2 id="extended-eucledian-algorithm">Extended Eucledian algorithm</h2>
+
+<p>我们都知道欧几里德算法，又叫辗转相除法是用来求两个数的最大公约数的。那么扩展欧几里德算法又是干什么的呢。扩展欧几里德算法是用来求解不定方程：<code>$ ax+by=\text{gcd}(a,b) $</code>(这个方程又叫<a href="http://en.wikipedia.org/wiki/B%C3%A9zout%27s_identity">贝祖等式</a>)。</p>
+
+<p>求满足<code>$ ax\equiv 1(\text{mod} ~M) $</code>，<code>$ a $</code>的逆元只需要将方程变形成<code>$ ax-My=1 $</code>，因为要满足<code>$ \text{gcd}(a,M)=1 $</code>，所以等式右边为<code>$ 1 $</code>。这样就可以利用扩展欧几里德算法来解出<code>$ x $</code>。</p>
+
+<p><table border='2' cellpadding='15px' bordercolor='#505050'>
+<td>
+<ol>
+<li>当$b=0$时，$\text{gcd}(a,b)=a$。此时$x=1$，$y=0$。(递归终止条件)</li> <p/>
+<li>当$ab!=0$时，设原始方程为：$ax_1+by_1=\text{gcd}(a,b)$，并存在：
+   $bx_2+(a\%b)y_2=\text{gcd}(b,a\%b)$。由辗转相除法可知$\text{gcd}(a,b)=\text{gcd}(b,a\%b)$<br/>
+   所以有：$ax_1+by_1=bx_2+(a\%b)y_2$。<br/>
+   即：$ax_1+by_1=bx_2+(a-(a/b)\times b)y_2=ay_2+b(x_2-(a/b)\times y_2)$<br/>
+   所以：$x_1=y_2$$，$$y1=x2-(a/b)\times y_2$<br/>
+   也就是说只要求出$x_2$和$y_2$就能根据上述等式求得$x_1$和$y_2$。这样就可以利用递归定义，直到满足递归终止条件为止，再一步步返回计算出$x$和$y$。</li> <p/>
+</ol>
+</td>
+</table>
+<br/></p>
+
+<pre><code class="language-c++">int extgcd(int a, int b, int &amp;x, int &amp;y) {
+    int d = a;
+    if (b != 0) {
+    	d = extgcd(b, a % b, y, x);
+        y -= (a / b) * x;
+    } else {
+    	x = 1;
+        y = 0;
+    }
+    return d;
+}
+</code></pre>
+
+<p>扩展欧几里德算法的复杂度和辗转相除法是一样的(只是多了一步计算)，都是
+<code>$ \mathcal{O}(\text{log}~\text{max}(a,b)) $</code>。利用扩展欧几里德算法就可以很方便地求得
+<code>$ a $</code>的逆元(<code>$ \text{mod} ~M $</code>)。</p>
+
+<pre><code class="language-c++">int mod_inverse(int a, int M) {
+    int x, y;
+    extgcd(a, M, x, y);
+    return (M + x % M) % M;
+}
+</code></pre>
+
+<p>这里用不到extgcd的返回值了(因为肯定是<code>$ 1 $</code>)。返回值的时候加上<code>$ M $</code>是为了防止当<code>$ x $</code>为负数的时候，有些编译器会将<code>$ x\%M $</code>返回负数，加上<code>$ M $</code>让其值回到<code>$ [0,M-1] $</code>。</p>
+
+<h2 id="fermat-s-little-theorem">Fermat&rsquo;s Little Theorem</h2>
+
+<p>费马小定理说的是：对于任意正整数<code>$ a $</code>和质数<code>$ p $</code>，满足<code>$ a^p\equiv a(\text{mod} ~p) $</code>。而且如果<code>$ a $</code>不是<code>$ p  $</code>的倍数时，条件等价成<code>$ a^{p-1}\equiv 1(\text{mod} ~p) $</code>。利用这条性质可以很方便的求解逆元。<code>$ ax\equiv 1(\text{mod} ~M) $</code>，这里质数<code>$ p=M $</code>，则<code>$ a^{p-1}\equiv 1(\text{mod} ~p) $</code>=<code>$ a\cdot a^{M-2}\equiv 1(\text{mod} ~M) $</code>。也就是说<code>$ a(\text{mod} ~M) $</code>的逆元<code>$ x=a^{M-2}(\text{mod} ~M) $</code>。这样就可以通过快速幂运算来求解逆元。</p>
+
+<pre><code class="language-c++">typedef long long ll;
+ll fast_pow(ll a, ll n, ll M) {
+    ll res = 1;
+    while (n &gt; 0) {
+    	if (n &amp; 1) res = res * a % M;
+        a = a * a % M;
+        n &gt;&gt;= 1;
+    }
+    return res;
+}
+
+ll mod_inverse(ll a, ll M) {
+    return fast_pow(a,M-2,M);
+}
+</code></pre>
+
+<p>说了这么多，总结一下就是在一些组合问题中由于数值太大需要对结果取模。在计算的时候，特别是在计算排列组合的时候会不可避免的遇到模除法，为了使得除法计算起来符合数值运算的过程就需要引入逆元的概念，在计算逆元的时候<code>$ M $</code>一定要是一个质数，这个质数一定得足够大，要不然取模后的结果很多都相同了造成无法判断问题输出的正确性。所以很多问题就用了<code>$ 1e9+7 $</code>这个数了。。。。</p>
+    </section>
+
+    <hr>
+
+    <footer class="post-footer">
+        <section class="f-1">
+            
+            <section class="author">
+                <p>Words by Angelds Wang</p>
+            </section>
+            
+            
+            <p class="f-post-time"><time datetime="2014-11-09T21:15:55&#43;08:00">November 9, 2014</time></p>
+        </section>
+                        
+        <section class="f-2">
+            <section class="share">
+                <span>Share:
+                <a class="icon-twitter" href="http://twitter.com/share?text=Why%20Modulo%20%241e9%2b7%24&url=https%3a%2f%2fangeldswang.github.io%2fpost%2f2014-11-09-why-modulo-1e7-plus-7%2f"
+                    onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <i class="fa fa-twitter"></i>
+                </a>
+                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fangeldswang.github.io%2fpost%2f2014-11-09-why-modulo-1e7-plus-7%2f"
+                    onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <i class="fa fa-facebook"></i>
+                </a>
+                <a class="icon-google-plus" href="https://plus.google.com/share?url=https%3a%2f%2fangeldswang.github.io%2fpost%2f2014-11-09-why-modulo-1e7-plus-7%2f"
+                   onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <i class="fa fa-google-plus"></i>
+                </a>
+                </span>
+            </section>
+
+            
+        </section>
+                
+        <section id="comments">
+            <div id="disqus_thread" class="post-comments"></div>
+            <script type="text/javascript">
+              if (window.location.hostname != "localhost") {
+                var disqus_shortname = 'angeldswang';
+                (function() {
+                  var dsq = document.createElement('script');
+                  dsq.type = 'text/javascript';
+                  dsq.async = true;
+                  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+              }
+            </script>
+            <noscript>
+              Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+            </noscript>
+        </section>
+                
+    </footer>
+</article>
+
+	</div>
+</main>
+    <footer id="site-footer">
+        <div class="container">
+            <a href="https://angeldswang.github.io/index.xml" title="Get the RSS feed"><span class="tooltip"><i class="fa fa-rss"></i></span></a>
+            <section>&copy; <a href="https://angeldswang.github.io/">Angelds Wang</a> 2017 | All rights reserved</section>
+            <section>Theme by <a href="http://www.jrdnbwmn.com">Jordan Bowman</a>. Generated with <a href="http://gohugo.io/">Hugo</a>.</section>
+        </div>
+    </footer>
+
+    <script type="text/javascript" src="https://angeldswang.github.io/js/fittext.js"></script>
+    <script type="text/javascript"
+            src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+    <script type="text/x-mathjax-config">
+     MathJax.Hub.Config({
+         tex2jax: {
+             inlineMath: [['$','$'], ['\\(','\\)']],
+             displayMath: [['$$','$$'], ['\[','\]']],
+             processEscapes: true,
+             processEnvironments: true,
+             skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+             TeX: { equationNumbers: { autoNumber: "AMS" },
+                    extensions: ["AMSmath.js", "AMSsymbols.js"] }
+         }
+     });
+    </script>
+
+    <script type="text/x-mathjax-config">
+     MathJax.Hub.Queue(function() {
+         
+         
+         
+         var all = MathJax.Hub.getAllJax(), i;
+         for(i = 0; i < all.length; i += 1) {
+             all[i].SourceElement().parentNode.className += ' has-jax';
+         }
+     });
+    </script>
+    <script type="text/javascript">
+      $(".heading").fitText();
+    </script>
+
+
+
+</body>
+</html>
