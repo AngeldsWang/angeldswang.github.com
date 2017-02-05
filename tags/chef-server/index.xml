@@ -27,7 +27,7 @@
 &lt;/ul&gt;
 
 &lt;p&gt;There is &lt;a href=&#34;http://misheska.com/blog/2014/11/25/chef-server-12/&#34;&gt;a good tutorial&lt;/a&gt; about setting up chef server 12.
-However, there are some differences when applying to the latest chef-server release version. Take a example for&lt;/p&gt;
+However, there are some differences when applying to the latest chef-server release version. Take an example for&lt;/p&gt;
 
 &lt;p&gt;Enviroment:&lt;/p&gt;
 
@@ -37,7 +37,7 @@ However, there are some differences when applying to the latest chef-server rele
 &lt;li&gt;Chef verion: →↓&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;λ wang-zhenjun [my/chef_projects/demo] → chef --version
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;λ angeldswang [my/chef_projects/demo] → chef --version
 Chef Development Kit Version: 1.0.3
 chef-client version: 12.16.42
 delivery version: master (83358fb62c0f711c70ad5a81030a6cae4017f103)
@@ -51,7 +51,7 @@ kitchen version: 1.14.2
 
 &lt;p&gt;It will help you handle the additional files necessary to manage Enterprise Chef beyond the cookbooks themselves. And usually, you&amp;rsquo;ll definitely be using more than one cookbook in your project, so we first create a subdirectory named cookbooks. For now, your directory structure will be like:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;λ wang-zhenjun [my/chef_projects/demo] → tree -a
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;λ angeldswang [my/chef_projects/demo] → tree -a
 .
 └── chef-repo
     └── cookbooks
@@ -63,7 +63,7 @@ kitchen version: 1.14.2
 
 &lt;p&gt;Turn to the cookbooks directory, since we are using chef development kit, we&amp;rsquo;ll generate a cookbook by &lt;code&gt;chef generate cookbook&lt;/code&gt; command.&lt;/p&gt;
 
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;λ wang-zhenjun [demo/chef-repo/cookbooks] → chef generate cookbook server
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;λ angeldswang [demo/chef-repo/cookbooks] → chef generate cookbook server
 Generating cookbook server
 - Ensuring correct cookbook file content
 - Committing cookbook files to git
@@ -76,7 +76,7 @@ Generating cookbook server
 Your cookbook is ready. Type `cd server` to enter it.
 ...
 
-λ wang-zhenjun [demo/chef-repo/cookbooks] → tree -aL 2
+λ angeldswang [demo/chef-repo/cookbooks] → tree -aL 2
 .
 └── server
     ├── .delivery
@@ -178,7 +178,7 @@ end
 
 &lt;p&gt;Both of them can be performed by &lt;code&gt;chef-server-ctl&lt;/code&gt; subcommands: &lt;code&gt;user-create&lt;/code&gt; and &lt;code&gt;org-create&lt;/code&gt; respectively.&lt;/p&gt;
 
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;λ wang-zhenjun [chef-repo/cookbooks/server] at  master !?
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;λ angeldswang [chef-repo/cookbooks/server] at  master !?
 → kitchen login
 Last login: Sat Jan 21 17:25:50 2017 from 10.0.2.2
 
@@ -194,8 +194,8 @@ angeldswang.pem  chefserver_demo-validator.pem
 
 &lt;p&gt;From now on, we&amp;rsquo;ll use knife, a command-line tool that provides an interface between a local chef-repo and the chef server, to manage our chef server from our local machine. First of all, let&amp;rsquo;s mkdir a new directory to place the configuration files about knife, usually a &lt;code&gt;.chef&lt;/code&gt; directory under the top-level directory of the repository, for our case, it&amp;rsquo;s the &lt;code&gt;chef-repo/&lt;/code&gt;. Before configuing our knife, we need to copy above two secret keys to the &lt;code&gt;.chef&lt;/code&gt; directory.&lt;/p&gt;
 
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;λ wang-zhenjun [chef_projects/demo/chef-repo] → scp -o PubkeyAuthentication=no vagrant@192.168.33.34:/home/vagrant/angeldswang.pem .chef/
-λ wang-zhenjun [chef_projects/demo/chef-repo] → scp -o PubkeyAuthentication=no vagrant@192.168.33.34:/home/vagrant/chefserver_demo-validator.pem .chef/
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;λ angeldswang [chef_projects/demo/chef-repo] → scp -o PubkeyAuthentication=no vagrant@192.168.33.34:/home/vagrant/angeldswang.pem .chef/
+λ angeldswang [chef_projects/demo/chef-repo] → scp -o PubkeyAuthentication=no vagrant@192.168.33.34:/home/vagrant/chefserver_demo-validator.pem .chef/
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;Then you need create a &lt;code&gt;chef-repo/.chef/knife.rb&lt;/code&gt; file by your hand.&lt;/p&gt;
@@ -217,7 +217,7 @@ cookbook_path            [&amp;quot;#{current_dir}/../cookbooks&amp;quot;]
 
 &lt;p&gt;For now, you can use knife to check the connection by running &lt;code&gt;knife client list&lt;/code&gt;, which asks chef server to list valid clients. However, you&amp;rsquo;ll encounter the following problem.&lt;/p&gt;
 
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;λ wang-zhenjun [chef_projects/demo/chef-repo] → knife client list
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;λ angeldswang [chef_projects/demo/chef-repo] → knife client list
 ERROR: SSL Validation failure connecting to host: default-centos65 - SSL_connect returned=1 errno=0 state=error: certificate verify failed
 ERROR: Could not establish a secure connection to the server.
 Use `knife ssl check` to troubleshoot your SSL configuration.
@@ -228,7 +228,7 @@ If your Chef Server uses a self-signed certificate, you can use
 &lt;p&gt;This is because the chef server will generate a self-signed SSL certificate during the installation process, but your local workstation doesn&amp;rsquo;t have the certificate. As the message hint, you can use &lt;code&gt;knife ssl fetch&lt;/code&gt; to get the certificate.
 For our case, it should be placed at &lt;code&gt;chef-repo/.chef/trusted_certs/default-centos65.crt&lt;/code&gt;. Then run &lt;code&gt;knife client list&lt;/code&gt; again, it should work right now.&lt;/p&gt;
 
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;λ wang-zhenjun [chef_projects/demo/chef-repo] → knife client list
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;λ angeldswang [chef_projects/demo/chef-repo] → knife client list
 chefserver_demo-validator
 &lt;/code&gt;&lt;/pre&gt;
 

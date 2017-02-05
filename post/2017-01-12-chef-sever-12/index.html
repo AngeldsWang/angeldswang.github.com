@@ -63,7 +63,7 @@
 </ul>
 
 <p>There is <a href="http://misheska.com/blog/2014/11/25/chef-server-12/">a good tutorial</a> about setting up chef server 12.
-However, there are some differences when applying to the latest chef-server release version. Take a example for</p>
+However, there are some differences when applying to the latest chef-server release version. Take an example for</p>
 
 <p>Enviroment:</p>
 
@@ -73,7 +73,7 @@ However, there are some differences when applying to the latest chef-server rele
 <li>Chef verion: →↓</li>
 </ul>
 
-<pre><code class="language-bash">λ wang-zhenjun [my/chef_projects/demo] → chef --version
+<pre><code class="language-bash">λ angeldswang [my/chef_projects/demo] → chef --version
 Chef Development Kit Version: 1.0.3
 chef-client version: 12.16.42
 delivery version: master (83358fb62c0f711c70ad5a81030a6cae4017f103)
@@ -87,7 +87,7 @@ kitchen version: 1.14.2
 
 <p>It will help you handle the additional files necessary to manage Enterprise Chef beyond the cookbooks themselves. And usually, you&rsquo;ll definitely be using more than one cookbook in your project, so we first create a subdirectory named cookbooks. For now, your directory structure will be like:</p>
 
-<pre><code class="language-bash">λ wang-zhenjun [my/chef_projects/demo] → tree -a
+<pre><code class="language-bash">λ angeldswang [my/chef_projects/demo] → tree -a
 .
 └── chef-repo
     └── cookbooks
@@ -99,7 +99,7 @@ kitchen version: 1.14.2
 
 <p>Turn to the cookbooks directory, since we are using chef development kit, we&rsquo;ll generate a cookbook by <code>chef generate cookbook</code> command.</p>
 
-<pre><code class="language-bash">λ wang-zhenjun [demo/chef-repo/cookbooks] → chef generate cookbook server
+<pre><code class="language-bash">λ angeldswang [demo/chef-repo/cookbooks] → chef generate cookbook server
 Generating cookbook server
 - Ensuring correct cookbook file content
 - Committing cookbook files to git
@@ -112,7 +112,7 @@ Generating cookbook server
 Your cookbook is ready. Type `cd server` to enter it.
 ...
 
-λ wang-zhenjun [demo/chef-repo/cookbooks] → tree -aL 2
+λ angeldswang [demo/chef-repo/cookbooks] → tree -aL 2
 .
 └── server
     ├── .delivery
@@ -214,7 +214,7 @@ end
 
 <p>Both of them can be performed by <code>chef-server-ctl</code> subcommands: <code>user-create</code> and <code>org-create</code> respectively.</p>
 
-<pre><code class="language-bash">λ wang-zhenjun [chef-repo/cookbooks/server] at  master !?
+<pre><code class="language-bash">λ angeldswang [chef-repo/cookbooks/server] at  master !?
 → kitchen login
 Last login: Sat Jan 21 17:25:50 2017 from 10.0.2.2
 
@@ -230,8 +230,8 @@ angeldswang.pem  chefserver_demo-validator.pem
 
 <p>From now on, we&rsquo;ll use knife, a command-line tool that provides an interface between a local chef-repo and the chef server, to manage our chef server from our local machine. First of all, let&rsquo;s mkdir a new directory to place the configuration files about knife, usually a <code>.chef</code> directory under the top-level directory of the repository, for our case, it&rsquo;s the <code>chef-repo/</code>. Before configuing our knife, we need to copy above two secret keys to the <code>.chef</code> directory.</p>
 
-<pre><code class="language-bash">λ wang-zhenjun [chef_projects/demo/chef-repo] → scp -o PubkeyAuthentication=no vagrant@192.168.33.34:/home/vagrant/angeldswang.pem .chef/
-λ wang-zhenjun [chef_projects/demo/chef-repo] → scp -o PubkeyAuthentication=no vagrant@192.168.33.34:/home/vagrant/chefserver_demo-validator.pem .chef/
+<pre><code class="language-bash">λ angeldswang [chef_projects/demo/chef-repo] → scp -o PubkeyAuthentication=no vagrant@192.168.33.34:/home/vagrant/angeldswang.pem .chef/
+λ angeldswang [chef_projects/demo/chef-repo] → scp -o PubkeyAuthentication=no vagrant@192.168.33.34:/home/vagrant/chefserver_demo-validator.pem .chef/
 </code></pre>
 
 <p>Then you need create a <code>chef-repo/.chef/knife.rb</code> file by your hand.</p>
@@ -253,7 +253,7 @@ cookbook_path            [&quot;#{current_dir}/../cookbooks&quot;]
 
 <p>For now, you can use knife to check the connection by running <code>knife client list</code>, which asks chef server to list valid clients. However, you&rsquo;ll encounter the following problem.</p>
 
-<pre><code class="language-bash">λ wang-zhenjun [chef_projects/demo/chef-repo] → knife client list
+<pre><code class="language-bash">λ angeldswang [chef_projects/demo/chef-repo] → knife client list
 ERROR: SSL Validation failure connecting to host: default-centos65 - SSL_connect returned=1 errno=0 state=error: certificate verify failed
 ERROR: Could not establish a secure connection to the server.
 Use `knife ssl check` to troubleshoot your SSL configuration.
@@ -264,7 +264,7 @@ If your Chef Server uses a self-signed certificate, you can use
 <p>This is because the chef server will generate a self-signed SSL certificate during the installation process, but your local workstation doesn&rsquo;t have the certificate. As the message hint, you can use <code>knife ssl fetch</code> to get the certificate.
 For our case, it should be placed at <code>chef-repo/.chef/trusted_certs/default-centos65.crt</code>. Then run <code>knife client list</code> again, it should work right now.</p>
 
-<pre><code class="language-bash">λ wang-zhenjun [chef_projects/demo/chef-repo] → knife client list
+<pre><code class="language-bash">λ angeldswang [chef_projects/demo/chef-repo] → knife client list
 chefserver_demo-validator
 </code></pre>
 
