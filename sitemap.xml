@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://angeldswang.github.io/post/2017-01-12-chef-sever-12/</loc>
+    <lastmod>2017-01-12T15:06:16+09:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://angeldswang.github.io/post/2015-01-28-run-script-after-angularjs/</loc>
     <lastmod>2015-01-28T15:35:55+08:00</lastmod>
   </url>
@@ -30,12 +35,36 @@
   
   <url>
     <loc>https://angeldswang.github.io/</loc>
-    <lastmod>2015-01-28T15:35:55+08:00</lastmod>
+    <lastmod>2017-01-12T15:06:16+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://angeldswang.github.io/categories/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://angeldswang.github.io/tags/chef/</loc>
+    <lastmod>2017-01-12T15:06:16+09:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://angeldswang.github.io/categories/chef/</loc>
+    <lastmod>2017-01-12T15:06:16+09:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://angeldswang.github.io/tags/chef-server/</loc>
+    <lastmod>2017-01-12T15:06:16+09:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://angeldswang.github.io/categories/chef-server/</loc>
+    <lastmod>2017-01-12T15:06:16+09:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -65,7 +94,7 @@
   
   <url>
     <loc>https://angeldswang.github.io/post/</loc>
-    <lastmod>2015-01-28T15:35:55+08:00</lastmod>
+    <lastmod>2017-01-12T15:06:16+09:00</lastmod>
     <priority>0</priority>
   </url>
   

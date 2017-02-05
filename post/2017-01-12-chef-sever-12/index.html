@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]><html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--><html class="no-js" prefix="og: http://ogp.me/ns#" xmlns:og="http://ogp.me/ns#"><!--<![endif]-->
+
+    <head>
+                <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="author" content="Angelds Wang">
+  
+	
+        <meta property="og:site_name" content="Brave Matrix">
+        <meta property="og:title" content="Brave Matrix">
+        <meta property="og:url" content="https://angeldswang.github.io/post/2017-01-12-chef-sever-12/">
+        <meta property="og:description" content="">
+    
+        <meta property="og:type" content="article" />
+        <meta property="og:article:author" content="Angelds Wang" />
+        <meta property="og:article:published_time" content="2017-01-12T15:06:16&#43;09:00" />
+    
+        <meta name="generator" content="Hugo 0.18.1" />
+        <title>chef sever 12 &middot; Brave Matrix</title>
+        <link rel="canonical" href="https://angeldswang.github.io/" />
+        <link rel="alternate" type="application/rss+xml" title="RSS" href="">
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/font-hack/2.020/css/hack-extended.min.css">
+        <link rel="stylesheet" type="text/css" href="https://angeldswang.github.io/css/main.css"/>
+        <link rel="stylesheet" type="text/css" href="https://angeldswang.github.io/css/customize.css"/>
+        <link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300|Montserrat:700" rel="stylesheet" type="text/css">
+        <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/zenburn.min.css">
+        <script type="text/javascript" src="https://angeldswang.github.io/js/highlight.min.js"></script>
+        <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+    </head>
+
+<body>
+<!--[if lt IE 7]><p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chrome/‎">install Google Chrome</a> to experience this site.</p><![endif]-->
+
+<main class="content" role="main">
+	<div class="container">
+		<article class="post">
+	<header class="post-header">
+        <h1 class="p-post-title">chef sever 12</h1>
+    </header>
+
+    <section class="post-content">
+        
+
+<p>nOn production enviroment, chef server is recommended when you need to manage more than one machine at a time.</p>
+
+<p>three types:</p>
+
+<ul>
+<li>Hosted Enterprise Chef</li>
+<li>On Premises (Private) Enterprise Chef</li>
+<li>Open Source Chef</li>
+</ul>
+
+<p>There is <a href="http://misheska.com/blog/2014/11/25/chef-server-12/">a good tutorial</a> about setting up chef server 12.
+However, there are some differences when applying to the latest chef-server release version. Take a example for</p>
+
+<p>Enviroment:</p>
+
+<ul>
+<li>workstation: macOS Sierra 10.12.2</li>
+<li>chef server and nodes: Vagrant based CentOS 6.5</li>
+<li>Chef verion: →↓</li>
+</ul>
+
+<pre><code class="language-bash">λ wang-zhenjun [my/chef_projects/demo] → chef --version
+Chef Development Kit Version: 1.0.3
+chef-client version: 12.16.42
+delivery version: master (83358fb62c0f711c70ad5a81030a6cae4017f103)
+berks version: 5.2.0
+kitchen version: 1.14.2
+</code></pre>
+
+<h3 id="install-enterprise-chef-server">Install Enterprise Chef Server</h3>
+
+<h4 id="create-a-top-level-chef-repo-directory">Create a Top-level Chef-repo Directory</h4>
+
+<p>It will help you handle the additional files necessary to manage Enterprise Chef beyond the cookbooks themselves. And usually, you&rsquo;ll definitely be using more than one cookbook in your project, so we first create a subdirectory named cookbooks. For now, your directory structure will be like:</p>
+
+<pre><code class="language-bash">λ wang-zhenjun [my/chef_projects/demo] → tree -a
+.
+└── chef-repo
+    └── cookbooks
+
+2 directories, 0 files
+</code></pre>
+
+<h4 id="generate-cookbook-for-chef-server">Generate Cookbook for Chef server</h4>
+
+<p>Turn to the cookbooks directory, since we are using chef development kit, we&rsquo;ll generate a cookbook by <code>chef generate cookbook</code> command.</p>
+
+<pre><code class="language-bash">λ wang-zhenjun [demo/chef-repo/cookbooks] → chef generate cookbook server
+Generating cookbook server
+- Ensuring correct cookbook file content
+- Committing cookbook files to git
+- Ensuring delivery configuration
+- Ensuring correct delivery build cookbook content
+- Adding delivery configuration to feature branch
+- Adding build cookbook to feature branch
+- Merging delivery content feature branch to master
+
+Your cookbook is ready. Type `cd server` to enter it.
+...
+
+λ wang-zhenjun [demo/chef-repo/cookbooks] → tree -aL 2
+.
+└── server
+    ├── .delivery
+    ├── .git
+    ├── .gitignore
+    ├── .kitchen.yml
+    ├── Berksfile
+    ├── README.md
+    ├── chefignore
+    ├── metadata.rb
+    ├── recipes
+    ├── spec
+    └── test
+
+6 directories, 6 files
+</code></pre>
+
+<p>Then edit the <code>.kitchen.yml</code> file to use the CentOS 6.5 basebox provided by <a href="http://www.learningchef.com/">learningchef</a> (basically we&rsquo;ll follow the chapter 9 &amp; 10 in this book). Since we&rsquo;ll build a chef server with some client nodes in a local network, we need to assign a private network address to the server, like <code>192.168.33.34</code>.</p>
+
+<pre><code class="language-yaml">---
+driver:
+  name: vagrant
+
+provisioner:
+  name: chef_solo
+  # You may wish to disable always updating cookbooks in CI or other testing environments.
+  # For example:
+  #   always_update_cookbooks: &lt;%= !ENV['CI'] %&gt;
+  always_update_cookbooks: true
+
+verifier:
+  name: inspec
+
+platforms:
+  - name: centos65
+    driver:
+      box: learningchef/centos65
+      box_url: learningchef/centos65
+      network:
+        - [&quot;private_network&quot;, {ip: &quot;192.168.33.34&quot;}]
+      customize:
+        memory: 1536
+
+suites:
+  - name: default
+    run_list:
+      - recipe[server::default]
+    verifier:
+      inspec_tests:
+        - test/recipes
+    attributes:
+</code></pre>
+
+<p>Notice that, if you set <code>always_update_cookbooks: true</code>, you need run <code>berks install</code> first to create <code>Berksfile.lock</code>, from which Kitchen will upload the latest cookbooks.</p>
+
+<h4 id="prepare-attributes-and-recipes">Prepare attributes and recipes</h4>
+
+<p>Before we build our chef server, we&rsquo;ll write attributes and recipes to make sure the chef server can be installed automatically. Run <code>chef generate attribute default</code> to create the default attributes file and add the chef server download url according to your linux distribution, in our case, we&rsquo;ll choose <a href="https://downloads.chef.io/chef-server">Red Hat Enterprise Linux 6</a>&rsquo;s version.</p>
+
+<p>Define package download url in attributes/default.rb</p>
+
+<pre><code class="language-ruby">default['server']['url'] = \
+'https://packages.chef.io/files/stable/chef-server/12.11.1/el/6/'\
+'chef-server-core-12.11.1-1.el6.x86_64.rpm'
+</code></pre>
+
+<p>Add install and reconfigure actions in recipes/default.rb</p>
+
+<pre><code class="language-ruby">package_url = node['server']['url']
+package_name = ::File.basename(package_url)
+package_local_path = &quot;#{Chef::Config[:file_cache_path]}/#{package_name}&quot;
+
+remote_file package_local_path do
+  source package_url
+end
+
+package package_name do
+  source package_local_path
+  provider Chef::Provider::Package::Rpm
+  notifies :run, 'execute[reconfigure-chef-server]', :immediately
+end
+
+execute 'reconfigure-chef-server' do
+  command 'chef-server-ctl reconfigure'
+  action :nothing
+end
+</code></pre>
+
+<p>Then you can run <code>kitchen converge</code> to build the server node. Depends on your network speed, it&rsquo;ll take your 10 ~ 50 mins.</p>
+
+<h3 id="configure-chef-server">Configure Chef Server</h3>
+
+<p>Since chef server 12.0, the management web UI is not enabled by default. That means you need configure your chef server through the command line, which mainly includes two things:</p>
+
+<ul>
+<li>Create an admin user</li>
+<li>Create an organization</li>
+</ul>
+
+<p>Both of them can be performed by <code>chef-server-ctl</code> subcommands: <code>user-create</code> and <code>org-create</code> respectively.</p>
+
+<pre><code class="language-bash">λ wang-zhenjun [chef-repo/cookbooks/server] at  master !?
+→ kitchen login
+Last login: Sat Jan 21 17:25:50 2017 from 10.0.2.2
+
+[vagrant@default-centos65 ~]$ sudo chef-server-ctl user-create angeldswang Angelds Wang angeldswang@gmail.com 123456 -f angeldswang.pem
+[vagrant@default-centos65 ~]$ sudo chef-server-ctl org-create chefserver_demo &quot;chef server demo V12&quot; --association_user angeldswang -f chefserver_demo-validator.pem
+[vagrant@default-centos65 ~]$ ls
+angeldswang.pem  chefserver_demo-validator.pem
+</code></pre>
+
+<p>You can refer to the <a href="https://docs.chef.io/ctl_chef_server.html#user-create">chef document</a> for detail options. And now we create the admin user and the organization he belongs to. Notice that there were two secret keys also being created respectively. They will be used to validate the security of connection request. Next we&rsquo;ll show how to use the secret keys to construct connection to chef server.</p>
+
+<h4 id="configure-knife">Configure knife</h4>
+
+<p>From now on, we&rsquo;ll use knife, a command-line tool that provides an interface between a local chef-repo and the chef server, to manage our chef server from our local machine. First of all, let&rsquo;s mkdir a new directory to place the configuration files about knife, usually a <code>.chef</code> directory under the top-level directory of the repository, for our case, it&rsquo;s the <code>chef-repo/</code>. Before configuing our knife, we need to copy above two secret keys to the <code>.chef</code> directory.</p>
+
+<pre><code class="language-bash">λ wang-zhenjun [chef_projects/demo/chef-repo] → scp -o PubkeyAuthentication=no vagrant@192.168.33.34:/home/vagrant/angeldswang.pem .chef/
+λ wang-zhenjun [chef_projects/demo/chef-repo] → scp -o PubkeyAuthentication=no vagrant@192.168.33.34:/home/vagrant/chefserver_demo-validator.pem .chef/
+</code></pre>
+
+<p>Then you need create a <code>chef-repo/.chef/knife.rb</code> file by your hand.</p>
+
+<pre><code class="language-ruby">current_dir = File.dirname(__FILE__)
+log_level                :info
+log_location             STDOUT
+node_name                &quot;angeldswang&quot;
+client_key               &quot;#{current_dir}/angeldswang.pem&quot;
+validation_client_name   &quot;chefserver_demo-validator&quot;
+validation_key           &quot;#{current_dir}/chefserver_demo-validator.pem&quot;
+chef_server_url          &quot;https://default-centos65:443/organizations/chefserver_demo&quot;
+cache_type               'BasicFile'
+cache_options( :path =&gt; &quot;#{ENV['HOME']}/.chef/checksums&quot; )
+cookbook_path            [&quot;#{current_dir}/../cookbooks&quot;]
+</code></pre>
+
+<p>Since the default server domain is <code>default-centos65</code>, the <code>chef_server_url</code> should be <code>https://default-centos65:443/organizations/chefserver_demo</code>. And make sure you can access the domain from your local machine, remember to add the host setting <code>192.168.33.34 default-centos65</code> to your <code>/etc/hosts</code>.</p>
+
+<p>For now, you can use knife to check the connection by running <code>knife client list</code>, which asks chef server to list valid clients. However, you&rsquo;ll encounter the following problem.</p>
+
+<pre><code class="language-bash">λ wang-zhenjun [chef_projects/demo/chef-repo] → knife client list
+ERROR: SSL Validation failure connecting to host: default-centos65 - SSL_connect returned=1 errno=0 state=error: certificate verify failed
+ERROR: Could not establish a secure connection to the server.
+Use `knife ssl check` to troubleshoot your SSL configuration.
+If your Chef Server uses a self-signed certificate, you can use
+`knife ssl fetch` to make knife trust the server's certificates.
+</code></pre>
+
+<p>This is because the chef server will generate a self-signed SSL certificate during the installation process, but your local workstation doesn&rsquo;t have the certificate. As the message hint, you can use <code>knife ssl fetch</code> to get the certificate.
+For our case, it should be placed at <code>chef-repo/.chef/trusted_certs/default-centos65.crt</code>. Then run <code>knife client list</code> again, it should work right now.</p>
+
+<pre><code class="language-bash">λ wang-zhenjun [chef_projects/demo/chef-repo] → knife client list
+chefserver_demo-validator
+</code></pre>
+
+<p>If you still have some problem with this step, you can check out <a href="http://www.thegeekstuff.com/2016/06/knife-ssl-check-fetch/">this article</a> for more helpful information.</p>
+
+<p>Just out of curiosity, you can visit the <code>chef_server_url</code> on your browser, <code>https://default-centos65:443/organizations/chefserver_demo</code>. It&rsquo;s cool, but you must be suggested to install the Management Console manually if you want to use browser to manage your chef server. All right, let&rsquo;s do that.</p>
+
+<p>First, login to the chef server, and run</p>
+
+<ul>
+<li><code>chef-server-ctl install chef-manage</code></li>
+<li><code>chef-server-ctl reconfigure</code></li>
+<li><code>chef-manage-ctl reconfigure</code></li>
+</ul>
+
+<p>all of these commands should be runned with sudo.</p>
+
+<p>For a long long journey, you can access the chef management web UI by signin with the user created by <code>chef-server-ctl user-create</code>.</p>
+
+<p><img src="/images/chef-manager.jpeg" alt="chef manager" /></p>
+
+    </section>
+
+    <hr>
+
+    <footer class="post-footer">
+        <section class="f-1">
+            
+            <section class="author">
+                <p>Words by Angelds Wang</p>
+            </section>
+            
+            
+            <p class="f-post-time"><time datetime="2017-01-12T15:06:16&#43;09:00">January 12, 2017</time></p>
+        </section>
+                        
+        <section class="f-2">
+            <section class="share">
+                <span>Share:
+                <a class="icon-twitter" href="http://twitter.com/share?text=chef%20sever%2012&url=https%3a%2f%2fangeldswang.github.io%2fpost%2f2017-01-12-chef-sever-12%2f"
+                    onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <i class="fa fa-twitter"></i>
+                </a>
+                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fangeldswang.github.io%2fpost%2f2017-01-12-chef-sever-12%2f"
+                    onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <i class="fa fa-facebook"></i>
+                </a>
+                <a class="icon-google-plus" href="https://plus.google.com/share?url=https%3a%2f%2fangeldswang.github.io%2fpost%2f2017-01-12-chef-sever-12%2f"
+                   onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <i class="fa fa-google-plus"></i>
+                </a>
+                </span>
+            </section>
+
+            
+            	<span class="f-post-tags"><i class="fa fa-tag"></i>
+            	chef, chef server
+            	</span>
+            
+        </section>
+                
+        <section id="comments">
+            <div id="disqus_thread" class="post-comments"></div>
+            <script type="text/javascript">
+              if (window.location.hostname != "localhost") {
+                var disqus_shortname = 'angeldswang';
+                (function() {
+                  var dsq = document.createElement('script');
+                  dsq.type = 'text/javascript';
+                  dsq.async = true;
+                  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+              }
+            </script>
+            <noscript>
+              Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+            </noscript>
+        </section>
+                
+    </footer>
+</article>
+
+	</div>
+</main>
+    <footer id="site-footer">
+        <div class="container">
+            <a href="https://angeldswang.github.io/index.xml" title="Get the RSS feed"><span class="tooltip"><i class="fa fa-rss"></i></span></a>
+            <section>&copy; <a href="https://angeldswang.github.io/">Angelds Wang</a> 2017 | All rights reserved</section>
+            <section>Theme by <a href="http://www.jrdnbwmn.com">Jordan Bowman</a>. Generated with <a href="http://gohugo.io/">Hugo</a>.</section>
+        </div>
+    </footer>
+
+    <script type="text/javascript" src="https://angeldswang.github.io/js/fittext.js"></script>
+    <script type="text/javascript"
+            src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+    <script type="text/x-mathjax-config">
+     MathJax.Hub.Config({
+         tex2jax: {
+             inlineMath: [['$','$'], ['\\(','\\)']],
+             displayMath: [['$$','$$'], ['\[','\]']],
+             processEscapes: true,
+             processEnvironments: true,
+             skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+             TeX: { equationNumbers: { autoNumber: "AMS" },
+                    extensions: ["AMSmath.js", "AMSsymbols.js"] }
+         }
+     });
+    </script>
+
+    <script type="text/x-mathjax-config">
+     MathJax.Hub.Queue(function() {
+         
+         
+         
+         var all = MathJax.Hub.getAllJax(), i;
+         for(i = 0; i < all.length; i += 1) {
+             all[i].SourceElement().parentNode.className += ' has-jax';
+         }
+     });
+    </script>
+    <script type="text/javascript">
+      $(".heading").fitText();
+    </script>
+
+
+
+</body>
+</html>
