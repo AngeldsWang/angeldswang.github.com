@@ -22,13 +22,13 @@
   </url>
   
   <url>
-    <loc>https://angeldswang.github.io/tags/angularjs/</loc>
+    <loc>https://angeldswang.github.io/categories/angularjs/</loc>
     <lastmod>2015-01-28T15:35:55+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://angeldswang.github.io/categories/angularjs/</loc>
+    <loc>https://angeldswang.github.io/tags/angularjs/</loc>
     <lastmod>2015-01-28T15:35:55+08:00</lastmod>
     <priority>0</priority>
   </url>
@@ -45,19 +45,13 @@
   </url>
   
   <url>
-    <loc>https://angeldswang.github.io/tags/chef/</loc>
-    <lastmod>2017-01-12T15:06:16+09:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>https://angeldswang.github.io/categories/chef/</loc>
     <lastmod>2017-01-12T15:06:16+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://angeldswang.github.io/tags/chef-server/</loc>
+    <loc>https://angeldswang.github.io/tags/chef/</loc>
     <lastmod>2017-01-12T15:06:16+09:00</lastmod>
     <priority>0</priority>
   </url>
@@ -69,8 +63,8 @@
   </url>
   
   <url>
-    <loc>https://angeldswang.github.io/tags/monte-carlo/</loc>
-    <lastmod>2014-08-19T03:11:55+08:00</lastmod>
+    <loc>https://angeldswang.github.io/tags/chef-server/</loc>
+    <lastmod>2017-01-12T15:06:16+09:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -81,13 +75,19 @@
   </url>
   
   <url>
-    <loc>https://angeldswang.github.io/tags/number-theory/</loc>
-    <lastmod>2014-11-09T21:15:55+08:00</lastmod>
+    <loc>https://angeldswang.github.io/tags/monte-carlo/</loc>
+    <lastmod>2014-08-19T03:11:55+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://angeldswang.github.io/categories/number-theory/</loc>
+    <lastmod>2014-11-09T21:15:55+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://angeldswang.github.io/tags/number-theory/</loc>
     <lastmod>2014-11-09T21:15:55+08:00</lastmod>
     <priority>0</priority>
   </url>
@@ -99,25 +99,25 @@
   </url>
   
   <url>
-    <loc>https://angeldswang.github.io/tags/sampling/</loc>
-    <lastmod>2014-08-19T03:11:55+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>https://angeldswang.github.io/categories/sampling/</loc>
     <lastmod>2014-08-19T03:11:55+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://angeldswang.github.io/tags/statistical-methods/</loc>
+    <loc>https://angeldswang.github.io/tags/sampling/</loc>
     <lastmod>2014-08-19T03:11:55+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://angeldswang.github.io/categories/statistical-methods/</loc>
+    <lastmod>2014-08-19T03:11:55+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://angeldswang.github.io/tags/statistical-methods/</loc>
     <lastmod>2014-08-19T03:11:55+08:00</lastmod>
     <priority>0</priority>
   </url>

@@ -27,7 +27,7 @@
 &lt;/ul&gt;
 
 &lt;p&gt;There is &lt;a href=&#34;http://misheska.com/blog/2014/11/25/chef-server-12/&#34;&gt;a good tutorial&lt;/a&gt; about setting up chef server 12.
-However, there are some differences when applying to the latest chef-server release version. Take an example for&lt;/p&gt;
+However, there are some differences when applying to the latest chef-server release version. For our example,&lt;/p&gt;
 
 &lt;p&gt;Enviroment:&lt;/p&gt;
 
