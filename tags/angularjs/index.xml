@@ -2,14 +2,11 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Angularjs on Brave Matrix</title>
-    <link>https://angeldswang.github.io/tags/angularjs/</link>
+    <link>https://angeldswang.github.io/tags/angularjs/index.xml</link>
     <description>Recent content in Angularjs on Brave Matrix</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 28 Jan 2015 15:35:55 +0800</lastBuildDate>
-    
-	<atom:link href="https://angeldswang.github.io/tags/angularjs/index.xml" rel="self" type="application/rss+xml" />
-    
+    <atom:link href="https://angeldswang.github.io/tags/angularjs/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Run script after Angularjs ng-repeat finishing</title>
@@ -17,7 +14,129 @@
       <pubDate>Wed, 28 Jan 2015 15:35:55 +0800</pubDate>
       
       <guid>https://angeldswang.github.io/post/2015-01-28-run-script-after-angularjs/</guid>
-      <description>&lt;p&gt;这几天在做一个小项目的时候，用到了&lt;a href=&#34;http://vnjs.net/www/project/freewall/&#34;&gt;Freewall&lt;/a&gt;这个很nice的插件。它可以很方便的替你实现很多不错的grid layout。但在用到&lt;a href=&#34;http://vnjs.net/www/project/freewall/example/pinterest-layout.html&#34;&gt;Pinterest style layout&lt;/a&gt;的时候遇到了一个问题。官方给出的example如下:&lt;/p&gt;</description>
+      <description>&lt;p&gt;这几天在做一个小项目的时候，用到了&lt;a href=&#34;http://vnjs.net/www/project/freewall/&#34;&gt;Freewall&lt;/a&gt;这个很nice的插件。它可以很方便的替你实现很多不错的grid layout。但在用到&lt;a href=&#34;http://vnjs.net/www/project/freewall/example/pinterest-layout.html&#34;&gt;Pinterest style layout&lt;/a&gt;的时候遇到了一个问题。官方给出的example如下:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-html&#34;&gt;&amp;lt;div id=&amp;quot;freewall&amp;quot; class=&amp;quot;free-wall&amp;quot;&amp;gt;
+    &amp;lt;div class=&amp;quot;brick&amp;quot;&amp;gt;
+        &amp;lt;img src=&amp;quot;i/photo/1.jpg&amp;quot; width=&amp;quot;100%&amp;quot;&amp;gt;
+        &amp;lt;div class=&amp;quot;info&amp;quot;&amp;gt;
+            &amp;lt;h3&amp;gt;Freewall&amp;lt;/h3&amp;gt;
+            &amp;lt;h5&amp;gt;Pinterest layout&amp;lt;/h5&amp;gt;
+        &amp;lt;/div&amp;gt;
+    &amp;lt;/div&amp;gt;
+    &amp;lt;div class=&amp;quot;brick&amp;quot;&amp;gt;
+        &amp;lt;img src=&amp;quot;i/photo/2.jpg&amp;quot; width=&amp;quot;100%&amp;quot;&amp;gt;
+        &amp;lt;div class=&amp;quot;info&amp;quot;&amp;gt;
+            &amp;lt;h3&amp;gt;Freewall&amp;lt;/h3&amp;gt;
+            &amp;lt;h5&amp;gt;Pinterest layout&amp;lt;/h5&amp;gt;
+        &amp;lt;/div&amp;gt;
+    &amp;lt;/div&amp;gt;
+    ....
+&amp;lt;/div&amp;gt;
+&amp;lt;script type=&amp;quot;text/javascript&amp;quot;&amp;gt;
+    var wall = new freewall(&amp;quot;#freewall&amp;quot;);
+    wall.reset({
+        selector: &#39;.brick&#39;,
+        animate: true,
+        cellW: 200,
+        cellH: &#39;auto&#39;,
+        onResize: function() {
+            wall.fitWidth();
+        }
+    });
+
+    wall.container.find(&#39;.brick img&#39;).load(function() {
+        wall.fitWidth();
+    });
+&amp;lt;/script&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;这里省略了样式的代码，直接看这些最核心的部分。一看很简单，就一堆自己的图片加上用&lt;code&gt;freewall&lt;/code&gt;初始化一下整个图片墙就行了。可是我自己的代码怎么都没法在网页加载的初期就能&lt;code&gt;fitWidth&lt;/code&gt;。但是可以响应&lt;code&gt;onResize&lt;/code&gt;。我的代码如下。(就是把example的&lt;a href=&#34;http://html2jade.org/&#34;&gt;html转成jade&lt;/a&gt;，偷懒了^_^)&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-jade&#34;&gt;extends layout
+
+block content
+  #bgimg(ng-if=&#39;!currTrend&#39;)
+    img(src=&#39;/images/bgImg.png&#39;, width=&#39;100%&#39;)
+  #bgimg(ng-if=&#39;currTrend&#39;)
+    #freewall.free-wall(ng-hide=&#39;!searched&#39;)
+      .brick(ng-repeat=&#39;tweetinfo in trendinfo&#39;)
+        img(ng-src=&#39;{{tweetinfo.imageURL}}&#39;, width=&#39;100%&#39;)
+        .info
+          ...
+
+    script(type=&#39;text/javascript&#39;).
+      var wall = new freewall(&amp;quot;#freewall&amp;quot;);
+      wall.reset({
+        selector: &#39;.brick&#39;,
+        animate: true,
+        cellW: 200,
+        cellH: &#39;auto&#39;,
+        onResize: function() {
+          wall.fitWidth();
+        }
+      });
+      wall.container.find(&#39;.brick img&#39;).load(function() {
+        wall.fitWidth();
+      });
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;思来想去可能是我用了Angularjs的ng-repeat动态从服务器端读图片过来的问题，我试了下，一个个的手打这些图片列表是可以出来&lt;code&gt;fitWidth&lt;/code&gt;的效果的。综合以上分析，既然用ng-repeat的时候是可以响应&lt;code&gt;onResize&lt;/code&gt;的，说明脚本肯定是被执行了，但是整个图片墙没有去&lt;code&gt;fitWidth&lt;/code&gt;只能说明这些&lt;code&gt;brick&lt;/code&gt;是异步添加的。实际运行的时候，脚本早就先运行完了，才慢慢的从服务器端通过http读过来的图片。这样&lt;code&gt;wall.container.find(&#39;.brick img&#39;).load&lt;/code&gt;之前执行了也没什么效果。那么怎么才能同步这些脚本呢？查来查去，发现可以用Angularjs里面的&lt;code&gt;directive&lt;/code&gt;来实现这一过程。&lt;/p&gt;
+
+&lt;p&gt;首先给循环中的每个&lt;code&gt;brick&lt;/code&gt;添加一个检测ng-repeat完成的事件发射器，并将其封装成一个叫&lt;code&gt;repeatBrick&lt;/code&gt;的directive。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;angular.module(&#39;YourModule&#39;,[])
+  .controller(&#39;YourCtrl&#39;, function ($scope, $http) {
+   // do other things
+})
+.directive(&#39;repeatBrick&#39;, function() {
+  return function(scope, element, attrs) {
+    if (scope.$last){	// detect the last brick
+      scope.$emit(&#39;LastBrick&#39;);	// emit the `LastBrick` event
+    }
+  }
+})
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;然后在自定义一个&lt;code&gt;freewall&lt;/code&gt;上的directive。在里面监听&lt;code&gt;LastBrick&lt;/code&gt;事件，并在其回调函数中执行之前的脚本就行了。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;.directive(&#39;theFreewall&#39;, function() {
+  return function(scope, element, attrs) {
+    scope.$on(&#39;LastBrick&#39;, function(event){	// listen to the `LastBrick` event
+      var wall = new freewall(&amp;quot;#freewall&amp;quot;);	// run the script in callback function 
+      wall.reset({
+        selector: &#39;.brick&#39;,
+        animate: true,
+        cellW: 200,
+        cellH: &#39;auto&#39;,
+        onResize: function() {
+          wall.fitWidth();
+        }
+      });
+      wall.container.find(&#39;.brick img&#39;).load(function() {
+        wall.fitWidth();
+      });
+    });
+  };
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;当然这时候在模板中还要加上这两个directives。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-jade&#34;&gt;extends layout
+
+block content
+  #bgimg(ng-if=&#39;!currTrend&#39;)
+    img(src=&#39;/images/bgImg.png&#39;, width=&#39;100%&#39;)
+  #bgimg(ng-if=&#39;currTrend&#39;)
+    #freewall.free-wall(ng-hide=&#39;!searched&#39; the-freewall)	//- add `theFreewall` directive
+      .brick(ng-repeat=&#39;tweetinfo in trendinfo&#39; repeat-brick)	//- add `repeatBrick` directive
+        img(ng-src=&#39;{{tweetinfo.imageURL}}&#39;, width=&#39;100%&#39;)
+        .info
+          ...
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;这样就能确保在读取完这些图片之后立刻执行脚本进行布局。总结来说就是传统的html+js是顺序执行的，但是一旦引入模板引擎或者像Angularjs这样的指令之后，很可能就变成异步执行的了，这是个得注意的小坑。&lt;/p&gt;</description>
     </item>
     
   </channel>

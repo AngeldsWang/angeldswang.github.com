@@ -2,14 +2,11 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Chef Server on Brave Matrix</title>
-    <link>https://angeldswang.github.io/tags/chef-server/</link>
+    <link>https://angeldswang.github.io/tags/chef-server/index.xml</link>
     <description>Recent content in Chef Server on Brave Matrix</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 12 Jan 2017 15:06:16 +0900</lastBuildDate>
-    
-	<atom:link href="https://angeldswang.github.io/tags/chef-server/index.xml" rel="self" type="application/rss+xml" />
-    
+    <atom:link href="https://angeldswang.github.io/tags/chef-server/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>chef sever 12</title>
@@ -17,11 +14,242 @@
       <pubDate>Thu, 12 Jan 2017 15:06:16 +0900</pubDate>
       
       <guid>https://angeldswang.github.io/post/2017-01-12-chef-sever-12/</guid>
-      <description>On production enviroment, chef server is recommended when you need to manage more than one machine at a time.
-three types:
- Hosted Enterprise Chef On Premises (Private) Enterprise Chef Open Source Chef  There is a good tutorial about setting up chef server 12. However, there are some differences when applying to the latest chef-server release version. For our example,
-Enviroment:
- workstation: macOS Sierra 10.12.2 chef server and nodes: Vagrant based CentOS 6.</description>
+      <description>
+
+&lt;p&gt;nOn production enviroment, chef server is recommended when you need to manage more than one machine at a time.&lt;/p&gt;
+
+&lt;p&gt;three types:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Hosted Enterprise Chef&lt;/li&gt;
+&lt;li&gt;On Premises (Private) Enterprise Chef&lt;/li&gt;
+&lt;li&gt;Open Source Chef&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;There is &lt;a href=&#34;http://misheska.com/blog/2014/11/25/chef-server-12/&#34;&gt;a good tutorial&lt;/a&gt; about setting up chef server 12.
+However, there are some differences when applying to the latest chef-server release version. For our example,&lt;/p&gt;
+
+&lt;p&gt;Enviroment:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;workstation: macOS Sierra 10.12.2&lt;/li&gt;
+&lt;li&gt;chef server and nodes: Vagrant based CentOS 6.5&lt;/li&gt;
+&lt;li&gt;Chef verion: →↓&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;λ angeldswang [my/chef_projects/demo] → chef --version
+Chef Development Kit Version: 1.0.3
+chef-client version: 12.16.42
+delivery version: master (83358fb62c0f711c70ad5a81030a6cae4017f103)
+berks version: 5.2.0
+kitchen version: 1.14.2
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;install-enterprise-chef-server&#34;&gt;Install Enterprise Chef Server&lt;/h3&gt;
+
+&lt;h4 id=&#34;create-a-top-level-chef-repo-directory&#34;&gt;Create a Top-level Chef-repo Directory&lt;/h4&gt;
+
+&lt;p&gt;It will help you handle the additional files necessary to manage Enterprise Chef beyond the cookbooks themselves. And usually, you&amp;rsquo;ll definitely be using more than one cookbook in your project, so we first create a subdirectory named cookbooks. For now, your directory structure will be like:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;λ angeldswang [my/chef_projects/demo] → tree -a
+.
+└── chef-repo
+    └── cookbooks
+
+2 directories, 0 files
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;generate-cookbook-for-chef-server&#34;&gt;Generate Cookbook for Chef server&lt;/h4&gt;
+
+&lt;p&gt;Turn to the cookbooks directory, since we are using chef development kit, we&amp;rsquo;ll generate a cookbook by &lt;code&gt;chef generate cookbook&lt;/code&gt; command.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;λ angeldswang [demo/chef-repo/cookbooks] → chef generate cookbook server
+Generating cookbook server
+- Ensuring correct cookbook file content
+- Committing cookbook files to git
+- Ensuring delivery configuration
+- Ensuring correct delivery build cookbook content
+- Adding delivery configuration to feature branch
+- Adding build cookbook to feature branch
+- Merging delivery content feature branch to master
+
+Your cookbook is ready. Type `cd server` to enter it.
+...
+
+λ angeldswang [demo/chef-repo/cookbooks] → tree -aL 2
+.
+└── server
+    ├── .delivery
+    ├── .git
+    ├── .gitignore
+    ├── .kitchen.yml
+    ├── Berksfile
+    ├── README.md
+    ├── chefignore
+    ├── metadata.rb
+    ├── recipes
+    ├── spec
+    └── test
+
+6 directories, 6 files
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Then edit the &lt;code&gt;.kitchen.yml&lt;/code&gt; file to use the CentOS 6.5 basebox provided by &lt;a href=&#34;http://www.learningchef.com/&#34;&gt;learningchef&lt;/a&gt; (basically we&amp;rsquo;ll follow the chapter 9 &amp;amp; 10 in this book). Since we&amp;rsquo;ll build a chef server with some client nodes in a local network, we need to assign a private network address to the server, like &lt;code&gt;192.168.33.34&lt;/code&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-yaml&#34;&gt;---
+driver:
+  name: vagrant
+
+provisioner:
+  name: chef_solo
+  # You may wish to disable always updating cookbooks in CI or other testing environments.
+  # For example:
+  #   always_update_cookbooks: &amp;lt;%= !ENV[&#39;CI&#39;] %&amp;gt;
+  always_update_cookbooks: true
+
+verifier:
+  name: inspec
+
+platforms:
+  - name: centos65
+    driver:
+      box: learningchef/centos65
+      box_url: learningchef/centos65
+      network:
+        - [&amp;quot;private_network&amp;quot;, {ip: &amp;quot;192.168.33.34&amp;quot;}]
+      customize:
+        memory: 1536
+
+suites:
+  - name: default
+    run_list:
+      - recipe[server::default]
+    verifier:
+      inspec_tests:
+        - test/recipes
+    attributes:
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Notice that, if you set &lt;code&gt;always_update_cookbooks: true&lt;/code&gt;, you need run &lt;code&gt;berks install&lt;/code&gt; first to create &lt;code&gt;Berksfile.lock&lt;/code&gt;, from which Kitchen will upload the latest cookbooks.&lt;/p&gt;
+
+&lt;h4 id=&#34;prepare-attributes-and-recipes&#34;&gt;Prepare attributes and recipes&lt;/h4&gt;
+
+&lt;p&gt;Before we build our chef server, we&amp;rsquo;ll write attributes and recipes to make sure the chef server can be installed automatically. Run &lt;code&gt;chef generate attribute default&lt;/code&gt; to create the default attributes file and add the chef server download url according to your linux distribution, in our case, we&amp;rsquo;ll choose &lt;a href=&#34;https://downloads.chef.io/chef-server&#34;&gt;Red Hat Enterprise Linux 6&lt;/a&gt;&amp;rsquo;s version.&lt;/p&gt;
+
+&lt;p&gt;Define package download url in attributes/default.rb&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-ruby&#34;&gt;default[&#39;server&#39;][&#39;url&#39;] = \
+&#39;https://packages.chef.io/files/stable/chef-server/12.11.1/el/6/&#39;\
+&#39;chef-server-core-12.11.1-1.el6.x86_64.rpm&#39;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Add install and reconfigure actions in recipes/default.rb&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-ruby&#34;&gt;package_url = node[&#39;server&#39;][&#39;url&#39;]
+package_name = ::File.basename(package_url)
+package_local_path = &amp;quot;#{Chef::Config[:file_cache_path]}/#{package_name}&amp;quot;
+
+remote_file package_local_path do
+  source package_url
+end
+
+package package_name do
+  source package_local_path
+  provider Chef::Provider::Package::Rpm
+  notifies :run, &#39;execute[reconfigure-chef-server]&#39;, :immediately
+end
+
+execute &#39;reconfigure-chef-server&#39; do
+  command &#39;chef-server-ctl reconfigure&#39;
+  action :nothing
+end
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Then you can run &lt;code&gt;kitchen converge&lt;/code&gt; to build the server node. Depends on your network speed, it&amp;rsquo;ll take your 10 ~ 50 mins.&lt;/p&gt;
+
+&lt;h3 id=&#34;configure-chef-server&#34;&gt;Configure Chef Server&lt;/h3&gt;
+
+&lt;p&gt;Since chef server 12.0, the management web UI is not enabled by default. That means you need configure your chef server through the command line, which mainly includes two things:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Create an admin user&lt;/li&gt;
+&lt;li&gt;Create an organization&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Both of them can be performed by &lt;code&gt;chef-server-ctl&lt;/code&gt; subcommands: &lt;code&gt;user-create&lt;/code&gt; and &lt;code&gt;org-create&lt;/code&gt; respectively.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;λ angeldswang [chef-repo/cookbooks/server] at  master !?
+→ kitchen login
+Last login: Sat Jan 21 17:25:50 2017 from 10.0.2.2
+
+[vagrant@default-centos65 ~]$ sudo chef-server-ctl user-create angeldswang Angelds Wang angeldswang@gmail.com 123456 -f angeldswang.pem
+[vagrant@default-centos65 ~]$ sudo chef-server-ctl org-create chefserver_demo &amp;quot;chef server demo V12&amp;quot; --association_user angeldswang -f chefserver_demo-validator.pem
+[vagrant@default-centos65 ~]$ ls
+angeldswang.pem  chefserver_demo-validator.pem
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You can refer to the &lt;a href=&#34;https://docs.chef.io/ctl_chef_server.html#user-create&#34;&gt;chef document&lt;/a&gt; for detail options. And now we create the admin user and the organization he belongs to. Notice that there were two secret keys also being created respectively. They will be used to validate the security of connection request. Next we&amp;rsquo;ll show how to use the secret keys to construct connection to chef server.&lt;/p&gt;
+
+&lt;h4 id=&#34;configure-knife&#34;&gt;Configure knife&lt;/h4&gt;
+
+&lt;p&gt;From now on, we&amp;rsquo;ll use knife, a command-line tool that provides an interface between a local chef-repo and the chef server, to manage our chef server from our local machine. First of all, let&amp;rsquo;s mkdir a new directory to place the configuration files about knife, usually a &lt;code&gt;.chef&lt;/code&gt; directory under the top-level directory of the repository, for our case, it&amp;rsquo;s the &lt;code&gt;chef-repo/&lt;/code&gt;. Before configuing our knife, we need to copy above two secret keys to the &lt;code&gt;.chef&lt;/code&gt; directory.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;λ angeldswang [chef_projects/demo/chef-repo] → scp -o PubkeyAuthentication=no vagrant@192.168.33.34:/home/vagrant/angeldswang.pem .chef/
+λ angeldswang [chef_projects/demo/chef-repo] → scp -o PubkeyAuthentication=no vagrant@192.168.33.34:/home/vagrant/chefserver_demo-validator.pem .chef/
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Then you need create a &lt;code&gt;chef-repo/.chef/knife.rb&lt;/code&gt; file by your hand.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-ruby&#34;&gt;current_dir = File.dirname(__FILE__)
+log_level                :info
+log_location             STDOUT
+node_name                &amp;quot;angeldswang&amp;quot;
+client_key               &amp;quot;#{current_dir}/angeldswang.pem&amp;quot;
+validation_client_name   &amp;quot;chefserver_demo-validator&amp;quot;
+validation_key           &amp;quot;#{current_dir}/chefserver_demo-validator.pem&amp;quot;
+chef_server_url          &amp;quot;https://default-centos65:443/organizations/chefserver_demo&amp;quot;
+cache_type               &#39;BasicFile&#39;
+cache_options( :path =&amp;gt; &amp;quot;#{ENV[&#39;HOME&#39;]}/.chef/checksums&amp;quot; )
+cookbook_path            [&amp;quot;#{current_dir}/../cookbooks&amp;quot;]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Since the default server domain is &lt;code&gt;default-centos65&lt;/code&gt;, the &lt;code&gt;chef_server_url&lt;/code&gt; should be &lt;code&gt;https://default-centos65:443/organizations/chefserver_demo&lt;/code&gt;. And make sure you can access the domain from your local machine, remember to add the host setting &lt;code&gt;192.168.33.34 default-centos65&lt;/code&gt; to your &lt;code&gt;/etc/hosts&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;For now, you can use knife to check the connection by running &lt;code&gt;knife client list&lt;/code&gt;, which asks chef server to list valid clients. However, you&amp;rsquo;ll encounter the following problem.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;λ angeldswang [chef_projects/demo/chef-repo] → knife client list
+ERROR: SSL Validation failure connecting to host: default-centos65 - SSL_connect returned=1 errno=0 state=error: certificate verify failed
+ERROR: Could not establish a secure connection to the server.
+Use `knife ssl check` to troubleshoot your SSL configuration.
+If your Chef Server uses a self-signed certificate, you can use
+`knife ssl fetch` to make knife trust the server&#39;s certificates.
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This is because the chef server will generate a self-signed SSL certificate during the installation process, but your local workstation doesn&amp;rsquo;t have the certificate. As the message hint, you can use &lt;code&gt;knife ssl fetch&lt;/code&gt; to get the certificate.
+For our case, it should be placed at &lt;code&gt;chef-repo/.chef/trusted_certs/default-centos65.crt&lt;/code&gt;. Then run &lt;code&gt;knife client list&lt;/code&gt; again, it should work right now.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;λ angeldswang [chef_projects/demo/chef-repo] → knife client list
+chefserver_demo-validator
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;If you still have some problem with this step, you can check out &lt;a href=&#34;http://www.thegeekstuff.com/2016/06/knife-ssl-check-fetch/&#34;&gt;this article&lt;/a&gt; for more helpful information.&lt;/p&gt;
+
+&lt;p&gt;Just out of curiosity, you can visit the &lt;code&gt;chef_server_url&lt;/code&gt; on your browser, &lt;code&gt;https://default-centos65:443/organizations/chefserver_demo&lt;/code&gt;. It&amp;rsquo;s cool, but you must be suggested to install the Management Console manually if you want to use browser to manage your chef server. All right, let&amp;rsquo;s do that.&lt;/p&gt;
+
+&lt;p&gt;First, login to the chef server, and run&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;chef-server-ctl install chef-manage&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;chef-server-ctl reconfigure&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;chef-manage-ctl reconfigure&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;all of these commands should be runned with sudo.&lt;/p&gt;
+
+&lt;p&gt;For a long long journey, you can access the chef management web UI by signin with the user created by &lt;code&gt;chef-server-ctl user-create&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://angeldswang.github.io/images/chef-manager.jpeg&#34; alt=&#34;chef manager&#34; /&gt;&lt;/p&gt;
+</description>
     </item>
     
   </channel>
