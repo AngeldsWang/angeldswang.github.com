@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on Brave Matrix</title>
+    <link>https://angeldswang.github.io/tags/</link>
+    <description>Recent content in Tags on Brave Matrix</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 28 Jan 2015 15:35:55 +0800</lastBuildDate>
+    
+	<atom:link href="https://angeldswang.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Angularjs</title>
+      <link>https://angeldswang.github.io/tags/angularjs/</link>
+      <pubDate>Wed, 28 Jan 2015 15:35:55 +0800</pubDate>
+      
+      <guid>https://angeldswang.github.io/tags/angularjs/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Chef</title>
+      <link>https://angeldswang.github.io/tags/chef/</link>
+      <pubDate>Thu, 12 Jan 2017 15:06:16 +0900</pubDate>
+      
+      <guid>https://angeldswang.github.io/tags/chef/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Chef Server</title>
+      <link>https://angeldswang.github.io/tags/chef-server/</link>
+      <pubDate>Thu, 12 Jan 2017 15:06:16 +0900</pubDate>
+      
+      <guid>https://angeldswang.github.io/tags/chef-server/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Monte Carlo</title>
+      <link>https://angeldswang.github.io/tags/monte-carlo/</link>
+      <pubDate>Tue, 19 Aug 2014 03:11:55 +0800</pubDate>
+      
+      <guid>https://angeldswang.github.io/tags/monte-carlo/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Number Theory</title>
+      <link>https://angeldswang.github.io/tags/number-theory/</link>
+      <pubDate>Sun, 09 Nov 2014 21:15:55 +0800</pubDate>
+      
+      <guid>https://angeldswang.github.io/tags/number-theory/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Sampling</title>
+      <link>https://angeldswang.github.io/tags/sampling/</link>
+      <pubDate>Tue, 19 Aug 2014 03:11:55 +0800</pubDate>
+      
+      <guid>https://angeldswang.github.io/tags/sampling/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Statistical Methods</title>
+      <link>https://angeldswang.github.io/tags/statistical-methods/</link>
+      <pubDate>Tue, 19 Aug 2014 03:11:55 +0800</pubDate>
+      
+      <guid>https://angeldswang.github.io/tags/statistical-methods/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>
