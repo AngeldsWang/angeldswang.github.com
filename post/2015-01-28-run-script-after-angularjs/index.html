@@ -4,8 +4,8 @@
 <!--[if IE 8]><html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--><html class="no-js" prefix="og: http://ogp.me/ns#" xmlns:og="http://ogp.me/ns#"><!--<![endif]-->
 
-    <head>
-                <meta charset="utf-8">
+<head>
+          <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
@@ -24,20 +24,44 @@
         <meta property="og:article:author" content="Angelds Wang" />
         <meta property="og:article:published_time" content="2015-01-28T15:35:55&#43;08:00" />
     
-        <meta name="generator" content="Hugo 0.26" />
-        <title>Run script after Angularjs ng-repeat finishing &middot; Brave Matrix</title>
-        <link rel="canonical" href="https://angeldswang.github.io/" />
-        <link rel="alternate" type="application/rss+xml" title="RSS" href="">
-        <link rel="stylesheet" href="//cdn.jsdelivr.net/font-hack/2.020/css/hack-extended.min.css">
-        <link rel="stylesheet" type="text/css" href="https://angeldswang.github.io/css/main.css"/>
-        <link rel="stylesheet" type="text/css" href="https://angeldswang.github.io/css/customize.css"/>
-        <link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300|Montserrat:700" rel="stylesheet" type="text/css">
-        <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
-        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/zenburn.min.css">
-        <script type="text/javascript" src="https://angeldswang.github.io/js/highlight.min.js"></script>
-        <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
-        <script>hljs.initHighlightingOnLoad();</script>
-    </head>
+        <meta name="generator" content="Hugo 0.78.2" />
+
+  <title>Run script after Angularjs ng-repeat finishing &middot; Brave Matrix</title>
+  <link rel="canonical" href="https://angeldswang.github.io/" />
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/font-hack/2.020/css/hack-extended.min.css">
+  <link rel="stylesheet" type="text/css" href="https://angeldswang.github.io/css/main.css"/>
+  <link rel="stylesheet" type="text/css" href="https://angeldswang.github.io/css/customize.css"/>
+  <link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/zenburn.min.css">
+  <script type="text/javascript" src="https://angeldswang.github.io/js/highlight.min.js"></script>
+  <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script>
+ MathJax = {
+   tex: {
+     inlineMath: [['$', '$'], ['\\(', '\\)']],
+     displayMath: [['$$','$$'], ['\\[', '\\]']],
+     processEscapes: true,
+     processEnvironments: true
+   },
+   options: {
+     skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+   }
+ };
+
+ window.addEventListener('load', (event) => {
+   document.querySelectorAll("mjx-container").forEach(function(x){
+     x.parentElement.classList += 'has-jax'})
+ });
+
+</script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+</head>
 
 <body>
 <!--[if lt IE 7]><p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chrome/‎">install Google Chrome</a> to experience this site.</p><![endif]-->
@@ -51,45 +75,41 @@
 
     <section class="post-content">
         <p>这几天在做一个小项目的时候，用到了<a href="http://vnjs.net/www/project/freewall/">Freewall</a>这个很nice的插件。它可以很方便的替你实现很多不错的grid layout。但在用到<a href="http://vnjs.net/www/project/freewall/example/pinterest-layout.html">Pinterest style layout</a>的时候遇到了一个问题。官方给出的example如下:</p>
-
-<pre><code class="language-html">&lt;div id=&quot;freewall&quot; class=&quot;free-wall&quot;&gt;
-    &lt;div class=&quot;brick&quot;&gt;
-        &lt;img src=&quot;i/photo/1.jpg&quot; width=&quot;100%&quot;&gt;
-        &lt;div class=&quot;info&quot;&gt;
-            &lt;h3&gt;Freewall&lt;/h3&gt;
-            &lt;h5&gt;Pinterest layout&lt;/h5&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-    &lt;div class=&quot;brick&quot;&gt;
-        &lt;img src=&quot;i/photo/2.jpg&quot; width=&quot;100%&quot;&gt;
-        &lt;div class=&quot;info&quot;&gt;
-            &lt;h3&gt;Freewall&lt;/h3&gt;
-            &lt;h5&gt;Pinterest layout&lt;/h5&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;freewall&#34;</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;free-wall&#34;</span>&gt;
+    &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;brick&#34;</span>&gt;
+        &lt;<span style="color:#f92672">img</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;i/photo/1.jpg&#34;</span> <span style="color:#a6e22e">width</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;100%&#34;</span>&gt;
+        &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;info&#34;</span>&gt;
+            &lt;<span style="color:#f92672">h3</span>&gt;Freewall&lt;/<span style="color:#f92672">h3</span>&gt;
+            &lt;<span style="color:#f92672">h5</span>&gt;Pinterest layout&lt;/<span style="color:#f92672">h5</span>&gt;
+        &lt;/<span style="color:#f92672">div</span>&gt;
+    &lt;/<span style="color:#f92672">div</span>&gt;
+    &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;brick&#34;</span>&gt;
+        &lt;<span style="color:#f92672">img</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;i/photo/2.jpg&#34;</span> <span style="color:#a6e22e">width</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;100%&#34;</span>&gt;
+        &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;info&#34;</span>&gt;
+            &lt;<span style="color:#f92672">h3</span>&gt;Freewall&lt;/<span style="color:#f92672">h3</span>&gt;
+            &lt;<span style="color:#f92672">h5</span>&gt;Pinterest layout&lt;/<span style="color:#f92672">h5</span>&gt;
+        &lt;/<span style="color:#f92672">div</span>&gt;
+    &lt;/<span style="color:#f92672">div</span>&gt;
     ....
-&lt;/div&gt;
-&lt;script type=&quot;text/javascript&quot;&gt;
-    var wall = new freewall(&quot;#freewall&quot;);
-    wall.reset({
-        selector: '.brick',
-        animate: true,
-        cellW: 200,
-        cellH: 'auto',
-        onResize: function() {
-            wall.fitWidth();
+&lt;/<span style="color:#f92672">div</span>&gt;
+&lt;<span style="color:#f92672">script</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text/javascript&#34;</span>&gt;
+    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">wall</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">freewall</span>(<span style="color:#e6db74">&#34;#freewall&#34;</span>);
+    <span style="color:#a6e22e">wall</span>.<span style="color:#a6e22e">reset</span>({
+        <span style="color:#a6e22e">selector</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;.brick&#39;</span>,
+        <span style="color:#a6e22e">animate</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">true</span>,
+        <span style="color:#a6e22e">cellW</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">200</span>,
+        <span style="color:#a6e22e">cellH</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;auto&#39;</span>,
+        <span style="color:#a6e22e">onResize</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">function</span>() {
+            <span style="color:#a6e22e">wall</span>.<span style="color:#a6e22e">fitWidth</span>();
         }
     });
 
-    wall.container.find('.brick img').load(function() {
-        wall.fitWidth();
+    <span style="color:#a6e22e">wall</span>.<span style="color:#a6e22e">container</span>.<span style="color:#a6e22e">find</span>(<span style="color:#e6db74">&#39;.brick img&#39;</span>).<span style="color:#a6e22e">load</span>(<span style="color:#66d9ef">function</span>() {
+        <span style="color:#a6e22e">wall</span>.<span style="color:#a6e22e">fitWidth</span>();
     });
-&lt;/script&gt;
-</code></pre>
-
-<p>这里省略了样式的代码，直接看这些最核心的部分。一看很简单，就一堆自己的图片加上用<code>freewall</code>初始化一下整个图片墙就行了。可是我自己的代码怎么都没法在网页加载的初期就能<code>fitWidth</code>。但是可以响应<code>onResize</code>。我的代码如下。(就是把example的<a href="http://html2jade.org/">html转成jade</a>，偷懒了^_^)</p>
-
-<pre><code class="language-jade">extends layout
+&lt;/<span style="color:#f92672">script</span>&gt;
+</code></pre></div><p>这里省略了样式的代码，直接看这些最核心的部分。一看很简单，就一堆自己的图片加上用<code>freewall</code>初始化一下整个图片墙就行了。可是我自己的代码怎么都没法在网页加载的初期就能<code>fitWidth</code>。但是可以响应<code>onResize</code>。我的代码如下。(就是把example的<a href="http://html2jade.org/">html转成jade</a>，偷懒了^_^)</p>
+<pre><code class="language-jade" data-lang="jade">extends layout
 
 block content
   #bgimg(ng-if='!currTrend')
@@ -115,51 +135,41 @@ block content
       wall.container.find('.brick img').load(function() {
         wall.fitWidth();
       });
-</code></pre>
-
-<p>思来想去可能是我用了Angularjs的ng-repeat动态从服务器端读图片过来的问题，我试了下，一个个的手打这些图片列表是可以出来<code>fitWidth</code>的效果的。综合以上分析，既然用ng-repeat的时候是可以响应<code>onResize</code>的，说明脚本肯定是被执行了，但是整个图片墙没有去<code>fitWidth</code>只能说明这些<code>brick</code>是异步添加的。实际运行的时候，脚本早就先运行完了，才慢慢的从服务器端通过http读过来的图片。这样<code>wall.container.find('.brick img').load</code>之前执行了也没什么效果。那么怎么才能同步这些脚本呢？查来查去，发现可以用Angularjs里面的<code>directive</code>来实现这一过程。</p>
-
+</code></pre><p>思来想去可能是我用了Angularjs的ng-repeat动态从服务器端读图片过来的问题，我试了下，一个个的手打这些图片列表是可以出来<code>fitWidth</code>的效果的。综合以上分析，既然用ng-repeat的时候是可以响应<code>onResize</code>的，说明脚本肯定是被执行了，但是整个图片墙没有去<code>fitWidth</code>只能说明这些<code>brick</code>是异步添加的。实际运行的时候，脚本早就先运行完了，才慢慢的从服务器端通过http读过来的图片。这样<code>wall.container.find('.brick img').load</code>之前执行了也没什么效果。那么怎么才能同步这些脚本呢？查来查去，发现可以用Angularjs里面的<code>directive</code>来实现这一过程。</p>
 <p>首先给循环中的每个<code>brick</code>添加一个检测ng-repeat完成的事件发射器，并将其封装成一个叫<code>repeatBrick</code>的directive。</p>
-
-<pre><code class="language-javascript">angular.module('YourModule',[])
-  .controller('YourCtrl', function ($scope, $http) {
-   // do other things
-})
-.directive('repeatBrick', function() {
-  return function(scope, element, attrs) {
-    if (scope.$last){	// detect the last brick
-      scope.$emit('LastBrick');	// emit the `LastBrick` event
-    }
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">angular</span>.<span style="color:#a6e22e">module</span>(<span style="color:#e6db74">&#39;YourModule&#39;</span>,[])
+  .<span style="color:#a6e22e">controller</span>(<span style="color:#e6db74">&#39;YourCtrl&#39;</span>, <span style="color:#66d9ef">function</span> (<span style="color:#a6e22e">$scope</span>, <span style="color:#a6e22e">$http</span>) {
+   <span style="color:#75715e">// do other things
+</span><span style="color:#75715e"></span>})
+.<span style="color:#a6e22e">directive</span>(<span style="color:#e6db74">&#39;repeatBrick&#39;</span>, <span style="color:#66d9ef">function</span>() {
+  <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">function</span>(<span style="color:#a6e22e">scope</span>, <span style="color:#a6e22e">element</span>, <span style="color:#a6e22e">attrs</span>) {
+    <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">scope</span>.<span style="color:#a6e22e">$last</span>){	<span style="color:#75715e">// detect the last brick
+</span><span style="color:#75715e"></span>      <span style="color:#a6e22e">scope</span>.<span style="color:#a6e22e">$emit</span>(<span style="color:#e6db74">&#39;LastBrick&#39;</span>);	<span style="color:#75715e">// emit the `LastBrick` event
+</span><span style="color:#75715e"></span>    }
   }
 })
-</code></pre>
-
-<p>然后在自定义一个<code>freewall</code>上的directive。在里面监听<code>LastBrick</code>事件，并在其回调函数中执行之前的脚本就行了。</p>
-
-<pre><code class="language-javascript">.directive('theFreewall', function() {
-  return function(scope, element, attrs) {
-    scope.$on('LastBrick', function(event){	// listen to the `LastBrick` event
-      var wall = new freewall(&quot;#freewall&quot;);	// run the script in callback function 
-      wall.reset({
-        selector: '.brick',
-        animate: true,
-        cellW: 200,
-        cellH: 'auto',
-        onResize: function() {
-          wall.fitWidth();
+</code></pre></div><p>然后在自定义一个<code>freewall</code>上的directive。在里面监听<code>LastBrick</code>事件，并在其回调函数中执行之前的脚本就行了。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">.<span style="color:#a6e22e">directive</span>(<span style="color:#e6db74">&#39;theFreewall&#39;</span>, <span style="color:#66d9ef">function</span>() {
+  <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">function</span>(<span style="color:#a6e22e">scope</span>, <span style="color:#a6e22e">element</span>, <span style="color:#a6e22e">attrs</span>) {
+    <span style="color:#a6e22e">scope</span>.<span style="color:#a6e22e">$on</span>(<span style="color:#e6db74">&#39;LastBrick&#39;</span>, <span style="color:#66d9ef">function</span>(<span style="color:#a6e22e">event</span>){	<span style="color:#75715e">// listen to the `LastBrick` event
+</span><span style="color:#75715e"></span>      <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">wall</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">freewall</span>(<span style="color:#e6db74">&#34;#freewall&#34;</span>);	<span style="color:#75715e">// run the script in callback function 
+</span><span style="color:#75715e"></span>      <span style="color:#a6e22e">wall</span>.<span style="color:#a6e22e">reset</span>({
+        <span style="color:#a6e22e">selector</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;.brick&#39;</span>,
+        <span style="color:#a6e22e">animate</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">true</span>,
+        <span style="color:#a6e22e">cellW</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">200</span>,
+        <span style="color:#a6e22e">cellH</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;auto&#39;</span>,
+        <span style="color:#a6e22e">onResize</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">function</span>() {
+          <span style="color:#a6e22e">wall</span>.<span style="color:#a6e22e">fitWidth</span>();
         }
       });
-      wall.container.find('.brick img').load(function() {
-        wall.fitWidth();
+      <span style="color:#a6e22e">wall</span>.<span style="color:#a6e22e">container</span>.<span style="color:#a6e22e">find</span>(<span style="color:#e6db74">&#39;.brick img&#39;</span>).<span style="color:#a6e22e">load</span>(<span style="color:#66d9ef">function</span>() {
+        <span style="color:#a6e22e">wall</span>.<span style="color:#a6e22e">fitWidth</span>();
       });
     });
   };
 });
-</code></pre>
-
-<p>当然这时候在模板中还要加上这两个directives。</p>
-
-<pre><code class="language-jade">extends layout
+</code></pre></div><p>当然这时候在模板中还要加上这两个directives。</p>
+<pre><code class="language-jade" data-lang="jade">extends layout
 
 block content
   #bgimg(ng-if='!currTrend')
@@ -170,9 +180,7 @@ block content
         img(ng-src='{{tweetinfo.imageURL}}', width='100%')
         .info
           ...
-</code></pre>
-
-<p>这样就能确保在读取完这些图片之后立刻执行脚本进行布局。总结来说就是传统的html+js是顺序执行的，但是一旦引入模板引擎或者像Angularjs这样的指令之后，很可能就变成异步执行的了，这是个得注意的小坑。</p>
+</code></pre><p>这样就能确保在读取完这些图片之后立刻执行脚本进行布局。总结来说就是传统的html+js是顺序执行的，但是一旦引入模板引擎或者像Angularjs这样的指令之后，很可能就变成异步执行的了，这是个得注意的小坑。</p>
     </section>
 
     <hr>
@@ -246,30 +254,6 @@ block content
     </footer>
 
     <script type="text/javascript" src="https://angeldswang.github.io/js/fittext.js"></script>
-    <script type="text/javascript" async
-            src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-     MathJax.Hub.Config({
-         tex2jax: {
-             inlineMath: [['$','$'], ['\\(','\\)']],
-             displayMath: [['$$','$$'], ['\[','\]']],
-             processEscapes: true,
-             processEnvironments: true,
-             skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
-             TeX: { equationNumbers: { autoNumber: "AMS" },
-                    extensions: ["AMSmath.js", "AMSsymbols.js"] }
-         }
-     });
-
-     MathJax.Hub.Queue(function() {
-         
-         
-         
-         var all = MathJax.Hub.getAllJax(), i;
-         for(i = 0; i < all.length; i += 1) {
-             all[i].SourceElement().parentNode.className += ' has-jax';
-         }
-     });
-    </script>
     <script type="text/javascript">
       $(".heading").fitText();
     </script>

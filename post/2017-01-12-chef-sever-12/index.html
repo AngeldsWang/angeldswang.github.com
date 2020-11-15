@@ -4,8 +4,8 @@
 <!--[if IE 8]><html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--><html class="no-js" prefix="og: http://ogp.me/ns#" xmlns:og="http://ogp.me/ns#"><!--<![endif]-->
 
-    <head>
-                <meta charset="utf-8">
+<head>
+          <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
@@ -24,20 +24,44 @@
         <meta property="og:article:author" content="Angelds Wang" />
         <meta property="og:article:published_time" content="2017-01-12T15:06:16&#43;09:00" />
     
-        <meta name="generator" content="Hugo 0.26" />
-        <title>chef sever 12 &middot; Brave Matrix</title>
-        <link rel="canonical" href="https://angeldswang.github.io/" />
-        <link rel="alternate" type="application/rss+xml" title="RSS" href="">
-        <link rel="stylesheet" href="//cdn.jsdelivr.net/font-hack/2.020/css/hack-extended.min.css">
-        <link rel="stylesheet" type="text/css" href="https://angeldswang.github.io/css/main.css"/>
-        <link rel="stylesheet" type="text/css" href="https://angeldswang.github.io/css/customize.css"/>
-        <link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300|Montserrat:700" rel="stylesheet" type="text/css">
-        <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
-        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/zenburn.min.css">
-        <script type="text/javascript" src="https://angeldswang.github.io/js/highlight.min.js"></script>
-        <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
-        <script>hljs.initHighlightingOnLoad();</script>
-    </head>
+        <meta name="generator" content="Hugo 0.78.2" />
+
+  <title>chef sever 12 &middot; Brave Matrix</title>
+  <link rel="canonical" href="https://angeldswang.github.io/" />
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/font-hack/2.020/css/hack-extended.min.css">
+  <link rel="stylesheet" type="text/css" href="https://angeldswang.github.io/css/main.css"/>
+  <link rel="stylesheet" type="text/css" href="https://angeldswang.github.io/css/customize.css"/>
+  <link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/zenburn.min.css">
+  <script type="text/javascript" src="https://angeldswang.github.io/js/highlight.min.js"></script>
+  <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script>
+ MathJax = {
+   tex: {
+     inlineMath: [['$', '$'], ['\\(', '\\)']],
+     displayMath: [['$$','$$'], ['\\[', '\\]']],
+     processEscapes: true,
+     processEnvironments: true
+   },
+   options: {
+     skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+   }
+ };
+
+ window.addEventListener('load', (event) => {
+   document.querySelectorAll("mjx-container").forEach(function(x){
+     x.parentElement.classList += 'has-jax'})
+ });
+
+</script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+</head>
 
 <body>
 <!--[if lt IE 7]><p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chrome/‎">install Google Chrome</a> to experience this site.</p><![endif]-->
@@ -50,56 +74,39 @@
     </header>
 
     <section class="post-content">
-        
-
-<p>On production enviroment, chef server is recommended when you need to manage more than one machine at a time.</p>
-
+        <p>On production enviroment, chef server is recommended when you need to manage more than one machine at a time.</p>
 <p>three types:</p>
-
 <ul>
 <li>Hosted Enterprise Chef</li>
 <li>On Premises (Private) Enterprise Chef</li>
 <li>Open Source Chef</li>
 </ul>
-
 <p>There is <a href="http://misheska.com/blog/2014/11/25/chef-server-12/">a good tutorial</a> about setting up chef server 12.
 However, there are some differences when applying to the latest chef-server release version. For our example,</p>
-
 <p>Enviroment:</p>
-
 <ul>
 <li>workstation: macOS Sierra 10.12.2</li>
 <li>chef server and nodes: Vagrant based CentOS 6.5</li>
 <li>Chef verion: →↓</li>
 </ul>
-
-<pre><code class="language-bash">λ angeldswang [my/chef_projects/demo] → chef --version
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">λ angeldswang <span style="color:#f92672">[</span>my/chef_projects/demo<span style="color:#f92672">]</span> → chef --version
 Chef Development Kit Version: 1.0.3
 chef-client version: 12.16.42
-delivery version: master (83358fb62c0f711c70ad5a81030a6cae4017f103)
+delivery version: master <span style="color:#f92672">(</span>83358fb62c0f711c70ad5a81030a6cae4017f103<span style="color:#f92672">)</span>
 berks version: 5.2.0
 kitchen version: 1.14.2
-</code></pre>
-
-<h3 id="install-enterprise-chef-server">Install Enterprise Chef Server</h3>
-
+</code></pre></div><h3 id="install-enterprise-chef-server">Install Enterprise Chef Server</h3>
 <h4 id="create-a-top-level-chef-repo-directory">Create a Top-level Chef-repo Directory</h4>
-
 <p>It will help you handle the additional files necessary to manage Enterprise Chef beyond the cookbooks themselves. And usually, you&rsquo;ll definitely be using more than one cookbook in your project, so we first create a subdirectory named cookbooks. For now, your directory structure will be like:</p>
-
-<pre><code class="language-bash">λ angeldswang [my/chef_projects/demo] → tree -a
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">λ angeldswang <span style="color:#f92672">[</span>my/chef_projects/demo<span style="color:#f92672">]</span> → tree -a
 .
 └── chef-repo
     └── cookbooks
 
-2 directories, 0 files
-</code></pre>
-
-<h4 id="generate-cookbook-for-chef-server">Generate Cookbook for Chef server</h4>
-
+<span style="color:#ae81ff">2</span> directories, <span style="color:#ae81ff">0</span> files
+</code></pre></div><h4 id="generate-cookbook-for-chef-server">Generate Cookbook for Chef server</h4>
 <p>Turn to the cookbooks directory, since we are using chef development kit, we&rsquo;ll generate a cookbook by <code>chef generate cookbook</code> command.</p>
-
-<pre><code class="language-bash">λ angeldswang [demo/chef-repo/cookbooks] → chef generate cookbook server
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">λ angeldswang <span style="color:#f92672">[</span>demo/chef-repo/cookbooks<span style="color:#f92672">]</span> → chef generate cookbook server
 Generating cookbook server
 - Ensuring correct cookbook file content
 - Committing cookbook files to git
@@ -109,10 +116,10 @@ Generating cookbook server
 - Adding build cookbook to feature branch
 - Merging delivery content feature branch to master
 
-Your cookbook is ready. Type `cd server` to enter it.
+Your cookbook is ready. Type <span style="color:#e6db74">`</span>cd server<span style="color:#e6db74">`</span> to enter it.
 ...
 
-λ angeldswang [demo/chef-repo/cookbooks] → tree -aL 2
+λ angeldswang <span style="color:#f92672">[</span>demo/chef-repo/cookbooks<span style="color:#f92672">]</span> → tree -aL <span style="color:#ae81ff">2</span>
 .
 └── server
     ├── .delivery
@@ -127,164 +134,122 @@ Your cookbook is ready. Type `cd server` to enter it.
     ├── spec
     └── test
 
-6 directories, 6 files
-</code></pre>
+<span style="color:#ae81ff">6</span> directories, <span style="color:#ae81ff">6</span> files
+</code></pre></div><p>Then edit the <code>.kitchen.yml</code> file to use the CentOS 6.5 basebox provided by <a href="http://www.learningchef.com/">learningchef</a> (basically we&rsquo;ll follow the chapter 9 &amp; 10 in this book). Since we&rsquo;ll build a chef server with some client nodes in a local network, we need to assign a private network address to the server, like <code>192.168.33.34</code>.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">---
+<span style="color:#f92672">driver</span>:
+  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">vagrant</span>
 
-<p>Then edit the <code>.kitchen.yml</code> file to use the CentOS 6.5 basebox provided by <a href="http://www.learningchef.com/">learningchef</a> (basically we&rsquo;ll follow the chapter 9 &amp; 10 in this book). Since we&rsquo;ll build a chef server with some client nodes in a local network, we need to assign a private network address to the server, like <code>192.168.33.34</code>.</p>
+<span style="color:#f92672">provisioner</span>:
+  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">chef_solo</span>
+  <span style="color:#75715e"># You may wish to disable always updating cookbooks in CI or other testing environments.</span>
+  <span style="color:#75715e"># For example:</span>
+  <span style="color:#75715e">#   always_update_cookbooks: &lt;%= !ENV[&#39;CI&#39;] %&gt;</span>
+  <span style="color:#f92672">always_update_cookbooks</span>: <span style="color:#66d9ef">true</span>
 
-<pre><code class="language-yaml">---
-driver:
-  name: vagrant
+<span style="color:#f92672">verifier</span>:
+  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">inspec</span>
 
-provisioner:
-  name: chef_solo
-  # You may wish to disable always updating cookbooks in CI or other testing environments.
-  # For example:
-  #   always_update_cookbooks: &lt;%= !ENV['CI'] %&gt;
-  always_update_cookbooks: true
+<span style="color:#f92672">platforms</span>:
+  - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">centos65</span>
+    <span style="color:#f92672">driver</span>:
+      <span style="color:#f92672">box</span>: <span style="color:#ae81ff">learningchef/centos65</span>
+      <span style="color:#f92672">box_url</span>: <span style="color:#ae81ff">learningchef/centos65</span>
+      <span style="color:#f92672">network</span>:
+        - [<span style="color:#e6db74">&#34;private_network&#34;</span>, {<span style="color:#f92672">ip</span>: <span style="color:#e6db74">&#34;192.168.33.34&#34;</span>}]
+      <span style="color:#f92672">customize</span>:
+        <span style="color:#f92672">memory</span>: <span style="color:#ae81ff">1536</span>
 
-verifier:
-  name: inspec
-
-platforms:
-  - name: centos65
-    driver:
-      box: learningchef/centos65
-      box_url: learningchef/centos65
-      network:
-        - [&quot;private_network&quot;, {ip: &quot;192.168.33.34&quot;}]
-      customize:
-        memory: 1536
-
-suites:
-  - name: default
-    run_list:
-      - recipe[server::default]
-    verifier:
-      inspec_tests:
-        - test/recipes
-    attributes:
-</code></pre>
-
-<p>Notice that, if you set <code>always_update_cookbooks: true</code>, you need run <code>berks install</code> first to create <code>Berksfile.lock</code>, from which Kitchen will upload the latest cookbooks.</p>
-
+<span style="color:#f92672">suites</span>:
+  - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">default</span>
+    <span style="color:#f92672">run_list</span>:
+      - <span style="color:#ae81ff">recipe[server::default]</span>
+    <span style="color:#f92672">verifier</span>:
+      <span style="color:#f92672">inspec_tests</span>:
+        - <span style="color:#ae81ff">test/recipes</span>
+    <span style="color:#f92672">attributes</span>:
+</code></pre></div><p>Notice that, if you set <code>always_update_cookbooks: true</code>, you need run <code>berks install</code> first to create <code>Berksfile.lock</code>, from which Kitchen will upload the latest cookbooks.</p>
 <h4 id="prepare-attributes-and-recipes">Prepare attributes and recipes</h4>
-
 <p>Before we build our chef server, we&rsquo;ll write attributes and recipes to make sure the chef server can be installed automatically. Run <code>chef generate attribute default</code> to create the default attributes file and add the chef server download url according to your linux distribution, in our case, we&rsquo;ll choose <a href="https://downloads.chef.io/chef-server">Red Hat Enterprise Linux 6</a>&rsquo;s version.</p>
-
 <p>Define package download url in attributes/default.rb</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">default<span style="color:#f92672">[</span><span style="color:#e6db74">&#39;server&#39;</span><span style="color:#f92672">][</span><span style="color:#e6db74">&#39;url&#39;</span><span style="color:#f92672">]</span> <span style="color:#f92672">=</span> \
+<span style="color:#e6db74">&#39;https://packages.chef.io/files/stable/chef-server/12.11.1/el/6/&#39;</span>\
+<span style="color:#e6db74">&#39;chef-server-core-12.11.1-1.el6.x86_64.rpm&#39;</span>
+</code></pre></div><p>Add install and reconfigure actions in recipes/default.rb</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">package_url <span style="color:#f92672">=</span> node<span style="color:#f92672">[</span><span style="color:#e6db74">&#39;server&#39;</span><span style="color:#f92672">][</span><span style="color:#e6db74">&#39;url&#39;</span><span style="color:#f92672">]</span>
+package_name <span style="color:#f92672">=</span> <span style="color:#f92672">::</span><span style="color:#66d9ef">File</span><span style="color:#f92672">.</span>basename(package_url)
+package_local_path <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">#{</span><span style="color:#66d9ef">Chef</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Config</span><span style="color:#f92672">[</span><span style="color:#e6db74">:file_cache_path</span><span style="color:#f92672">]</span><span style="color:#e6db74">}</span><span style="color:#e6db74">/</span><span style="color:#e6db74">#{</span>package_name<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
 
-<pre><code class="language-ruby">default['server']['url'] = \
-'https://packages.chef.io/files/stable/chef-server/12.11.1/el/6/'\
-'chef-server-core-12.11.1-1.el6.x86_64.rpm'
-</code></pre>
-
-<p>Add install and reconfigure actions in recipes/default.rb</p>
-
-<pre><code class="language-ruby">package_url = node['server']['url']
-package_name = ::File.basename(package_url)
-package_local_path = &quot;#{Chef::Config[:file_cache_path]}/#{package_name}&quot;
-
-remote_file package_local_path do
+remote_file package_local_path <span style="color:#66d9ef">do</span>
   source package_url
-end
+<span style="color:#66d9ef">end</span>
 
-package package_name do
+package package_name <span style="color:#66d9ef">do</span>
   source package_local_path
-  provider Chef::Provider::Package::Rpm
-  notifies :run, 'execute[reconfigure-chef-server]', :immediately
-end
+  provider <span style="color:#66d9ef">Chef</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Provider</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Package</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Rpm</span>
+  notifies <span style="color:#e6db74">:run</span>, <span style="color:#e6db74">&#39;execute[reconfigure-chef-server]&#39;</span>, <span style="color:#e6db74">:immediately</span>
+<span style="color:#66d9ef">end</span>
 
-execute 'reconfigure-chef-server' do
-  command 'chef-server-ctl reconfigure'
-  action :nothing
-end
-</code></pre>
-
-<p>Then you can run <code>kitchen converge</code> to build the server node. Depends on your network speed, it&rsquo;ll take your 10 ~ 50 mins.</p>
-
+execute <span style="color:#e6db74">&#39;reconfigure-chef-server&#39;</span> <span style="color:#66d9ef">do</span>
+  command <span style="color:#e6db74">&#39;chef-server-ctl reconfigure&#39;</span>
+  action <span style="color:#e6db74">:nothing</span>
+<span style="color:#66d9ef">end</span>
+</code></pre></div><p>Then you can run <code>kitchen converge</code> to build the server node. Depends on your network speed, it&rsquo;ll take your 10 ~ 50 mins.</p>
 <h3 id="configure-chef-server">Configure Chef Server</h3>
-
 <p>Since chef server 12.0, the management web UI is not enabled by default. That means you need configure your chef server through the command line, which mainly includes two things:</p>
-
 <ul>
 <li>Create an admin user</li>
 <li>Create an organization</li>
 </ul>
-
 <p>Both of them can be performed by <code>chef-server-ctl</code> subcommands: <code>user-create</code> and <code>org-create</code> respectively.</p>
-
-<pre><code class="language-bash">λ angeldswang [chef-repo/cookbooks/server] at  master !?
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">λ angeldswang <span style="color:#f92672">[</span>chef-repo/cookbooks/server<span style="color:#f92672">]</span> at  master !?
 → kitchen login
-Last login: Sat Jan 21 17:25:50 2017 from 10.0.2.2
+Last login: Sat Jan <span style="color:#ae81ff">21</span> 17:25:50 <span style="color:#ae81ff">2017</span> from 10.0.2.2
 
-[vagrant@default-centos65 ~]$ sudo chef-server-ctl user-create angeldswang Angelds Wang angeldswang@gmail.com 123456 -f angeldswang.pem
-[vagrant@default-centos65 ~]$ sudo chef-server-ctl org-create chefserver_demo &quot;chef server demo V12&quot; --association_user angeldswang -f chefserver_demo-validator.pem
-[vagrant@default-centos65 ~]$ ls
+<span style="color:#f92672">[</span>vagrant@default-centos65 ~<span style="color:#f92672">]</span>$ sudo chef-server-ctl user-create angeldswang Angelds Wang angeldswang@gmail.com <span style="color:#ae81ff">123456</span> -f angeldswang.pem
+<span style="color:#f92672">[</span>vagrant@default-centos65 ~<span style="color:#f92672">]</span>$ sudo chef-server-ctl org-create chefserver_demo <span style="color:#e6db74">&#34;chef server demo V12&#34;</span> --association_user angeldswang -f chefserver_demo-validator.pem
+<span style="color:#f92672">[</span>vagrant@default-centos65 ~<span style="color:#f92672">]</span>$ ls
 angeldswang.pem  chefserver_demo-validator.pem
-</code></pre>
-
-<p>You can refer to the <a href="https://docs.chef.io/ctl_chef_server.html#user-create">chef document</a> for detail options. And now we create the admin user and the organization he belongs to. Notice that there were two secret keys also being created respectively. They will be used to validate the security of connection request. Next we&rsquo;ll show how to use the secret keys to construct connection to chef server.</p>
-
+</code></pre></div><p>You can refer to the <a href="https://docs.chef.io/ctl_chef_server.html#user-create">chef document</a> for detail options. And now we create the admin user and the organization he belongs to. Notice that there were two secret keys also being created respectively. They will be used to validate the security of connection request. Next we&rsquo;ll show how to use the secret keys to construct connection to chef server.</p>
 <h4 id="configure-knife">Configure knife</h4>
-
 <p>From now on, we&rsquo;ll use knife, a command-line tool that provides an interface between a local chef-repo and the chef server, to manage our chef server from our local machine. First of all, let&rsquo;s mkdir a new directory to place the configuration files about knife, usually a <code>.chef</code> directory under the top-level directory of the repository, for our case, it&rsquo;s the <code>chef-repo/</code>. Before configuing our knife, we need to copy above two secret keys to the <code>.chef</code> directory.</p>
-
-<pre><code class="language-bash">λ angeldswang [chef_projects/demo/chef-repo] → scp -o PubkeyAuthentication=no vagrant@192.168.33.34:/home/vagrant/angeldswang.pem .chef/
-λ angeldswang [chef_projects/demo/chef-repo] → scp -o PubkeyAuthentication=no vagrant@192.168.33.34:/home/vagrant/chefserver_demo-validator.pem .chef/
-</code></pre>
-
-<p>Then you need create a <code>chef-repo/.chef/knife.rb</code> file by your hand.</p>
-
-<pre><code class="language-ruby">current_dir = File.dirname(__FILE__)
-log_level                :info
-log_location             STDOUT
-node_name                &quot;angeldswang&quot;
-client_key               &quot;#{current_dir}/angeldswang.pem&quot;
-validation_client_name   &quot;chefserver_demo-validator&quot;
-validation_key           &quot;#{current_dir}/chefserver_demo-validator.pem&quot;
-chef_server_url          &quot;https://default-centos65:443/organizations/chefserver_demo&quot;
-cache_type               'BasicFile'
-cache_options( :path =&gt; &quot;#{ENV['HOME']}/.chef/checksums&quot; )
-cookbook_path            [&quot;#{current_dir}/../cookbooks&quot;]
-</code></pre>
-
-<p>Since the default server domain is <code>default-centos65</code>, the <code>chef_server_url</code> should be <code>https://default-centos65:443/organizations/chefserver_demo</code>. And make sure you can access the domain from your local machine, remember to add the host setting <code>192.168.33.34 default-centos65</code> to your <code>/etc/hosts</code>.</p>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">λ angeldswang <span style="color:#f92672">[</span>chef_projects/demo/chef-repo<span style="color:#f92672">]</span> → scp -o PubkeyAuthentication<span style="color:#f92672">=</span>no vagrant@192.168.33.34:/home/vagrant/angeldswang.pem .chef/
+λ angeldswang <span style="color:#f92672">[</span>chef_projects/demo/chef-repo<span style="color:#f92672">]</span> → scp -o PubkeyAuthentication<span style="color:#f92672">=</span>no vagrant@192.168.33.34:/home/vagrant/chefserver_demo-validator.pem .chef/
+</code></pre></div><p>Then you need create a <code>chef-repo/.chef/knife.rb</code> file by your hand.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">current_dir <span style="color:#f92672">=</span> <span style="color:#66d9ef">File</span><span style="color:#f92672">.</span>dirname(__FILE__)
+log_level                <span style="color:#e6db74">:info</span>
+log_location             <span style="color:#66d9ef">STDOUT</span>
+node_name                <span style="color:#e6db74">&#34;angeldswang&#34;</span>
+client_key               <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">#{</span>current_dir<span style="color:#e6db74">}</span><span style="color:#e6db74">/angeldswang.pem&#34;</span>
+validation_client_name   <span style="color:#e6db74">&#34;chefserver_demo-validator&#34;</span>
+validation_key           <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">#{</span>current_dir<span style="color:#e6db74">}</span><span style="color:#e6db74">/chefserver_demo-validator.pem&#34;</span>
+chef_server_url          <span style="color:#e6db74">&#34;https://default-centos65:443/organizations/chefserver_demo&#34;</span>
+cache_type               <span style="color:#e6db74">&#39;BasicFile&#39;</span>
+cache_options( <span style="color:#e6db74">:path</span> <span style="color:#f92672">=&gt;</span> <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">#{</span><span style="color:#66d9ef">ENV</span><span style="color:#f92672">[</span><span style="color:#e6db74">&#39;HOME&#39;</span><span style="color:#f92672">]</span><span style="color:#e6db74">}</span><span style="color:#e6db74">/.chef/checksums&#34;</span> )
+cookbook_path            <span style="color:#f92672">[</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">#{</span>current_dir<span style="color:#e6db74">}</span><span style="color:#e6db74">/../cookbooks&#34;</span><span style="color:#f92672">]</span>
+</code></pre></div><p>Since the default server domain is <code>default-centos65</code>, the <code>chef_server_url</code> should be <code>https://default-centos65:443/organizations/chefserver_demo</code>. And make sure you can access the domain from your local machine, remember to add the host setting <code>192.168.33.34 default-centos65</code> to your <code>/etc/hosts</code>.</p>
 <p>For now, you can use knife to check the connection by running <code>knife client list</code>, which asks chef server to list valid clients. However, you&rsquo;ll encounter the following problem.</p>
-
-<pre><code class="language-bash">λ angeldswang [chef_projects/demo/chef-repo] → knife client list
-ERROR: SSL Validation failure connecting to host: default-centos65 - SSL_connect returned=1 errno=0 state=error: certificate verify failed
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">λ angeldswang <span style="color:#f92672">[</span>chef_projects/demo/chef-repo<span style="color:#f92672">]</span> → knife client list
+ERROR: SSL Validation failure connecting to host: default-centos65 - SSL_connect returned<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> errno<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span> state<span style="color:#f92672">=</span>error: certificate verify failed
 ERROR: Could not establish a secure connection to the server.
-Use `knife ssl check` to troubleshoot your SSL configuration.
+Use <span style="color:#e6db74">`</span>knife ssl check<span style="color:#e6db74">`</span> to troubleshoot your SSL configuration.
 If your Chef Server uses a self-signed certificate, you can use
-`knife ssl fetch` to make knife trust the server's certificates.
-</code></pre>
-
-<p>This is because the chef server will generate a self-signed SSL certificate during the installation process, but your local workstation doesn&rsquo;t have the certificate. As the message hint, you can use <code>knife ssl fetch</code> to get the certificate.
+<span style="color:#e6db74">`</span>knife ssl fetch<span style="color:#e6db74">`</span> to make knife trust the server<span style="color:#960050;background-color:#1e0010">&#39;</span>s certificates.
+</code></pre></div><p>This is because the chef server will generate a self-signed SSL certificate during the installation process, but your local workstation doesn&rsquo;t have the certificate. As the message hint, you can use <code>knife ssl fetch</code> to get the certificate.
 For our case, it should be placed at <code>chef-repo/.chef/trusted_certs/default-centos65.crt</code>. Then run <code>knife client list</code> again, it should work right now.</p>
-
-<pre><code class="language-bash">λ angeldswang [chef_projects/demo/chef-repo] → knife client list
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">λ angeldswang <span style="color:#f92672">[</span>chef_projects/demo/chef-repo<span style="color:#f92672">]</span> → knife client list
 chefserver_demo-validator
-</code></pre>
-
-<p>If you still have some problem with this step, you can check out <a href="http://www.thegeekstuff.com/2016/06/knife-ssl-check-fetch/">this article</a> for more helpful information.</p>
-
+</code></pre></div><p>If you still have some problem with this step, you can check out <a href="http://www.thegeekstuff.com/2016/06/knife-ssl-check-fetch/">this article</a> for more helpful information.</p>
 <p>Just out of curiosity, you can visit the <code>chef_server_url</code> on your browser, <code>https://default-centos65:443/organizations/chefserver_demo</code>. It&rsquo;s cool, but you must be suggested to install the Management Console manually if you want to use browser to manage your chef server. All right, let&rsquo;s do that.</p>
-
 <p>First, login to the chef server, and run</p>
-
 <ul>
 <li><code>chef-server-ctl install chef-manage</code></li>
 <li><code>chef-server-ctl reconfigure</code></li>
 <li><code>chef-manage-ctl reconfigure</code></li>
 </ul>
-
 <p>all of these commands should be runned with sudo.</p>
-
 <p>For a long long journey, you can access the chef management web UI by signin with the user created by <code>chef-server-ctl user-create</code>.</p>
-
-<p><img src="/images/chef-manager.jpeg" alt="chef manager" /></p>
+<p><img src="/images/chef-manager.jpeg" alt="chef manager"></p>
 
     </section>
 
@@ -359,30 +324,6 @@ chefserver_demo-validator
     </footer>
 
     <script type="text/javascript" src="https://angeldswang.github.io/js/fittext.js"></script>
-    <script type="text/javascript" async
-            src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-     MathJax.Hub.Config({
-         tex2jax: {
-             inlineMath: [['$','$'], ['\\(','\\)']],
-             displayMath: [['$$','$$'], ['\[','\]']],
-             processEscapes: true,
-             processEnvironments: true,
-             skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
-             TeX: { equationNumbers: { autoNumber: "AMS" },
-                    extensions: ["AMSmath.js", "AMSsymbols.js"] }
-         }
-     });
-
-     MathJax.Hub.Queue(function() {
-         
-         
-         
-         var all = MathJax.Hub.getAllJax(), i;
-         for(i = 0; i < all.length; i += 1) {
-             all[i].SourceElement().parentNode.className += ' has-jax';
-         }
-     });
-    </script>
     <script type="text/javascript">
       $(".heading").fitText();
     </script>

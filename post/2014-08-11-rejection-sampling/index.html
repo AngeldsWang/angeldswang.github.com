@@ -4,8 +4,8 @@
 <!--[if IE 8]><html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--><html class="no-js" prefix="og: http://ogp.me/ns#" xmlns:og="http://ogp.me/ns#"><!--<![endif]-->
 
-    <head>
-                <meta charset="utf-8">
+<head>
+          <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
@@ -24,20 +24,44 @@
         <meta property="og:article:author" content="Angelds Wang" />
         <meta property="og:article:published_time" content="2014-08-19T03:11:55&#43;08:00" />
     
-        <meta name="generator" content="Hugo 0.26" />
-        <title>Rejection Sampling &middot; Brave Matrix</title>
-        <link rel="canonical" href="https://angeldswang.github.io/" />
-        <link rel="alternate" type="application/rss+xml" title="RSS" href="">
-        <link rel="stylesheet" href="//cdn.jsdelivr.net/font-hack/2.020/css/hack-extended.min.css">
-        <link rel="stylesheet" type="text/css" href="https://angeldswang.github.io/css/main.css"/>
-        <link rel="stylesheet" type="text/css" href="https://angeldswang.github.io/css/customize.css"/>
-        <link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300|Montserrat:700" rel="stylesheet" type="text/css">
-        <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
-        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/zenburn.min.css">
-        <script type="text/javascript" src="https://angeldswang.github.io/js/highlight.min.js"></script>
-        <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
-        <script>hljs.initHighlightingOnLoad();</script>
-    </head>
+        <meta name="generator" content="Hugo 0.78.2" />
+
+  <title>Rejection Sampling &middot; Brave Matrix</title>
+  <link rel="canonical" href="https://angeldswang.github.io/" />
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/font-hack/2.020/css/hack-extended.min.css">
+  <link rel="stylesheet" type="text/css" href="https://angeldswang.github.io/css/main.css"/>
+  <link rel="stylesheet" type="text/css" href="https://angeldswang.github.io/css/customize.css"/>
+  <link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/zenburn.min.css">
+  <script type="text/javascript" src="https://angeldswang.github.io/js/highlight.min.js"></script>
+  <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script>
+ MathJax = {
+   tex: {
+     inlineMath: [['$', '$'], ['\\(', '\\)']],
+     displayMath: [['$$','$$'], ['\\[', '\\]']],
+     processEscapes: true,
+     processEnvironments: true
+   },
+   options: {
+     skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+   }
+ };
+
+ window.addEventListener('load', (event) => {
+   document.querySelectorAll("mjx-container").forEach(function(x){
+     x.parentElement.classList += 'has-jax'})
+ });
+
+</script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+</head>
 
 <body>
 <!--[if lt IE 7]><p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chrome/‎">install Google Chrome</a> to experience this site.</p><![endif]-->
@@ -50,14 +74,11 @@
     </header>
 
     <section class="post-content">
-        <p>如何产生符合一定分布的随机变量？对于简单的随机变量，我们往往可以直接获得其概率分布函数<code>$ F(x)=P(X\leqslant x) $</code>。但是对于更多复杂的随机变量来说，获得其概率分布的解析表达式是不可能的。对于这种情况，要产生这样的随机变量就需要另辟蹊径。<strong>Rejection sampling</strong>就是其中最具代表性的一种。下文主要参考了<a href="http://www.columbia.edu/~ks20/4703-Sigman/Monte-Carlo-Sigman.html" title="Karl Sigman's Lecture Notes on Monte Carlo Simulation">Karl Sigman的notes</a>。</p>
-
-<p>Rejection sampling的主要思想是用另一个容易产生的概率分布<code>$ G $</code>，(它的概率密度是<code>$ g(x) $</code>)，来尽可能的逼近所求的概率分布<code>$ F $</code>。形式化出来就是，这两个概率分布密度的比有明确的上界<code>$ c $</code>，即<code>$ \text{sup}_x\{f(x)/g(x)\}\leqslant c $</code>。实际中，<code>$ c $</code>的值尽可能的接近<code>$ 1 $</code>。下面首先来看如何用Rejection sampling来获得连续随机变量。对于离散随机变量，情况基本类似。
+        <p>如何产生符合一定分布的随机变量？对于简单的随机变量，我们往往可以直接获得其概率分布函数$ F(x)=P(X\leqslant x) $。但是对于更多复杂的随机变量来说，获得其概率分布的解析表达式是不可能的。对于这种情况，要产生这样的随机变量就需要另辟蹊径。<strong>Rejection sampling</strong>就是其中最具代表性的一种。下文主要参考了<a href="http://www.columbia.edu/~ks20/4703-Sigman/Monte-Carlo-Sigman.html" title="Karl Sigman's Lecture Notes on Monte Carlo Simulation">Karl Sigman的notes</a>。</p>
+<p>Rejection sampling的主要思想是用另一个容易产生的概率分布$ G $，(它的概率密度是$ g(x) $)，来尽可能的逼近所求的概率分布$ F $。形式化出来就是，这两个概率分布密度的比有明确的上界$ c $，即$ \text{sup}_x{f(x)/g(x)}\leqslant c $。实际中，$ c $的值尽可能的接近$ 1 $。下面首先来看如何用Rejection sampling来获得连续随机变量。对于离散随机变量，情况基本类似。
 <br>
 <br></p>
-
 <h3 id="用rejection-sampling算法产生连续随机变量">用Rejection sampling算法产生连续随机变量</h3>
-
 <table border='2' cellpadding='15px' bordercolor='#5050'>
 <td>
 <ol>
@@ -67,55 +88,37 @@
 </ol>
 </td>
 </table>
-
 <p>在证明上述算法之前，有以下几点值得我们注意：</p>
-
 <ul>
-<li><code>$ f(Y) $</code>和<code>$ g(Y) $</code>都是随机变量，因此<code>$ \frac{f(Y)}{cg(Y)} $</code>也是一个随机变量。这一比值和step 2 中的随机变量<code>$ U $</code>是相互独立的。</li>
-<li>这一比值是以0和1为上下界的，即<code>$ 0\leqslant \frac{f(Y)}{cg(Y)}\leqslant 1 $</code>。</li>
-<li>step 1 和 step 2 调用的次数<code>$ N $</code>(也就是成功采样获得一个<code>$ X $</code>所需的迭代次数)本身也是一个服从几何分布的随机变量。其一次试验就发生的概率<code>$ p=P(U\leqslant \frac{f(Y)}{cg(Y)}) $</code>，则<code>$ P(N=n)=(1-p)^{n-1}p, n\geqslant 1 $</code>。因此迭代次数的期望为<code>$ E(N)=1/p $</code>。</li>
-<li>最终，我们可以将所期望获得的随机变量<code>$ X $</code>的概率分布<code>$ F $</code>等价于在事件<code>$ \{U\leqslant \frac{f(Y)}{cg(Y)}\} $</code>发生的条件下，随机变量<code>$ Y $</code>的概率分布。
+<li>$ f(Y) $和$ g(Y) $都是随机变量，因此$ \frac{f(Y)}{cg(Y)} $也是一个随机变量。这一比值和step 2 中的随机变量$ U $是相互独立的。</li>
+<li>这一比值是以0和1为上下界的，即$ 0\leqslant \frac{f(Y)}{cg(Y)}\leqslant 1 $。</li>
+<li>step 1 和 step 2 调用的次数$ N $(也就是成功采样获得一个$ X $所需的迭代次数)本身也是一个服从几何分布的随机变量。其一次试验就发生的概率$ p=P(U\leqslant \frac{f(Y)}{cg(Y)}) $，则$ P(N=n)=(1-p)^{n-1}p, n\geqslant 1 $。因此迭代次数的期望为$ E(N)=1/p $。</li>
+<li>最终，我们可以将所期望获得的随机变量$ X $的概率分布$ F $等价于在事件$ {U\leqslant \frac{f(Y)}{cg(Y)}} $发生的条件下，随机变量$ Y $的概率分布。
 <br/>
-另外，若以随机变量<code>$ Y $</code>为条件，事件<code>$ \{U\leqslant \frac{f(Y)}{cg(Y)}\} $</code>发生的概率为：<code>$ P(U\leqslant \frac{f(Y)}{cg(Y)}|Y=y)=\frac{f(y)}{cg(y)} $</code>。考虑到<code>$ Y $</code>的概率密度为<code>$ g(y) $</code>，通过去条件化并对<code>$ Y $</code>所有可能的值上进行积分，这样就可以得到<code>$ p=P(U\leqslant \frac{f(Y)}{cg(Y)}) $</code>，即：
-<code>$$
-\begin{align*} 
-p &amp; = \int_{-\infty}^{\infty}\frac{f(y)}{cg(y)}\times g(y)\text{d}y\\
-&amp; = \frac{1}{c}\int_{-\infty}^{\infty}f(y)\text{d}y\\
-&amp; = \frac{1}{c} 
+另外，若以随机变量$ Y $为条件，事件$ {U\leqslant \frac{f(Y)}{cg(Y)}} $发生的概率为：$ P(U\leqslant \frac{f(Y)}{cg(Y)}|Y=y)=\frac{f(y)}{cg(y)} $。考虑到$ Y $的概率密度为$ g(y) $，通过去条件化并对$ Y $所有可能的值上进行积分，这样就可以得到$ p=P(U\leqslant \frac{f(Y)}{cg(Y)}) $，即：
+$$
+\begin{align*}
+p &amp; = \int_{-\infty}^{\infty}\frac{f(y)}{cg(y)}\times g(y)\text{d}y\<br>
+&amp; = \frac{1}{c}\int_{-\infty}^{\infty}f(y)\text{d}y\<br>
+&amp; = \frac{1}{c}
 \end{align*}
-$$</code>
-因此，算法的迭代次数的期望即为<code>$ E(N)=c $</code>。从这个角度上可以看出，若要使得算法的迭代次数尽可能少，等价于最小化上确界常数<code>$ c $</code>。
-算法成功采样一个随机变量<code>$ X $</code>所需的迭代次数的期望即为上确界常数<code>$ c=\text{sup}_x\{f(x)/g(x)\} $</code>。
+$$
+因此，算法的迭代次数的期望即为$ E(N)=c $。从这个角度上可以看出，若要使得算法的迭代次数尽可能少，等价于最小化上确界常数$ c $。
+算法成功采样一个随机变量$ X $所需的迭代次数的期望即为上确界常数$ c=\text{sup}_x{f(x)/g(x)} $。
 <br>
 <br></li>
 </ul>
-
 <h3 id="rejection-sampling算法证明">Rejection sampling算法证明</h3>
-
-<p>由上述说明可知，要证明Rejection sampling算法可行，只需要证明<code>$ \text{在给定条件}U\leqslant b\frac{f(Y)}{cg(Y)}\text{下}，\text{随机变量}Y\text{的概率分布即为}F，\text{即}，P(Y\leqslant y|U\leqslant \frac{f(Y)}{cg(Y)})=F(y) $</code>。
-令<code>$ B=\{U\leqslant \frac{f(Y)}{cg(Y)}\} $</code>，<code>$ A=\{Y\leqslant y\} $</code>，又因为<code>$ P(B)=p=\frac{1}{c} $</code>，根据贝叶斯公式：
-<code>$$ 
-\begin{align*}
-\frac{P(B|A)P(A)}{P(B)} &amp;= P(U\leqslant \frac{f(Y)}{cg(Y)}|Y=y)\times \frac{G(y)}{1/c}\\
-                        &amp;= \frac{P(U\leqslant \frac{f(Y)}{cg(Y)}, Y=y)}{G(y)}\times \frac{G(y)}{1/c}\\
-                        &amp;= c\int_{-\infty}^yP(U\leqslant \frac{f(Y)}{cg(Y)}|Y=w\leqslant y)g(w)\text{d}w\\
-                        &amp;= c\int_{-\infty}^y\frac{f(w)}{cg(w)}g(w)\text{d}w\\
-                        &amp;= \int_{-\infty}^yf(w)\text{d}w\\
-                        &amp;= F(y)=P(A|B)=P(Y\leqslant y|U\leqslant \frac{f(Y)}{cg(Y)})~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\blacksquare
-\end{align*}
-$$</code></p>
-
+<p>由上述说明可知，要证明Rejection sampling算法可行，只需要证明$ \text{在给定条件}U\leqslant b\frac{f(Y)}{cg(Y)}\text{下}，\text{随机变量}Y\text{的概率分布即为}F，\text{即}，P(Y\leqslant y|U\leqslant \frac{f(Y)}{cg(Y)})=F(y) $。
+令$ B={U\leqslant \frac{f(Y)}{cg(Y)}} $，$ A={Y\leqslant y} $，又因为$ P(B)=p=\frac{1}{c} $，根据贝叶斯公式：
+<code>$$  \begin{align*} \frac{P(B|A)P(A)}{P(B)} &amp;= P(U\leqslant \frac{f(Y)}{cg(Y)}|Y=y)\times \frac{G(y)}{1/c}\\ &amp;= \frac{P(U\leqslant \frac{f(Y)}{cg(Y)}, Y=y)}{G(y)}\times \frac{G(y)}{1/c}\\ &amp;= c\int_{-\infty}^yP(U\leqslant \frac{f(Y)}{cg(Y)}|Y=w\leqslant y)g(w)\text{d}w\\ &amp;= c\int_{-\infty}^y\frac{f(w)}{cg(w)}g(w)\text{d}w\\ &amp;= \int_{-\infty}^yf(w)\text{d}w\\ &amp;= F(y)=P(A|B)=P(Y\leqslant y|U\leqslant \frac{f(Y)}{cg(Y)})~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\blacksquare \end{align*} $$</code></p>
 <h3 id="用rejection-sampling算法产生离散随机变量">用Rejection sampling算法产生离散随机变量</h3>
-
-<p>产生离散随机变量的方法和产生连续随机变量的方法基本一致，只是这时候目标的概率分布函数<code>$ F $</code>变成了概率质量函数<code>$ p(k)=P(X=k) $</code>，辅助的概率分布<code>$ G $</code>变成了概率质量函数<code>$ q(k)=P(Y=k) $</code>，并满足条件<code>$ \text{sup}_x\{p(k)/q(k)\}\leqslant c &lt; \infty $</code>。
+<p>产生离散随机变量的方法和产生连续随机变量的方法基本一致，只是这时候目标的概率分布函数$ F $变成了概率质量函数$ p(k)=P(X=k) $，辅助的概率分布$ G $变成了概率质量函数$ q(k)=P(Y=k) $，并满足条件$ \text{sup}_x{p(k)/q(k)}\leqslant c &lt; \infty $。
 <br>
 <br></p>
-
-<h3 id="示例-产生服从简单beta分布的随机变量">示例：产生服从简单Beta分布的随机变量</h3>
-
-<p>Beta分布的概率密度函数为<code>$ f(x)=bx^n(1-x)^m，x\in (0,1) $</code>，其中<code>$ b=[\int_0^1x^n(1-x)^m\text{d}x]^{-1} $</code>为归一化常数。这里我们只研究<code>$ n=m&gt;1 $</code>的情况，此时Beta分布的概率密度函数关于<code>$ x=\frac{1}{2} $</code>对称。这里我们选择<code>$ g(y)=1 $</code>这一均匀分布作为辅助的概率密度函数。因此，<code>$ c=\text{sup}_x\frac{f(x)}{g(x)}=\text{sup}_xf(x) $</code>当<code>$ x=\frac{1}{2} $</code>时取到最大，即<code>$ c=b4^{-n} $</code>。
-这样，若要产生服从<code>$ f(x)=b(x(1-x))^n $</code>这一简单Beta分布的随机变量，只需要：</p>
-
+<h3 id="示例产生服从简单beta分布的随机变量">示例：产生服从简单Beta分布的随机变量</h3>
+<p>Beta分布的概率密度函数为$ f(x)=bx^n(1-x)^m，x\in (0,1) $，其中$ b=[\int_0^1x^n(1-x)^m\text{d}x]^{-1} $为归一化常数。这里我们只研究$ n=m&gt;1 $的情况，此时Beta分布的概率密度函数关于$ x=\frac{1}{2} $对称。这里我们选择$ g(y)=1 $这一均匀分布作为辅助的概率密度函数。因此，$ c=\text{sup}_x\frac{f(x)}{g(x)}=\text{sup}_xf(x) $当$ x=\frac{1}{2} $时取到最大，即$ c=b4^{-n} $。
+这样，若要产生服从$ f(x)=b(x(1-x))^n $这一简单Beta分布的随机变量，只需要：</p>
 <table border='2' cellpadding='15px' bordercolor='#5050'>
 <td>
 <ol>
@@ -197,30 +200,6 @@ $$</code></p>
     </footer>
 
     <script type="text/javascript" src="https://angeldswang.github.io/js/fittext.js"></script>
-    <script type="text/javascript" async
-            src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-     MathJax.Hub.Config({
-         tex2jax: {
-             inlineMath: [['$','$'], ['\\(','\\)']],
-             displayMath: [['$$','$$'], ['\[','\]']],
-             processEscapes: true,
-             processEnvironments: true,
-             skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
-             TeX: { equationNumbers: { autoNumber: "AMS" },
-                    extensions: ["AMSmath.js", "AMSsymbols.js"] }
-         }
-     });
-
-     MathJax.Hub.Queue(function() {
-         
-         
-         
-         var all = MathJax.Hub.getAllJax(), i;
-         for(i = 0; i < all.length; i += 1) {
-             all[i].SourceElement().parentNode.className += ' has-jax';
-         }
-     });
-    </script>
     <script type="text/javascript">
       $(".heading").fitText();
     </script>

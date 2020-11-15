@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Categories on Brave Matrix</title>
@@ -6,10 +6,24 @@
     <description>Recent content in Categories on Brave Matrix</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 28 Jan 2015 15:35:55 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 12 Jan 2017 15:06:16 +0900</lastBuildDate><atom:link href="https://angeldswang.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>chef</title>
+      <link>https://angeldswang.github.io/categories/chef/</link>
+      <pubDate>Thu, 12 Jan 2017 15:06:16 +0900</pubDate>
+      
+      <guid>https://angeldswang.github.io/categories/chef/</guid>
+      <description></description>
+    </item>
     
-	<atom:link href="https://angeldswang.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
-    
+    <item>
+      <title>chef server</title>
+      <link>https://angeldswang.github.io/categories/chef-server/</link>
+      <pubDate>Thu, 12 Jan 2017 15:06:16 +0900</pubDate>
+      
+      <guid>https://angeldswang.github.io/categories/chef-server/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Angularjs</title>
@@ -21,20 +35,11 @@
     </item>
     
     <item>
-      <title>Chef</title>
-      <link>https://angeldswang.github.io/categories/chef/</link>
-      <pubDate>Thu, 12 Jan 2017 15:06:16 +0900</pubDate>
+      <title>Number Theory</title>
+      <link>https://angeldswang.github.io/categories/number-theory/</link>
+      <pubDate>Sun, 09 Nov 2014 21:15:55 +0800</pubDate>
       
-      <guid>https://angeldswang.github.io/categories/chef/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Chef Server</title>
-      <link>https://angeldswang.github.io/categories/chef-server/</link>
-      <pubDate>Thu, 12 Jan 2017 15:06:16 +0900</pubDate>
-      
-      <guid>https://angeldswang.github.io/categories/chef-server/</guid>
+      <guid>https://angeldswang.github.io/categories/number-theory/</guid>
       <description></description>
     </item>
     
@@ -44,15 +49,6 @@
       <pubDate>Tue, 19 Aug 2014 03:11:55 +0800</pubDate>
       
       <guid>https://angeldswang.github.io/categories/monte-carlo/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Number Theory</title>
-      <link>https://angeldswang.github.io/categories/number-theory/</link>
-      <pubDate>Sun, 09 Nov 2014 21:15:55 +0800</pubDate>
-      
-      <guid>https://angeldswang.github.io/categories/number-theory/</guid>
       <description></description>
     </item>
     

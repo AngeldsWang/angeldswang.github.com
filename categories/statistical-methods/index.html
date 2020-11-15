@@ -4,8 +4,8 @@
 <!--[if IE 8]><html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--><html class="no-js" prefix="og: http://ogp.me/ns#" xmlns:og="http://ogp.me/ns#"><!--<![endif]-->
 
-    <head>
-                <meta charset="utf-8">
+<head>
+          <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
@@ -22,20 +22,44 @@
     
         <meta property="og:type" content="website" />
     
-        <meta name="generator" content="Hugo 0.26" />
-        <title>Statistical Methods &middot; Brave Matrix</title>
-        <link rel="canonical" href="https://angeldswang.github.io/" />
-        <link rel="alternate" type="application/rss+xml" title="RSS" href="https://angeldswang.github.io/categories/statistical-methods/index.xml">
-        <link rel="stylesheet" href="//cdn.jsdelivr.net/font-hack/2.020/css/hack-extended.min.css">
-        <link rel="stylesheet" type="text/css" href="https://angeldswang.github.io/css/main.css"/>
-        <link rel="stylesheet" type="text/css" href="https://angeldswang.github.io/css/customize.css"/>
-        <link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300|Montserrat:700" rel="stylesheet" type="text/css">
-        <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
-        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/zenburn.min.css">
-        <script type="text/javascript" src="https://angeldswang.github.io/js/highlight.min.js"></script>
-        <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
-        <script>hljs.initHighlightingOnLoad();</script>
-    </head>
+        <meta name="generator" content="Hugo 0.78.2" />
+
+  <title>Statistical Methods &middot; Brave Matrix</title>
+  <link rel="canonical" href="https://angeldswang.github.io/" />
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/categories/statistical-methods/index.xml">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/font-hack/2.020/css/hack-extended.min.css">
+  <link rel="stylesheet" type="text/css" href="https://angeldswang.github.io/css/main.css"/>
+  <link rel="stylesheet" type="text/css" href="https://angeldswang.github.io/css/customize.css"/>
+  <link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/zenburn.min.css">
+  <script type="text/javascript" src="https://angeldswang.github.io/js/highlight.min.js"></script>
+  <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script>
+ MathJax = {
+   tex: {
+     inlineMath: [['$', '$'], ['\\(', '\\)']],
+     displayMath: [['$$','$$'], ['\\[', '\\]']],
+     processEscapes: true,
+     processEnvironments: true
+   },
+   options: {
+     skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+   }
+ };
+
+ window.addEventListener('load', (event) => {
+   document.querySelectorAll("mjx-container").forEach(function(x){
+     x.parentElement.classList += 'has-jax'})
+ });
+
+</script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+</head>
 
 <body>
 <!--[if lt IE 7]><p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chrome/‎">install Google Chrome</a> to experience this site.</p><![endif]-->
@@ -56,7 +80,7 @@
     </header>
     
     <section class="post-excerpt">
-        <p><p>如何产生符合一定分布的随机变量？对于简单的随机变量，我们往往可以直接获得其概率分布函数<code>$ F(x)=P(X\leqslant x) $</code>。但是对于更多复杂的随机变量来说，获得其概率分布的解析表达式是不可能的。对于这种情况，要产生这样的随机变量就需要另辟蹊径。<strong>Rejection sampling</strong>就是其中最具代表性的一种。下文主要参考了<a href="http://www.columbia.edu/~ks20/4703-Sigman/Monte-Carlo-Sigman.html" title="Karl Sigman's Lecture Notes on Monte Carlo Simulation">Karl Sigman的notes</a>。</p></p>
+        <p><p>如何产生符合一定分布的随机变量？对于简单的随机变量，我们往往可以直接获得其概率分布函数$ F(x)=P(X\leqslant x) $。但是对于更多复杂的随机变量来说，获得其概率分布的解析表达式是不可能的。对于这种情况，要产生这样的随机变量就需要另辟蹊径。<strong>Rejection sampling</strong>就是其中最具代表性的一种。下文主要参考了<a href="http://www.columbia.edu/~ks20/4703-Sigman/Monte-Carlo-Sigman.html" title="Karl Sigman's Lecture Notes on Monte Carlo Simulation">Karl Sigman的notes</a>。</p></p>
     </section>
 
     <footer class="post-footer">
@@ -84,30 +108,6 @@
     </footer>
 
     <script type="text/javascript" src="https://angeldswang.github.io/js/fittext.js"></script>
-    <script type="text/javascript" async
-            src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-     MathJax.Hub.Config({
-         tex2jax: {
-             inlineMath: [['$','$'], ['\\(','\\)']],
-             displayMath: [['$$','$$'], ['\[','\]']],
-             processEscapes: true,
-             processEnvironments: true,
-             skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
-             TeX: { equationNumbers: { autoNumber: "AMS" },
-                    extensions: ["AMSmath.js", "AMSsymbols.js"] }
-         }
-     });
-
-     MathJax.Hub.Queue(function() {
-         
-         
-         
-         var all = MathJax.Hub.getAllJax(), i;
-         for(i = 0; i < all.length; i += 1) {
-             all[i].SourceElement().parentNode.className += ' has-jax';
-         }
-     });
-    </script>
     <script type="text/javascript">
       $(".heading").fitText();
     </script>
