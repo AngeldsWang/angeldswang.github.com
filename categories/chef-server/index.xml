@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>chef server on Brave Matrix</title>
-    <link>https://angeldswang.github.io/categories/chef-server/</link>
+    <link>https://bravematirx.org/categories/chef-server/</link>
     <description>Recent content in chef server on Brave Matrix</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 12 Jan 2017 15:06:16 +0900</lastBuildDate><atom:link href="https://angeldswang.github.io/categories/chef-server/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 12 Jan 2017 15:06:16 +0900</lastBuildDate><atom:link href="https://bravematirx.org/categories/chef-server/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>chef sever 12</title>
-      <link>https://angeldswang.github.io/post/2017-01-12-chef-sever-12/</link>
+      <link>https://bravematirx.org/post/2017-01-12-chef-sever-12/</link>
       <pubDate>Thu, 12 Jan 2017 15:06:16 +0900</pubDate>
       
-      <guid>https://angeldswang.github.io/post/2017-01-12-chef-sever-12/</guid>
+      <guid>https://bravematirx.org/post/2017-01-12-chef-sever-12/</guid>
       <description>On production enviroment, chef server is recommended when you need to manage more than one machine at a time.
 three types:
  Hosted Enterprise Chef On Premises (Private) Enterprise Chef Open Source Chef  There is a good tutorial about setting up chef server 12. However, there are some differences when applying to the latest chef-server release version. For our example,

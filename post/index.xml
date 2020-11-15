@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on Brave Matrix</title>
-    <link>https://angeldswang.github.io/post/</link>
+    <link>https://bravematirx.org/post/</link>
     <description>Recent content in Posts on Brave Matrix</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 12 Jan 2017 15:06:16 +0900</lastBuildDate><atom:link href="https://angeldswang.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 12 Jan 2017 15:06:16 +0900</lastBuildDate><atom:link href="https://bravematirx.org/post/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>chef sever 12</title>
-      <link>https://angeldswang.github.io/post/2017-01-12-chef-sever-12/</link>
+      <link>https://bravematirx.org/post/2017-01-12-chef-sever-12/</link>
       <pubDate>Thu, 12 Jan 2017 15:06:16 +0900</pubDate>
       
-      <guid>https://angeldswang.github.io/post/2017-01-12-chef-sever-12/</guid>
+      <guid>https://bravematirx.org/post/2017-01-12-chef-sever-12/</guid>
       <description>On production enviroment, chef server is recommended when you need to manage more than one machine at a time.
 three types:
  Hosted Enterprise Chef On Premises (Private) Enterprise Chef Open Source Chef  There is a good tutorial about setting up chef server 12. However, there are some differences when applying to the latest chef-server release version. For our example,
@@ -22,19 +22,19 @@ Enviroment:
     
     <item>
       <title>Run script after Angularjs ng-repeat finishing</title>
-      <link>https://angeldswang.github.io/post/2015-01-28-run-script-after-angularjs/</link>
+      <link>https://bravematirx.org/post/2015-01-28-run-script-after-angularjs/</link>
       <pubDate>Wed, 28 Jan 2015 15:35:55 +0800</pubDate>
       
-      <guid>https://angeldswang.github.io/post/2015-01-28-run-script-after-angularjs/</guid>
+      <guid>https://bravematirx.org/post/2015-01-28-run-script-after-angularjs/</guid>
       <description>&lt;p&gt;这几天在做一个小项目的时候，用到了&lt;a href=&#34;http://vnjs.net/www/project/freewall/&#34;&gt;Freewall&lt;/a&gt;这个很nice的插件。它可以很方便的替你实现很多不错的grid layout。但在用到&lt;a href=&#34;http://vnjs.net/www/project/freewall/example/pinterest-layout.html&#34;&gt;Pinterest style layout&lt;/a&gt;的时候遇到了一个问题。官方给出的example如下:&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>Why Modulo $1e9&#43;7$</title>
-      <link>https://angeldswang.github.io/post/2014-11-09-why-modulo-1e7-plus-7/</link>
+      <link>https://bravematirx.org/post/2014-11-09-why-modulo-1e7-plus-7/</link>
       <pubDate>Sun, 09 Nov 2014 21:15:55 +0800</pubDate>
       
-      <guid>https://angeldswang.github.io/post/2014-11-09-why-modulo-1e7-plus-7/</guid>
+      <guid>https://bravematirx.org/post/2014-11-09-why-modulo-1e7-plus-7/</guid>
       <description>&lt;p&gt;一直很好奇很多编程问题，比如求大数阶乘，大数的排列组合等，要求将输出结果对&lt;code&gt;$ 1e9+7 $&lt;/code&gt;(=1000000007)取模。为什么是这样一个数呢？今天一查，网上还是有不少讨论的。总结一下有下面几个原因。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;首先因为&lt;code&gt;$ 1e9+7 $&lt;/code&gt;是一个质数&lt;/li&gt;
@@ -45,10 +45,10 @@ Enviroment:
     
     <item>
       <title>Rejection Sampling</title>
-      <link>https://angeldswang.github.io/post/2014-08-11-rejection-sampling/</link>
+      <link>https://bravematirx.org/post/2014-08-11-rejection-sampling/</link>
       <pubDate>Tue, 19 Aug 2014 03:11:55 +0800</pubDate>
       
-      <guid>https://angeldswang.github.io/post/2014-08-11-rejection-sampling/</guid>
+      <guid>https://bravematirx.org/post/2014-08-11-rejection-sampling/</guid>
       <description>&lt;p&gt;如何产生符合一定分布的随机变量？对于简单的随机变量，我们往往可以直接获得其概率分布函数$ F(x)=P(X\leqslant x) $。但是对于更多复杂的随机变量来说，获得其概率分布的解析表达式是不可能的。对于这种情况，要产生这样的随机变量就需要另辟蹊径。&lt;strong&gt;Rejection sampling&lt;/strong&gt;就是其中最具代表性的一种。下文主要参考了&lt;a href=&#34;http://www.columbia.edu/~ks20/4703-Sigman/Monte-Carlo-Sigman.html&#34; title=&#34;Karl Sigman&#39;s Lecture Notes on Monte Carlo Simulation&#34;&gt;Karl Sigman的notes&lt;/a&gt;。&lt;/p&gt;</description>
     </item>
     
