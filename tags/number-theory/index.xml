@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Number Theory on Brave Matrix</title>
-    <link>https://bravematirx.org/tags/number-theory/</link>
+    <link>https://bravematrix.org/tags/number-theory/</link>
     <description>Recent content in Number Theory on Brave Matrix</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 09 Nov 2014 21:15:55 +0800</lastBuildDate><atom:link href="https://bravematirx.org/tags/number-theory/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 09 Nov 2014 21:15:55 +0800</lastBuildDate><atom:link href="https://bravematrix.org/tags/number-theory/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Why Modulo $1e9&#43;7$</title>
-      <link>https://bravematirx.org/post/2014-11-09-why-modulo-1e7-plus-7/</link>
+      <link>https://bravematrix.org/post/2014-11-09-why-modulo-1e7-plus-7/</link>
       <pubDate>Sun, 09 Nov 2014 21:15:55 +0800</pubDate>
       
-      <guid>https://bravematirx.org/post/2014-11-09-why-modulo-1e7-plus-7/</guid>
+      <guid>https://bravematrix.org/post/2014-11-09-why-modulo-1e7-plus-7/</guid>
       <description>&lt;p&gt;一直很好奇很多编程问题，比如求大数阶乘，大数的排列组合等，要求将输出结果对&lt;code&gt;$ 1e9+7 $&lt;/code&gt;(=1000000007)取模。为什么是这样一个数呢？今天一查，网上还是有不少讨论的。总结一下有下面几个原因。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;首先因为&lt;code&gt;$ 1e9+7 $&lt;/code&gt;是一个质数&lt;/li&gt;

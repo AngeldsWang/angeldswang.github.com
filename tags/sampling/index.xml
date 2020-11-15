@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Sampling on Brave Matrix</title>
-    <link>https://bravematirx.org/tags/sampling/</link>
+    <link>https://bravematrix.org/tags/sampling/</link>
     <description>Recent content in Sampling on Brave Matrix</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 19 Aug 2014 03:11:55 +0800</lastBuildDate><atom:link href="https://bravematirx.org/tags/sampling/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 19 Aug 2014 03:11:55 +0800</lastBuildDate><atom:link href="https://bravematrix.org/tags/sampling/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Rejection Sampling</title>
-      <link>https://bravematirx.org/post/2014-08-11-rejection-sampling/</link>
+      <link>https://bravematrix.org/post/2014-08-11-rejection-sampling/</link>
       <pubDate>Tue, 19 Aug 2014 03:11:55 +0800</pubDate>
       
-      <guid>https://bravematirx.org/post/2014-08-11-rejection-sampling/</guid>
+      <guid>https://bravematrix.org/post/2014-08-11-rejection-sampling/</guid>
       <description>&lt;p&gt;如何产生符合一定分布的随机变量？对于简单的随机变量，我们往往可以直接获得其概率分布函数$ F(x)=P(X\leqslant x) $。但是对于更多复杂的随机变量来说，获得其概率分布的解析表达式是不可能的。对于这种情况，要产生这样的随机变量就需要另辟蹊径。&lt;strong&gt;Rejection sampling&lt;/strong&gt;就是其中最具代表性的一种。下文主要参考了&lt;a href=&#34;http://www.columbia.edu/~ks20/4703-Sigman/Monte-Carlo-Sigman.html&#34; title=&#34;Karl Sigman&#39;s Lecture Notes on Monte Carlo Simulation&#34;&gt;Karl Sigman的notes&lt;/a&gt;。&lt;/p&gt;</description>
     </item>
     
