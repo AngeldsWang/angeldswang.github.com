@@ -35,11 +35,11 @@ Enviroment:
       <pubDate>Sun, 09 Nov 2014 21:15:55 +0800</pubDate>
       
       <guid>https://bravematrix.org/post/2014-11-09-why-modulo-1e7-plus-7/</guid>
-      <description>&lt;p&gt;一直很好奇很多编程问题，比如求大数阶乘，大数的排列组合等，要求将输出结果对&lt;code&gt;$ 1e9+7 $&lt;/code&gt;(=1000000007)取模。为什么是这样一个数呢？今天一查，网上还是有不少讨论的。总结一下有下面几个原因。&lt;/p&gt;
+      <description>&lt;p&gt;一直很好奇很多编程问题，比如求大数阶乘，大数的排列组合等，要求将输出结果对$ 1e9+7 $(=1000000007)取模。为什么是这样一个数呢？今天一查，网上还是有不少讨论的。总结一下有下面几个原因。&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;首先因为&lt;code&gt;$ 1e9+7 $&lt;/code&gt;是一个质数&lt;/li&gt;
-&lt;li&gt;其次是&lt;code&gt;$ 1e9+7 $&lt;/code&gt;对于int32来说足够大&lt;/li&gt;
-&lt;li&gt;还有就是&lt;code&gt;$ 1e9+7 $&lt;/code&gt;的平方对于int64来说也恰好不会溢出&lt;/li&gt;
+&lt;li&gt;首先因为$ 1e9+7 $是一个质数&lt;/li&gt;
+&lt;li&gt;其次是$ 1e9+7 $对于int32来说足够大&lt;/li&gt;
+&lt;li&gt;还有就是$ 1e9+7 $的平方对于int64来说也恰好不会溢出&lt;/li&gt;
 &lt;/ul&gt;</description>
     </item>
     
