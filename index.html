@@ -12,7 +12,7 @@
         <meta name="mobile-web-app-capable" content="yes">
         <meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="apple-mobile-web-app-status-bar-style" content="black">
-        <meta name="author" content="Angelds Wang">
+        <meta name="author" content="AngeldsWang">
   
 	
         <meta property="og:site_name" content="Brave Matrix">
@@ -30,9 +30,11 @@
   <link rel="stylesheet" href="//cdn.jsdelivr.net/font-hack/2.020/css/hack-extended.min.css">
   <link rel="stylesheet" type="text/css" href="https://bravematrix.org/css/main.css"/>
   <link rel="stylesheet" type="text/css" href="https://bravematrix.org/css/customize.css"/>
-  <link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300|Montserrat:700" rel="stylesheet" type="text/css">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400&display=swap" rel="stylesheet">
   <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
-  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/zenburn.min.css">
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.4.0/styles/nord.min.css">
   <script type="text/javascript" src="https://bravematrix.org/js/highlight.min.js"></script>
   <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
   <script>hljs.initHighlightingOnLoad();</script>
@@ -59,6 +61,11 @@
 <script type="text/javascript" id="MathJax-script" async
         src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
+  <style>
+   html, body, h1, h2, h3, h4, h5, h6 {
+     font-family: 'Lato', sans-serif;
+   }
+  </style>
 </head>
 
 <body>
@@ -75,7 +82,56 @@
 	
 		<article class="li post">
     <header class="post-header">
-        <h3 class="post-title"><a href="https://bravematrix.org/post/2017-01-12-chef-sever-12/">chef sever 12</a></h3>
+        <h3 class="post-title"><a href="https://bravematrix.org/post/2020-11-25-thriftrw/">Thriftrw</a></h3>
+        <p class="post-time"><time datetime="2020-06-10T10:06:16&#43;09:00">June 10, 2020</time></p>
+    </header>
+    
+    <section class="post-excerpt">
+        <p>Triftrw
+AST There are three basic interfaces in thriftrw&rsquo;s ast package
+ Node is a single element in the Thrift AST. Walker provides acccess to information about the state of the AST walker. Visitor walks an AST. The Visit function is called on each node of the AST.  type Node interface { node() visitChildren(nodeStack, visitor) } type Walker interface { Ancestors() []Node Parent() Node } type Visitor interface { Visit(w Walker, n Node) Visitor } visitor adapts a user-provided Visitor so that we can use the internal visitChildren method on nodes.</p>
+    </section>
+
+    <footer class="post-footer">
+        <span>
+            
+            <a href="https://bravematrix.org/post/2020-11-25-thriftrw/#comments"><i class="fa fa-comment"></i> Comments</a>
+            
+            
+            	&nbsp;&nbsp;<i class="fa fa-tag"></i>
+            	thrift, compiler
+            
+        </span>
+    </footer>
+</article>
+	
+		<article class="li post">
+    <header class="post-header">
+        <h3 class="post-title"><a href="https://bravematrix.org/post/2020-11-21-operator-pattern/">Operator pattern</a></h3>
+        <p class="post-time"><time datetime="2020-03-12T15:06:16&#43;09:00">March 12, 2020</time></p>
+    </header>
+    
+    <section class="post-excerpt">
+        <p> Operators Are Software SREs. The key tenet of SRE is automating systems administration by writing software to run your software. An Operator is like an automated SRE for its applications.
+ </p>
+    </section>
+
+    <footer class="post-footer">
+        <span>
+            
+            <a href="https://bravematrix.org/post/2020-11-21-operator-pattern/#comments"><i class="fa fa-comment"></i> Comments</a>
+            
+            
+            	&nbsp;&nbsp;<i class="fa fa-tag"></i>
+            	kubernetes, operator
+            
+        </span>
+    </footer>
+</article>
+	
+		<article class="li post">
+    <header class="post-header">
+        <h3 class="post-title"><a href="https://bravematrix.org/post/2017-01-12-chef-sever-12/">Chef Sever 12</a></h3>
         <p class="post-time"><time datetime="2017-01-12T15:06:16&#43;09:00">January 12, 2017</time></p>
     </header>
     
@@ -180,8 +236,7 @@ Enviroment:
     <footer id="site-footer">
         <div class="container">
             <a href="https://bravematrix.org/index.xml" title="Get the RSS feed"><span class="tooltip"><i class="fa fa-rss"></i></span></a>
-            <section>&copy; <a href="https://bravematrix.org/">Angelds Wang</a> 2020 | All rights reserved</section>
-            <section>Theme by <a href="http://www.jrdnbwmn.com">Jordan Bowman</a>. Generated with <a href="http://gohugo.io/">Hugo</a>.</section>
+            <section>&copy; <a href="https://bravematrix.org/">AngeldsWang</a> 2020 | All rights reserved</section>
         </div>
     </footer>
 

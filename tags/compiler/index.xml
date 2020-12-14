@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>compiler on Brave Matrix</title>
+    <link>https://bravematrix.org/tags/compiler/</link>
+    <description>Recent content in compiler on Brave Matrix</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 10 Jun 2020 10:06:16 +0900</lastBuildDate><atom:link href="https://bravematrix.org/tags/compiler/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Thriftrw</title>
+      <link>https://bravematrix.org/post/2020-11-25-thriftrw/</link>
+      <pubDate>Wed, 10 Jun 2020 10:06:16 +0900</pubDate>
+      
+      <guid>https://bravematrix.org/post/2020-11-25-thriftrw/</guid>
+      <description>Triftrw
+AST There are three basic interfaces in thriftrw&amp;rsquo;s ast package
+ Node is a single element in the Thrift AST. Walker provides acccess to information about the state of the AST walker. Visitor walks an AST. The Visit function is called on each node of the AST.  type Node interface { node() visitChildren(nodeStack, visitor) } type Walker interface { Ancestors() []Node Parent() Node } type Visitor interface { Visit(w Walker, n Node) Visitor } visitor adapts a user-provided Visitor so that we can use the internal visitChildren method on nodes.</description>
+    </item>
+    
+  </channel>
+</rss>

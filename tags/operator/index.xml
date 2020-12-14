@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>operator on Brave Matrix</title>
+    <link>https://bravematrix.org/tags/operator/</link>
+    <description>Recent content in operator on Brave Matrix</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 12 Mar 2020 15:06:16 +0900</lastBuildDate><atom:link href="https://bravematrix.org/tags/operator/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Operator pattern</title>
+      <link>https://bravematrix.org/post/2020-11-21-operator-pattern/</link>
+      <pubDate>Thu, 12 Mar 2020 15:06:16 +0900</pubDate>
+      
+      <guid>https://bravematrix.org/post/2020-11-21-operator-pattern/</guid>
+      <description> Operators Are Software SREs. The key tenet of SRE is automating systems administration by writing software to run your software. An Operator is like an automated SRE for its applications.
+ </description>
+    </item>
+    
+  </channel>
+</rss>

@@ -4,12 +4,72 @@
   
   <url>
     <loc>https://bravematrix.org/</loc>
-    <lastmod>2017-01-12T15:06:16+09:00</lastmod>
+    <lastmod>2020-06-10T10:06:16+09:00</lastmod>
   </url>
   
   <url>
     <loc>https://bravematrix.org/categories/</loc>
-    <lastmod>2017-01-12T15:06:16+09:00</lastmod>
+    <lastmod>2020-06-10T10:06:16+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://bravematrix.org/tags/compiler/</loc>
+    <lastmod>2020-06-10T10:06:16+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://bravematrix.org/post/</loc>
+    <lastmod>2020-06-10T10:06:16+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://bravematrix.org/tags/</loc>
+    <lastmod>2020-06-10T10:06:16+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://bravematrix.org/tags/thrift/</loc>
+    <lastmod>2020-06-10T10:06:16+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://bravematrix.org/categories/thrift/</loc>
+    <lastmod>2020-06-10T10:06:16+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://bravematrix.org/post/2020-11-25-thriftrw/</loc>
+    <lastmod>2020-06-10T10:06:16+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://bravematrix.org/categories/tools/</loc>
+    <lastmod>2020-06-10T10:06:16+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://bravematrix.org/categories/devops/</loc>
+    <lastmod>2020-03-12T15:06:16+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://bravematrix.org/tags/kubernetes/</loc>
+    <lastmod>2020-03-12T15:06:16+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://bravematrix.org/categories/kubernetes/</loc>
+    <lastmod>2020-03-12T15:06:16+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://bravematrix.org/tags/operator/</loc>
+    <lastmod>2020-03-12T15:06:16+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://bravematrix.org/post/2020-11-21-operator-pattern/</loc>
+    <lastmod>2020-03-12T15:06:16+09:00</lastmod>
   </url>
   
   <url>
@@ -34,16 +94,6 @@
   
   <url>
     <loc>https://bravematrix.org/post/2017-01-12-chef-sever-12/</loc>
-    <lastmod>2017-01-12T15:06:16+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://bravematrix.org/post/</loc>
-    <lastmod>2017-01-12T15:06:16+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://bravematrix.org/tags/</loc>
     <lastmod>2017-01-12T15:06:16+09:00</lastmod>
   </url>
   

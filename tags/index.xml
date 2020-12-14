@@ -6,7 +6,43 @@
     <description>Recent content in Tags on Brave Matrix</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 12 Jan 2017 15:06:16 +0900</lastBuildDate><atom:link href="https://bravematrix.org/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 10 Jun 2020 10:06:16 +0900</lastBuildDate><atom:link href="https://bravematrix.org/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>compiler</title>
+      <link>https://bravematrix.org/tags/compiler/</link>
+      <pubDate>Wed, 10 Jun 2020 10:06:16 +0900</pubDate>
+      
+      <guid>https://bravematrix.org/tags/compiler/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>thrift</title>
+      <link>https://bravematrix.org/tags/thrift/</link>
+      <pubDate>Wed, 10 Jun 2020 10:06:16 +0900</pubDate>
+      
+      <guid>https://bravematrix.org/tags/thrift/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>kubernetes</title>
+      <link>https://bravematrix.org/tags/kubernetes/</link>
+      <pubDate>Thu, 12 Mar 2020 15:06:16 +0900</pubDate>
+      
+      <guid>https://bravematrix.org/tags/kubernetes/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>operator</title>
+      <link>https://bravematrix.org/tags/operator/</link>
+      <pubDate>Thu, 12 Mar 2020 15:06:16 +0900</pubDate>
+      
+      <guid>https://bravematrix.org/tags/operator/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>chef</title>
       <link>https://bravematrix.org/tags/chef/</link>

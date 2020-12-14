@@ -10,3 +10,23 @@ code {
 code, kbd, pre, samp {
     font-family: Hack,Monaco,Menlo,Consolas,"Courier New",monospace;
 }
+
+h1, h2, h3, h4, h5, h6 {
+    margin-top: 1.2em;
+    margin-bottom: 0.7em;
+}
+
+p {
+    margin: auto auto 0.5em;
+}
+
+ul, ol {
+    margin-top: 0;
+    margin-bottom: 0.8em;
+}
+
+pre {
+    margin: 1.0em 0;
+    padding: 5px;
+    background-color: #2e3440 !important;
+}

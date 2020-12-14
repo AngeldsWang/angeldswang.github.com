@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]><html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--><html class="no-js" prefix="og: http://ogp.me/ns#" xmlns:og="http://ogp.me/ns#"><!--<![endif]-->
+
+<head>
+          <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="author" content="AngeldsWang">
+  
+	
+        <meta property="og:site_name" content="Brave Matrix">
+        <meta property="og:title" content="Brave Matrix">
+        <meta property="og:url" content="https://bravematrix.org/tags/thrift/">
+        <meta property="og:description" content="">
+    
+        <meta property="og:type" content="website" />
+    
+        <meta name="generator" content="Hugo 0.78.2" />
+
+  <title>thrift &middot; Brave Matrix</title>
+  <link rel="canonical" href="https://bravematrix.org/" />
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/tags/thrift/index.xml">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/font-hack/2.020/css/hack-extended.min.css">
+  <link rel="stylesheet" type="text/css" href="https://bravematrix.org/css/main.css"/>
+  <link rel="stylesheet" type="text/css" href="https://bravematrix.org/css/customize.css"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400&display=swap" rel="stylesheet">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.4.0/styles/nord.min.css">
+  <script type="text/javascript" src="https://bravematrix.org/js/highlight.min.js"></script>
+  <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script>
+ MathJax = {
+   tex: {
+     inlineMath: [['$', '$'], ['\\(', '\\)']],
+     displayMath: [['$$','$$'], ['\\[', '\\]']],
+     processEscapes: true,
+     processEnvironments: true
+   },
+   options: {
+     skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+   }
+ };
+
+ window.addEventListener('load', (event) => {
+   document.querySelectorAll("mjx-container").forEach(function(x){
+     x.parentElement.classList += 'has-jax'})
+ });
+
+</script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <style>
+   html, body, h1, h2, h3, h4, h5, h6 {
+     font-family: 'Lato', sans-serif;
+   }
+  </style>
+</head>
+
+<body>
+<!--[if lt IE 7]><p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chrome/‎">install Google Chrome</a> to experience this site.</p><![endif]-->
+
+    <header id="site-header">
+        <div class="container">
+            <a href="https://bravematrix.org/" alt="Brave Matrix"><h1 class="blog-title heading">Brave Matrix</h1></a>
+            <p class="blog-description"></p>
+        </div>
+    </header>
+<main class="content" role="main">
+	<div class="container">
+	
+		<article class="li post">
+    <header class="post-header">
+        <h3 class="post-title"><a href="https://bravematrix.org/post/2020-11-25-thriftrw/">Thriftrw</a></h3>
+        <p class="post-time"><time datetime="2020-06-10T10:06:16&#43;09:00">June 10, 2020</time></p>
+    </header>
+    
+    <section class="post-excerpt">
+        <p>Triftrw
+AST There are three basic interfaces in thriftrw&rsquo;s ast package
+ Node is a single element in the Thrift AST. Walker provides acccess to information about the state of the AST walker. Visitor walks an AST. The Visit function is called on each node of the AST.  type Node interface { node() visitChildren(nodeStack, visitor) } type Walker interface { Ancestors() []Node Parent() Node } type Visitor interface { Visit(w Walker, n Node) Visitor } visitor adapts a user-provided Visitor so that we can use the internal visitChildren method on nodes.</p>
+    </section>
+
+    <footer class="post-footer">
+        <span>
+            
+            <a href="https://bravematrix.org/post/2020-11-25-thriftrw/#comments"><i class="fa fa-comment"></i> Comments</a>
+            
+            
+            	&nbsp;&nbsp;<i class="fa fa-tag"></i>
+            	thrift, compiler
+            
+        </span>
+    </footer>
+</article>
+	
+	
+	</div>
+</main>
+    <footer id="site-footer">
+        <div class="container">
+            <a href="https://bravematrix.org/index.xml" title="Get the RSS feed"><span class="tooltip"><i class="fa fa-rss"></i></span></a>
+            <section>&copy; <a href="https://bravematrix.org/">AngeldsWang</a> 2020 | All rights reserved</section>
+        </div>
+    </footer>
+
+    <script type="text/javascript" src="https://bravematrix.org/js/fittext.js"></script>
+    <script type="text/javascript">
+      $(".heading").fitText();
+    </script>
+
+
+</body>
+</html>

@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]><html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--><html class="no-js" prefix="og: http://ogp.me/ns#" xmlns:og="http://ogp.me/ns#"><!--<![endif]-->
+
+<head>
+          <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="author" content="AngeldsWang">
+  
+	
+        <meta property="og:site_name" content="Brave Matrix">
+        <meta property="og:title" content="Brave Matrix">
+        <meta property="og:url" content="https://bravematrix.org/post/2020-11-25-thriftrw/">
+        <meta property="og:description" content="">
+    
+        <meta property="og:type" content="article" />
+        <meta property="og:article:author" content="AngeldsWang" />
+        <meta property="og:article:published_time" content="2020-06-10T10:06:16&#43;09:00" />
+    
+        <meta name="generator" content="Hugo 0.78.2" />
+
+  <title>Thriftrw &middot; Brave Matrix</title>
+  <link rel="canonical" href="https://bravematrix.org/" />
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/font-hack/2.020/css/hack-extended.min.css">
+  <link rel="stylesheet" type="text/css" href="https://bravematrix.org/css/main.css"/>
+  <link rel="stylesheet" type="text/css" href="https://bravematrix.org/css/customize.css"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400&display=swap" rel="stylesheet">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.4.0/styles/nord.min.css">
+  <script type="text/javascript" src="https://bravematrix.org/js/highlight.min.js"></script>
+  <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script>
+ MathJax = {
+   tex: {
+     inlineMath: [['$', '$'], ['\\(', '\\)']],
+     displayMath: [['$$','$$'], ['\\[', '\\]']],
+     processEscapes: true,
+     processEnvironments: true
+   },
+   options: {
+     skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+   }
+ };
+
+ window.addEventListener('load', (event) => {
+   document.querySelectorAll("mjx-container").forEach(function(x){
+     x.parentElement.classList += 'has-jax'})
+ });
+
+</script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <style>
+   html, body, h1, h2, h3, h4, h5, h6 {
+     font-family: 'Lato', sans-serif;
+   }
+  </style>
+</head>
+
+<body>
+<!--[if lt IE 7]><p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chrome/‎">install Google Chrome</a> to experience this site.</p><![endif]-->
+
+<main class="content" role="main">
+	<div class="container">
+		<article class="post">
+	<header class="post-header">
+        <h1 class="p-post-title">Thriftrw</h1>
+    </header>
+
+    <section class="post-content">
+        <p>Triftrw</p>
+<h2 id="ast">AST</h2>
+<p>There are three basic interfaces in thriftrw&rsquo;s ast package</p>
+<ul>
+<li>Node is a single element in the Thrift AST.</li>
+<li>Walker provides acccess to information about the state of the AST walker.</li>
+<li>Visitor walks an AST. The Visit function is called on each node of the AST.</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Node</span> <span style="color:#66d9ef">interface</span> {
+	<span style="color:#a6e22e">node</span>()
+	<span style="color:#a6e22e">visitChildren</span>(<span style="color:#a6e22e">nodeStack</span>, <span style="color:#a6e22e">visitor</span>)
+}
+
+<span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Walker</span> <span style="color:#66d9ef">interface</span> {
+	<span style="color:#a6e22e">Ancestors</span>() []<span style="color:#a6e22e">Node</span>
+	<span style="color:#a6e22e">Parent</span>() <span style="color:#a6e22e">Node</span>
+}
+
+<span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Visitor</span> <span style="color:#66d9ef">interface</span> {
+	<span style="color:#a6e22e">Visit</span>(<span style="color:#a6e22e">w</span> <span style="color:#a6e22e">Walker</span>, <span style="color:#a6e22e">n</span> <span style="color:#a6e22e">Node</span>) <span style="color:#a6e22e">Visitor</span>
+}
+</code></pre></div><p><code>visitor</code> adapts a user-provided Visitor so that we can use the internal <code>visitChildren</code> method on nodes.
+While <code>nodeStack</code> keeps nodes in the order they were visited</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">visitor</span> <span style="color:#66d9ef">struct</span> {
+	<span style="color:#a6e22e">Visitor</span> <span style="color:#a6e22e">Visitor</span>
+}
+
+<span style="color:#66d9ef">type</span> <span style="color:#a6e22e">nodeStack</span> []<span style="color:#a6e22e">Node</span>
+</code></pre></div><p>All the following types implement the <code>Node</code> interface</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">_</span> <span style="color:#a6e22e">Node</span> = (<span style="color:#f92672">*</span><span style="color:#a6e22e">Annotation</span>)(<span style="color:#66d9ef">nil</span>)
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">_</span> <span style="color:#a6e22e">Node</span> = <span style="color:#a6e22e">BaseType</span>{}
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">_</span> <span style="color:#a6e22e">Node</span> = (<span style="color:#f92672">*</span><span style="color:#a6e22e">Constant</span>)(<span style="color:#66d9ef">nil</span>)
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">_</span> <span style="color:#a6e22e">Node</span> = <span style="color:#a6e22e">ConstantBoolean</span>(<span style="color:#66d9ef">true</span>)
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">_</span> <span style="color:#a6e22e">Node</span> = <span style="color:#a6e22e">ConstantDouble</span>(<span style="color:#ae81ff">1.0</span>)
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">_</span> <span style="color:#a6e22e">Node</span> = <span style="color:#a6e22e">ConstantInteger</span>(<span style="color:#ae81ff">1</span>)
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">_</span> <span style="color:#a6e22e">Node</span> = <span style="color:#a6e22e">ConstantList</span>{}
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">_</span> <span style="color:#a6e22e">Node</span> = <span style="color:#a6e22e">ConstantMap</span>{}
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">_</span> <span style="color:#a6e22e">Node</span> = <span style="color:#a6e22e">ConstantMapItem</span>{}
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">_</span> <span style="color:#a6e22e">Node</span> = <span style="color:#a6e22e">ConstantReference</span>{}
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">_</span> <span style="color:#a6e22e">Node</span> = <span style="color:#a6e22e">ConstantString</span>(<span style="color:#e6db74">&#34;hi&#34;</span>)
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">_</span> <span style="color:#a6e22e">Node</span> = (<span style="color:#f92672">*</span><span style="color:#a6e22e">Enum</span>)(<span style="color:#66d9ef">nil</span>)
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">_</span> <span style="color:#a6e22e">Node</span> = (<span style="color:#f92672">*</span><span style="color:#a6e22e">EnumItem</span>)(<span style="color:#66d9ef">nil</span>)
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">_</span> <span style="color:#a6e22e">Node</span> = (<span style="color:#f92672">*</span><span style="color:#a6e22e">Field</span>)(<span style="color:#66d9ef">nil</span>)
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">_</span> <span style="color:#a6e22e">Node</span> = (<span style="color:#f92672">*</span><span style="color:#a6e22e">Function</span>)(<span style="color:#66d9ef">nil</span>)
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">_</span> <span style="color:#a6e22e">Node</span> = (<span style="color:#f92672">*</span><span style="color:#a6e22e">Include</span>)(<span style="color:#66d9ef">nil</span>)
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">_</span> <span style="color:#a6e22e">Node</span> = <span style="color:#a6e22e">ListType</span>{}
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">_</span> <span style="color:#a6e22e">Node</span> = <span style="color:#a6e22e">MapType</span>{}
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">_</span> <span style="color:#a6e22e">Node</span> = (<span style="color:#f92672">*</span><span style="color:#a6e22e">Namespace</span>)(<span style="color:#66d9ef">nil</span>)
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">_</span> <span style="color:#a6e22e">Node</span> = (<span style="color:#f92672">*</span><span style="color:#a6e22e">Program</span>)(<span style="color:#66d9ef">nil</span>)
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">_</span> <span style="color:#a6e22e">Node</span> = (<span style="color:#f92672">*</span><span style="color:#a6e22e">Service</span>)(<span style="color:#66d9ef">nil</span>)
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">_</span> <span style="color:#a6e22e">Node</span> = <span style="color:#a6e22e">SetType</span>{}
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">_</span> <span style="color:#a6e22e">Node</span> = (<span style="color:#f92672">*</span><span style="color:#a6e22e">Struct</span>)(<span style="color:#66d9ef">nil</span>)
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">_</span> <span style="color:#a6e22e">Node</span> = <span style="color:#a6e22e">TypeReference</span>{}
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">_</span> <span style="color:#a6e22e">Node</span> = (<span style="color:#f92672">*</span><span style="color:#a6e22e">Typedef</span>)(<span style="color:#66d9ef">nil</span>)
+</code></pre></div><h3 id="type">Type</h3>
+<p>In the very beginning, there is a <code>Type</code> interface representing all viable field types in Thrift.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Type</span> <span style="color:#66d9ef">interface</span> {
+	<span style="color:#a6e22e">Node</span>
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Stringer</span>
+	<span style="color:#a6e22e">fieldType</span>()
+}
+</code></pre></div><p>For <code>bool, byte, i16, i32, i64, double, string, binary</code> these base types, <code>BaseType</code> gives us a good example.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">BaseTypeID</span> <span style="color:#66d9ef">int</span>
+
+<span style="color:#66d9ef">const</span> (
+	<span style="color:#a6e22e">BoolTypeID</span>   <span style="color:#a6e22e">BaseTypeID</span> = <span style="color:#66d9ef">iota</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span> <span style="color:#75715e">// bool
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">I8TypeID</span>                           <span style="color:#75715e">// byte/i8
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">I16TypeID</span>                          <span style="color:#75715e">// i16
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">I32TypeID</span>                          <span style="color:#75715e">// i32
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">I64TypeID</span>                          <span style="color:#75715e">// i64
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">DoubleTypeID</span>                       <span style="color:#75715e">// double
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">StringTypeID</span>                       <span style="color:#75715e">// string
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">BinaryTypeID</span>                       <span style="color:#75715e">// binary
+</span><span style="color:#75715e"></span>)
+
+<span style="color:#66d9ef">type</span> <span style="color:#a6e22e">BaseType</span> <span style="color:#66d9ef">struct</span> {
+	<span style="color:#a6e22e">ID</span>          <span style="color:#a6e22e">BaseTypeID</span>
+	<span style="color:#a6e22e">Annotations</span> []<span style="color:#f92672">*</span><span style="color:#a6e22e">Annotation</span>
+	<span style="color:#a6e22e">Line</span>        <span style="color:#66d9ef">int</span>
+}
+
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">BaseType</span>) <span style="color:#a6e22e">node</span>()      {}
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">BaseType</span>) <span style="color:#a6e22e">fieldType</span>() {}
+
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">bt</span> <span style="color:#a6e22e">BaseType</span>) <span style="color:#a6e22e">lineNumber</span>() <span style="color:#66d9ef">int</span> { <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">bt</span>.<span style="color:#a6e22e">Line</span> }
+
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">bt</span> <span style="color:#a6e22e">BaseType</span>) <span style="color:#a6e22e">visitChildren</span>(<span style="color:#a6e22e">ss</span> <span style="color:#a6e22e">nodeStack</span>, <span style="color:#a6e22e">v</span> <span style="color:#a6e22e">visitor</span>) {
+	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">ann</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">bt</span>.<span style="color:#a6e22e">Annotations</span> {
+		<span style="color:#a6e22e">v</span>.<span style="color:#a6e22e">visit</span>(<span style="color:#a6e22e">ss</span>, <span style="color:#a6e22e">ann</span>)
+	}
+}
+
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">bt</span> <span style="color:#a6e22e">BaseType</span>) <span style="color:#a6e22e">String</span>() <span style="color:#66d9ef">string</span> {
+	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">name</span> <span style="color:#66d9ef">string</span>
+
+	<span style="color:#66d9ef">switch</span> <span style="color:#a6e22e">bt</span>.<span style="color:#a6e22e">ID</span> {
+	<span style="color:#66d9ef">case</span> <span style="color:#a6e22e">BoolTypeID</span>:
+		<span style="color:#a6e22e">name</span> = <span style="color:#e6db74">&#34;bool&#34;</span>
+	<span style="color:#66d9ef">case</span> <span style="color:#a6e22e">I8TypeID</span>:
+        <span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">default</span>:
+		panic(<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprintf</span>(<span style="color:#e6db74">&#34;unknown base type %v&#34;</span>, <span style="color:#a6e22e">bt</span>.<span style="color:#a6e22e">ID</span>))
+	}
+
+	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">appendAnnotations</span>(<span style="color:#a6e22e">name</span>, <span style="color:#a6e22e">bt</span>.<span style="color:#a6e22e">Annotations</span>)
+}
+</code></pre></div><p>Further, <code>MapType</code>&rsquo;s implementation turns to pretty straightforward.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">MapType</span> <span style="color:#66d9ef">struct</span> {
+	<span style="color:#a6e22e">KeyType</span>, <span style="color:#a6e22e">ValueType</span> <span style="color:#a6e22e">Type</span>
+	<span style="color:#a6e22e">Annotations</span>        []<span style="color:#f92672">*</span><span style="color:#a6e22e">Annotation</span>
+	<span style="color:#a6e22e">Line</span>               <span style="color:#66d9ef">int</span>
+}
+
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">MapType</span>) <span style="color:#a6e22e">node</span>()      {}
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">MapType</span>) <span style="color:#a6e22e">fieldType</span>() {}
+
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">mt</span> <span style="color:#a6e22e">MapType</span>) <span style="color:#a6e22e">lineNumber</span>() <span style="color:#66d9ef">int</span> { <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">mt</span>.<span style="color:#a6e22e">Line</span> }
+
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">mt</span> <span style="color:#a6e22e">MapType</span>) <span style="color:#a6e22e">visitChildren</span>(<span style="color:#a6e22e">ss</span> <span style="color:#a6e22e">nodeStack</span>, <span style="color:#a6e22e">v</span> <span style="color:#a6e22e">visitor</span>) {
+	<span style="color:#a6e22e">v</span>.<span style="color:#a6e22e">visit</span>(<span style="color:#a6e22e">ss</span>, <span style="color:#a6e22e">mt</span>.<span style="color:#a6e22e">KeyType</span>)
+	<span style="color:#a6e22e">v</span>.<span style="color:#a6e22e">visit</span>(<span style="color:#a6e22e">ss</span>, <span style="color:#a6e22e">mt</span>.<span style="color:#a6e22e">ValueType</span>)
+	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">ann</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">mt</span>.<span style="color:#a6e22e">Annotations</span> {
+		<span style="color:#a6e22e">v</span>.<span style="color:#a6e22e">visit</span>(<span style="color:#a6e22e">ss</span>, <span style="color:#a6e22e">ann</span>)
+	}
+}
+
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">mt</span> <span style="color:#a6e22e">MapType</span>) <span style="color:#a6e22e">String</span>() <span style="color:#66d9ef">string</span> {
+	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">appendAnnotations</span>(
+		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprintf</span>(<span style="color:#e6db74">&#34;map&lt;%s, %s&gt;&#34;</span>, <span style="color:#a6e22e">mt</span>.<span style="color:#a6e22e">KeyType</span>, <span style="color:#a6e22e">mt</span>.<span style="color:#a6e22e">ValueType</span>),
+		<span style="color:#a6e22e">mt</span>.<span style="color:#a6e22e">Annotations</span>,
+	)
+}
+</code></pre></div><p>In some language bindings, map type could be followed by type annotations, i.e. <code>map&lt;string, list&lt;i32&gt;&gt; (java.type = &quot;MultiMap&quot;)</code>.
+Beside the key value nodes, each annotation should be visited as well.</p>
+<h3 id="definition">Definition</h3>
+<p><code>Definition</code> interface unifies the different types representing items defined in the Thrift file.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Definition</span> <span style="color:#66d9ef">interface</span> {
+	<span style="color:#a6e22e">Node</span>
+	<span style="color:#a6e22e">Info</span>() <span style="color:#a6e22e">DefinitionInfo</span>
+	<span style="color:#a6e22e">definition</span>()
+}
+
+<span style="color:#66d9ef">type</span> <span style="color:#a6e22e">DefinitionInfo</span> <span style="color:#66d9ef">struct</span> {
+	<span style="color:#a6e22e">Name</span> <span style="color:#66d9ef">string</span>
+	<span style="color:#a6e22e">Line</span> <span style="color:#66d9ef">int</span>
+}
+</code></pre></div><p>Given <code>const i32 foo = 42</code>, a canonical implementation of <code>Constant</code> is defined as follows.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Constant</span> <span style="color:#66d9ef">struct</span> {
+	<span style="color:#a6e22e">Name</span>  <span style="color:#66d9ef">string</span>
+	<span style="color:#a6e22e">Type</span>  <span style="color:#a6e22e">Type</span>
+	<span style="color:#a6e22e">Value</span> <span style="color:#a6e22e">ConstantValue</span>
+	<span style="color:#a6e22e">Line</span>  <span style="color:#66d9ef">int</span>
+	<span style="color:#a6e22e">Doc</span>   <span style="color:#66d9ef">string</span>
+}
+
+<span style="color:#66d9ef">func</span> (<span style="color:#f92672">*</span><span style="color:#a6e22e">Constant</span>) <span style="color:#a6e22e">node</span>()       {}
+<span style="color:#66d9ef">func</span> (<span style="color:#f92672">*</span><span style="color:#a6e22e">Constant</span>) <span style="color:#a6e22e">definition</span>() {}
+
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Constant</span>) <span style="color:#a6e22e">lineNumber</span>() <span style="color:#66d9ef">int</span> { <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">Line</span> }
+
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Constant</span>) <span style="color:#a6e22e">visitChildren</span>(<span style="color:#a6e22e">ss</span> <span style="color:#a6e22e">nodeStack</span>, <span style="color:#a6e22e">v</span> <span style="color:#a6e22e">visitor</span>) {
+	<span style="color:#a6e22e">v</span>.<span style="color:#a6e22e">visit</span>(<span style="color:#a6e22e">ss</span>, <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">Type</span>)
+	<span style="color:#a6e22e">v</span>.<span style="color:#a6e22e">visit</span>(<span style="color:#a6e22e">ss</span>, <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">Value</span>)
+}
+
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Constant</span>) <span style="color:#a6e22e">Info</span>() <span style="color:#a6e22e">DefinitionInfo</span> {
+	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">DefinitionInfo</span>{<span style="color:#a6e22e">Name</span>: <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">Name</span>, <span style="color:#a6e22e">Line</span>: <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">Line</span>}
+}
+
+<span style="color:#66d9ef">type</span> <span style="color:#a6e22e">ConstantValue</span> <span style="color:#66d9ef">interface</span> {
+	<span style="color:#a6e22e">Node</span>
+	<span style="color:#a6e22e">constantValue</span>()
+}
+</code></pre></div><p>Particularly <code>ConstantValue</code> interface is leveraged to unify all the different types representing constant values.
+Here is the builtin trivial implementation for boolean value:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">ConstantBoolean</span> <span style="color:#66d9ef">bool</span>
+
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">ConstantBoolean</span>) <span style="color:#a6e22e">node</span>()   {}
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">ConstantBoolean</span>) <span style="color:#a6e22e">visitChildren</span>(<span style="color:#a6e22e">nodeStack</span>, <span style="color:#a6e22e">visitor</span>)   {}
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">ConstantBoolean</span>) <span style="color:#a6e22e">constantValue</span>()   {}
+</code></pre></div><h4 id="field">Field</h4>
+<p>Before diving into complicated definitions, let&rsquo;s take a look that how to define a single field in all the struct, union, exception and function parameter.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Requiredness</span> <span style="color:#66d9ef">int</span>
+
+<span style="color:#66d9ef">const</span> (
+	<span style="color:#a6e22e">Unspecified</span> <span style="color:#a6e22e">Requiredness</span> = <span style="color:#66d9ef">iota</span> <span style="color:#75715e">// unspecified (default)
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">Required</span>                        <span style="color:#75715e">// required
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">Optional</span>                        <span style="color:#75715e">// optional
+</span><span style="color:#75715e"></span>)
+
+<span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Field</span> <span style="color:#66d9ef">struct</span> {
+	<span style="color:#a6e22e">ID</span>           <span style="color:#66d9ef">int</span>
+	<span style="color:#a6e22e">Name</span>         <span style="color:#66d9ef">string</span>
+	<span style="color:#a6e22e">Type</span>         <span style="color:#a6e22e">Type</span>
+	<span style="color:#a6e22e">Requiredness</span> <span style="color:#a6e22e">Requiredness</span>
+	<span style="color:#a6e22e">Default</span>      <span style="color:#a6e22e">ConstantValue</span>
+	<span style="color:#a6e22e">Annotations</span>  []<span style="color:#f92672">*</span><span style="color:#a6e22e">Annotation</span>
+	<span style="color:#a6e22e">Line</span>         <span style="color:#66d9ef">int</span>
+	<span style="color:#a6e22e">Doc</span>          <span style="color:#66d9ef">string</span>
+}
+</code></pre></div><p><code>Requiredness</code> represents whether a field was marked as required or optional, or if the user did not specify either.</p>
+<h4 id="struct">Struct</h4>
+<p><code>Struct</code> is a collection of named fields with different types. For example,</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-thrift" data-lang="thrift"><span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">User</span> {
+	<span style="color:#ae81ff">1</span>: <span style="color:#66d9ef">required</span> <span style="color:#66d9ef">string</span> <span style="color:#a6e22e">name</span> <span style="color:#f92672">(</span>min_length <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;3&#34;</span>)
+	<span style="color:#ae81ff">2</span>: <span style="color:#66d9ef">optional</span> Status status <span style="color:#f92672">=</span> Enabled;
+}
+
+<span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">i128</span> {
+	<span style="color:#ae81ff">1</span>: <span style="color:#66d9ef">required</span> <span style="color:#66d9ef">i64</span> high
+	<span style="color:#ae81ff">2</span>: <span style="color:#66d9ef">required</span> <span style="color:#66d9ef">i64</span> low
+} (py.serializer <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;foo.Int128Serializer&#34;</span>)
+
+<span style="color:#66d9ef">union</span> <span style="color:#a6e22e">Contents</span> {
+	<span style="color:#ae81ff">1</span>: <span style="color:#66d9ef">string</span> plainText
+	<span style="color:#ae81ff">2</span>: <span style="color:#66d9ef">binary</span> pdf
+}
+
+<span style="color:#66d9ef">exception</span> <span style="color:#a6e22e">ServiceError</span> { <span style="color:#ae81ff">1</span>: <span style="color:#66d9ef">required</span> <span style="color:#66d9ef">string</span> message }
+</code></pre></div><p>Given all the above typical use cases, <code>Struct</code>&rsquo;s definition comes clear.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">StructureType</span> <span style="color:#66d9ef">int</span>
+
+<span style="color:#66d9ef">const</span> (
+	<span style="color:#a6e22e">StructType</span>    <span style="color:#a6e22e">StructureType</span> = <span style="color:#66d9ef">iota</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span> <span style="color:#75715e">// struct
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">UnionType</span>                              <span style="color:#75715e">// union
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">ExceptionType</span>                          <span style="color:#75715e">// exception
+</span><span style="color:#75715e"></span>)
+
+<span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Struct</span> <span style="color:#66d9ef">struct</span> {
+	<span style="color:#a6e22e">Name</span>        <span style="color:#66d9ef">string</span>
+	<span style="color:#a6e22e">Type</span>        <span style="color:#a6e22e">StructureType</span>
+	<span style="color:#a6e22e">Fields</span>      []<span style="color:#f92672">*</span><span style="color:#a6e22e">Field</span>
+	<span style="color:#a6e22e">Annotations</span> []<span style="color:#f92672">*</span><span style="color:#a6e22e">Annotation</span>
+	<span style="color:#a6e22e">Line</span>        <span style="color:#66d9ef">int</span>
+	<span style="color:#a6e22e">Doc</span>         <span style="color:#66d9ef">string</span>
+}
+</code></pre></div><h4 id="function">Function</h4>
+<p><code>Function</code> is a single function inside a service.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Function</span> <span style="color:#66d9ef">struct</span> {
+	<span style="color:#a6e22e">Name</span>        <span style="color:#66d9ef">string</span>
+	<span style="color:#a6e22e">Parameters</span>  []<span style="color:#f92672">*</span><span style="color:#a6e22e">Field</span>
+	<span style="color:#a6e22e">ReturnType</span>  <span style="color:#a6e22e">Type</span>
+	<span style="color:#a6e22e">Exceptions</span>  []<span style="color:#f92672">*</span><span style="color:#a6e22e">Field</span>
+	<span style="color:#a6e22e">OneWay</span>      <span style="color:#66d9ef">bool</span>
+	<span style="color:#a6e22e">Annotations</span> []<span style="color:#f92672">*</span><span style="color:#a6e22e">Annotation</span>
+	<span style="color:#a6e22e">Line</span>        <span style="color:#66d9ef">int</span>
+	<span style="color:#a6e22e">Doc</span>         <span style="color:#66d9ef">string</span>
+}
+</code></pre></div><h4 id="service">Service</h4>
+<p><code>Service</code> is a collection of functions. For inheriting from another service, <code>ServiceReference</code> references to its parent.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Service</span> <span style="color:#66d9ef">struct</span> {
+	<span style="color:#a6e22e">Name</span>      <span style="color:#66d9ef">string</span>
+	<span style="color:#a6e22e">Functions</span> []<span style="color:#f92672">*</span><span style="color:#a6e22e">Function</span>
+	<span style="color:#a6e22e">Parent</span>      <span style="color:#f92672">*</span><span style="color:#a6e22e">ServiceReference</span>
+	<span style="color:#a6e22e">Annotations</span> []<span style="color:#f92672">*</span><span style="color:#a6e22e">Annotation</span>
+	<span style="color:#a6e22e">Line</span>        <span style="color:#66d9ef">int</span>
+	<span style="color:#a6e22e">Doc</span>         <span style="color:#66d9ef">string</span>
+}
+
+<span style="color:#66d9ef">type</span> <span style="color:#a6e22e">ServiceReference</span> <span style="color:#66d9ef">struct</span> {
+	<span style="color:#a6e22e">Name</span> <span style="color:#66d9ef">string</span>
+	<span style="color:#a6e22e">Line</span> <span style="color:#66d9ef">int</span>
+}
+</code></pre></div><h4 id="annotation">Annotation</h4>
+<p><code>Annotation</code> represents a type annotation. Type annotations are key-value pairs in the form <code>(foo = &quot;bar&quot;, baz = &quot;qux&quot;)</code>
+They may be used to customize the generated code. Annotations are optional anywhere in the code where they&rsquo;re accepted and may be skipped completely.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Annotation</span> <span style="color:#66d9ef">struct</span> {
+	<span style="color:#a6e22e">Name</span>  <span style="color:#66d9ef">string</span>
+	<span style="color:#a6e22e">Value</span> <span style="color:#66d9ef">string</span>
+	<span style="color:#a6e22e">Line</span>  <span style="color:#66d9ef">int</span>
+}
+
+<span style="color:#66d9ef">func</span> (<span style="color:#f92672">*</span><span style="color:#a6e22e">Annotation</span>) <span style="color:#a6e22e">node</span>() {}
+<span style="color:#66d9ef">func</span> (<span style="color:#f92672">*</span><span style="color:#a6e22e">Annotation</span>) <span style="color:#a6e22e">visitChildren</span>(<span style="color:#a6e22e">nodeStack</span>, <span style="color:#a6e22e">visitor</span>) {}
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">ann</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Annotation</span>) <span style="color:#a6e22e">lineNumber</span>() <span style="color:#66d9ef">int</span> { <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">ann</span>.<span style="color:#a6e22e">Line</span> }
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">ann</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Annotation</span>) <span style="color:#a6e22e">String</span>() <span style="color:#66d9ef">string</span> {
+	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprintf</span>(<span style="color:#e6db74">&#34;%s = %q&#34;</span>, <span style="color:#a6e22e">ann</span>.<span style="color:#a6e22e">Name</span>, <span style="color:#a6e22e">ann</span>.<span style="color:#a6e22e">Value</span>)
+}
+</code></pre></div><h4 id="include">Include</h4>
+<p>Include is a request to include another Thrift file, like <code>include &quot;shared.thrift&quot;</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Include</span> <span style="color:#66d9ef">struct</span> {
+	<span style="color:#a6e22e">Path</span> <span style="color:#66d9ef">string</span>
+	<span style="color:#a6e22e">Name</span> <span style="color:#66d9ef">string</span>
+	<span style="color:#a6e22e">Line</span> <span style="color:#66d9ef">int</span>
+}
+</code></pre></div><p>In thriftrw, there is a custom Include-As syntax may be used to change the name under thich the file is imported.
+For example, <code>include t &quot;shared.thrift&quot;</code></p>
+<h4 id="namespace">Namespace</h4>
+<p><code>Namespace</code> statements allow users to choose the package name used by the generated code in certain languages.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Namespace</span> <span style="color:#66d9ef">struct</span> {
+	<span style="color:#a6e22e">Scope</span> <span style="color:#66d9ef">string</span>
+	<span style="color:#a6e22e">Name</span>  <span style="color:#66d9ef">string</span>
+	<span style="color:#a6e22e">Line</span>  <span style="color:#66d9ef">int</span>
+}
+</code></pre></div><p>What&rsquo;s more is that both <code>Include</code> and <code>Namespace</code> implement the <code>Header</code> interface, which holds the header part information by parsing
+the whole thrift file into a <code>Program</code> node.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// HeaderInfo provides a common way to access the line for a header.
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">HeaderInfo</span> <span style="color:#66d9ef">struct</span> {
+	<span style="color:#a6e22e">Line</span> <span style="color:#66d9ef">int</span>
+}
+
+<span style="color:#75715e">// Header unifies types representing header in the AST.
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Header</span> <span style="color:#66d9ef">interface</span> {
+	<span style="color:#a6e22e">Node</span>
+
+	<span style="color:#a6e22e">Info</span>() <span style="color:#a6e22e">HeaderInfo</span>
+	<span style="color:#a6e22e">header</span>()
+}
+
+<span style="color:#75715e">// Program represents the full syntax tree for a single .thrift file.
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Program</span> <span style="color:#66d9ef">struct</span> {
+	<span style="color:#a6e22e">Headers</span>     []<span style="color:#a6e22e">Header</span>
+	<span style="color:#a6e22e">Definitions</span> []<span style="color:#a6e22e">Definition</span>
+}
+
+<span style="color:#66d9ef">func</span> (<span style="color:#f92672">*</span><span style="color:#a6e22e">Program</span>) <span style="color:#a6e22e">node</span>() {}
+
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">p</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Program</span>) <span style="color:#a6e22e">visitChildren</span>(<span style="color:#a6e22e">ss</span> <span style="color:#a6e22e">nodeStack</span>, <span style="color:#a6e22e">v</span> <span style="color:#a6e22e">visitor</span>) {
+	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">h</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">Headers</span> {
+		<span style="color:#a6e22e">v</span>.<span style="color:#a6e22e">visit</span>(<span style="color:#a6e22e">ss</span>, <span style="color:#a6e22e">h</span>)
+	}
+	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">d</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">Definitions</span> {
+		<span style="color:#a6e22e">v</span>.<span style="color:#a6e22e">visit</span>(<span style="color:#a6e22e">ss</span>, <span style="color:#a6e22e">d</span>)
+	}
+}
+</code></pre></div><h2 id="compiler">Compiler</h2>
+<p>There is an internel <code>compiler</code> taking charge of compiling a thrift file to predefined type specifications.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// compiler is responsible for compiling Thrift files.
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">compiler</span> <span style="color:#66d9ef">struct</span> {
+	<span style="color:#75715e">// fs is the interface used to interact with the filesystem.
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fs</span> <span style="color:#a6e22e">FS</span>
+	<span style="color:#75715e">// nonStrict will compile Thrift files that do not pass strict validation.
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">nonStrict</span> <span style="color:#66d9ef">bool</span>
+	<span style="color:#75715e">// Map from file path to Module representing that file.
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">Modules</span> <span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]<span style="color:#f92672">*</span><span style="color:#a6e22e">Module</span>
+}
+</code></pre></div><p>Module represents a compiled Thrift module. It contains all information about all known types,
+constants, services, and includes from the Thrift file.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Module</span> <span style="color:#66d9ef">struct</span> {
+	<span style="color:#a6e22e">Name</span>       <span style="color:#66d9ef">string</span>
+	<span style="color:#a6e22e">ThriftPath</span> <span style="color:#66d9ef">string</span>
+
+	<span style="color:#75715e">// Mapping from the /Thrift name/ to the compiled representation of
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// different definitions.
+</span><span style="color:#75715e"></span>
+	<span style="color:#a6e22e">Includes</span>  <span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]<span style="color:#f92672">*</span><span style="color:#a6e22e">IncludedModule</span>
+	<span style="color:#a6e22e">Constants</span> <span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]<span style="color:#f92672">*</span><span style="color:#a6e22e">Constant</span>
+	<span style="color:#a6e22e">Types</span>     <span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]<span style="color:#a6e22e">TypeSpec</span>
+	<span style="color:#a6e22e">Services</span>  <span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]<span style="color:#f92672">*</span><span style="color:#a6e22e">ServiceSpec</span>
+
+	<span style="color:#a6e22e">Raw</span> []<span style="color:#66d9ef">byte</span> <span style="color:#75715e">// The raw IDL input.
+</span><span style="color:#75715e"></span>}
+</code></pre></div><p><code>Thriftrw</code> use <code>ragel</code> and <code>yacc</code> to generate parser for gathering parsed definitions into module&rsquo;s fields, I will dive into details in another post.</p>
+<h2 id="generator">Generator</h2>
+<p>Package gen generates Go code based on a compiled Thrift module specification.</p>
+<p>There&rsquo;re a lot of examples in <code>gen/internel/tests</code></p>
+
+    </section>
+
+    <hr>
+
+    <footer class="post-footer">
+        <section class="f-1">
+            
+            <section class="author">
+                <p>Words by AngeldsWang</p>
+            </section>
+            
+            
+            <p class="f-post-time"><time datetime="2020-06-10T10:06:16&#43;09:00">June 10, 2020</time></p>
+        </section>
+                        
+        <section class="f-2">
+            <section class="share">
+                <span>Share:
+                <a class="icon-twitter" href="http://twitter.com/share?text=Thriftrw&url=https%3a%2f%2fbravematrix.org%2fpost%2f2020-11-25-thriftrw%2f"
+                    onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <i class="fa fa-twitter"></i>
+                </a>
+                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fbravematrix.org%2fpost%2f2020-11-25-thriftrw%2f"
+                    onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <i class="fa fa-facebook"></i>
+                </a>
+                <a class="icon-google-plus" href="https://plus.google.com/share?url=https%3a%2f%2fbravematrix.org%2fpost%2f2020-11-25-thriftrw%2f"
+                   onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <i class="fa fa-google-plus"></i>
+                </a>
+                </span>
+            </section>
+
+            
+            	<span class="f-post-tags"><i class="fa fa-tag"></i>
+            	thrift, compiler
+            	</span>
+            
+        </section>
+                
+        <section id="comments">
+            <div id="disqus_thread" class="post-comments"></div>
+            <script type="text/javascript">
+              if (window.location.hostname != "localhost") {
+                var disqus_shortname = 'angeldswang';
+                (function() {
+                  var dsq = document.createElement('script');
+                  dsq.type = 'text/javascript';
+                  dsq.async = true;
+                  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+              }
+            </script>
+            <noscript>
+              Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+            </noscript>
+        </section>
+                
+    </footer>
+</article>
+
+	</div>
+</main>
+    <footer id="site-footer">
+        <div class="container">
+            <a href="https://bravematrix.org/index.xml" title="Get the RSS feed"><span class="tooltip"><i class="fa fa-rss"></i></span></a>
+            <section>&copy; <a href="https://bravematrix.org/">AngeldsWang</a> 2020 | All rights reserved</section>
+        </div>
+    </footer>
+
+    <script type="text/javascript" src="https://bravematrix.org/js/fittext.js"></script>
+    <script type="text/javascript">
+      $(".heading").fitText();
+    </script>
+
+
+
+</body>
+</html>
