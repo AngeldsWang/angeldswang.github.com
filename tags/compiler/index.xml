@@ -13,9 +13,9 @@
       <pubDate>Wed, 10 Jun 2020 10:06:16 +0900</pubDate>
       
       <guid>https://bravematrix.org/post/2020-11-25-thriftrw/</guid>
-      <description>Triftrw
+      <description>Triftrw is a general purpose, serialization-only, thrift encoding libraries written by Uber. Since there&amp;rsquo;re some thrift code generation ralated issues in my working project right now, I decide to give myself a chance to dive into this attractive library. Of course, the Go implementation.
 AST There are three basic interfaces in thriftrw&amp;rsquo;s ast package
- Node is a single element in the Thrift AST. Walker provides acccess to information about the state of the AST walker. Visitor walks an AST. The Visit function is called on each node of the AST.  type Node interface { node() visitChildren(nodeStack, visitor) } type Walker interface { Ancestors() []Node Parent() Node } type Visitor interface { Visit(w Walker, n Node) Visitor } visitor adapts a user-provided Visitor so that we can use the internal visitChildren method on nodes.</description>
+ Node is a single element in the Thrift AST. Walker provides acccess to information about the state of the AST walker.</description>
     </item>
     
   </channel>
